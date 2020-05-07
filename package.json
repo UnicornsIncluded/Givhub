@@ -11,7 +11,7 @@
     "dev": "./scripts/watch-dev",
     "lint": "./scripts/lint",
     "lint:fix": "./scripts/lint-fix",
-    "seed": "node script/seed.js",
+    "seed": "node ./scripts/seed.js",
     "start-dev": "NODE_ENV='development' npm run watch-dev & NODE_ENV='development' npm run start",
     "watch-dev": "./scripts/watch-dev",
     "test": "./scripts/test",
