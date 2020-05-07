@@ -18,7 +18,7 @@ export default function WelcomePage() {
       <div className="section">
         <div className="container">
           <h1 className="title is-1">
-            Welcome Page!
+            Welcome
           </h1>
         </div>
       </div>
