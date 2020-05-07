@@ -1,28 +1,53 @@
-const seeder = require('mongoose-seed');
-
-const db = "mongodb://localhost:27017/i-am-learning";
-
-seeder.connect(db, function () {
-    seeder.loadModels([
-        '../server/database/schemas/Todo'
-    ]);
-
-    seeder.clearModels(['Todo'], function () {
-
-        seeder.populateModels(data, function () {
-            seeder.disconnect();
-        });
-    });
+const User = require("../server/database/schemas/User");
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/givhub", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
-const data = [
-    {
-        'model': 'Todo',
-        'documents': [
-            {
-                "user": "5d725a4a7b292f5f8ceff789",
-                "text": "make sure to close video and mute audio before using mathroom",
-            }
-        ]
-    }
-]
+const users = [
+  new User({
+    userType: "donor",
+    firstName: "Bella",
+    lastName: "Hadid",
+    password: "123",
+    address: "1624 Fairford Dr, Fullerton CA 92833",
+    email: "bella@email.com",
+    donationCart: {
+      items: [{ name: "carrot" }, { name: "banana" }, { name: "bagel" }],
+      status: "active",
+    },
+    // donationCartHistory
+  }),
+  new User({
+    userType: "courier",
+    firstName: "Gigi",
+    lastName: "Hadid",
+    password: "123",
+    address: "1625 Fairford Dr, Fullerton CA 92833",
+    email: "gigi@email.com",
+    donationCart: {
+      items: [{ name: "vitamins" }, { name: "strawberries" }, { name: "tea" }],
+      status: "active",
+    },
+    // donationCartHistory
+  }),
+];
+
+async function syncUsers() {
+  let done = 0;
+  for (let i = 0; i < users.length; i++) {
+    await users[i].save(function (err, result) {
+      done++;
+      if (done === users.length) {
+        exit();
+      }
+    });
+  }
+}
+
+function exit() {
+  mongoose.disconnect();
+}
+
+syncUsers();

@@ -62,7 +62,7 @@ export default function Navigation({ pathname }) {
         <div className="navbar-brand">
           <Link to={auth ? '/home' : '/'} className="navbar-item" aria-label="main navigation">
             <h3 className="title is-3 logo">
-              MERN Boilerplate
+              Givhub
             </h3>
           </Link>
           <div className="navbar-brand-right">
