@@ -22,6 +22,7 @@ export default function Main({ location }) {
   const dispatch = useDispatch();
   const { alerts } = useSelector(R.pick(['alerts']));
   const [loading, setLoading] = useState(true);
+  console.log(R.identity)
 
   useEffect(() => {
     dispatch(attemptGetUser())
