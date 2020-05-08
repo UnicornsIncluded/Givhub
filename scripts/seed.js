@@ -8,9 +8,10 @@ mongoose.connect("mongodb://localhost:27017/givhub", {
 const users = [
   new User({
     userType: "donor",
+    username: "bella@email.com",
     firstName: "Bella",
     lastName: "Hadid",
-    password: "123",
+    password: "123456",
     address: "1624 Fairford Dr, Fullerton CA 92833",
     email: "bella@email.com",
     donationCart: {
@@ -21,9 +22,10 @@ const users = [
   }),
   new User({
     userType: "courier",
+    username: "gigi@email.com",
     firstName: "Gigi",
     lastName: "Hadid",
-    password: "123",
+    password: "123456",
     address: "1625 Fairford Dr, Fullerton CA 92833",
     email: "gigi@email.com",
     donationCart: {
