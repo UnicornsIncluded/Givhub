@@ -3,17 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import * as R from 'ramda';
 import Button from 'react-bootstrap/Button'
+import io from 'socket.io-client'
+const socket = io(window.location.origin)
 
 export default function UserPage() {
   const dispatch = useDispatch();
   const { user } = useSelector(R.pick(['user']));
 
   useEffect(() => {
+    
     if (!R.isEmpty(user)) {
       dispatch(push('/user/1'));
     }
   }, []);
-
+  console.log('>>>>>socket', socket)
   return (
     <div className="welcome-page page">
       <div className="section">
@@ -22,10 +25,11 @@ export default function UserPage() {
           <br />
           <br />
           <br />
-          <h1 className="title is-1">
+          <h1 id="userTitle" className="title is-1">
             Please Press Button To Alert a Courier to Pick Up Donation!
           </h1>
-        <Button variant="success" size="lg"> Press Me! </Button>        </div>
+          {/* onClick emits 'clicked' */}
+        <Button id="userButton" variant="success" size="lg" onClick = {() => {socket.emit('clicked')}}> Press Me! </Button>        </div>
       </div>
     </div>
   );
