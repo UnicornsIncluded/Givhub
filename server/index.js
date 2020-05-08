@@ -1,4 +1,5 @@
 const express = require("express");
+const socketio = require('socket.io');
 const path = require("path");
 const bodyParser = require("body-parser");
 
@@ -19,4 +20,19 @@ configPassport(app, express);
 
 app.use("/", routes);
 
-app.listen(port, () => console.log(`Server is listening on port ${port}`));
+const startListening = () => {
+    // start listening (and create a 'server' object representing our server)
+    const server = app.listen(port, () =>
+        console.log(`Mixing it up on port ${port}`)
+    )
+
+    // set up our socket control center
+    const io = socketio(server)
+    require('./socket')(io)
+}
+
+async function bootApp() {
+    await startListening()
+}
+
+bootApp()

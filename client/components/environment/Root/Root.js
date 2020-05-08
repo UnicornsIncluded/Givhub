@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import Main from '_environment/Main';
 
+import '../../../socket'
 export default function Root({ history, store }) {
   return (
     <Provider store={store}>
