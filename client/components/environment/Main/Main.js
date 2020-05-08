@@ -14,6 +14,7 @@ import HomePage from '_pages/HomePage';
 import TodoPage from '_pages/TodoPage';
 import SettingsPage from '_pages/SettingsPage';
 import LostPage from '_pages/LostPage';
+import UserPage from '_pages/UserPage';
 
 import Navigation from '_organisms/Navigation';
 import Footer from '_organisms/Footer';
@@ -46,7 +47,9 @@ export default function Main({ location }) {
           <Route path="/home" component={HomePage} />
           <Route path="/todo" component={TodoPage} />
           <Route path="/settings" component={SettingsPage} />
+          <Route path="/user/:userId" component={UserPage} />
           <Route path="*" component={LostPage} />
+          
         </Switch>
       </div>
       <Footer />
