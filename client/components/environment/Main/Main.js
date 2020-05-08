@@ -24,7 +24,6 @@ export default function Main({ location }) {
   const dispatch = useDispatch();
   const { alerts } = useSelector(R.pick(['alerts']));
   const [loading, setLoading] = useState(true);
-  console.log(R.identity)
 
   useEffect(() => {
     dispatch(attemptGetUser())
@@ -51,7 +50,7 @@ export default function Main({ location }) {
           <Route path="/user/:userId" component={UserPage} />
           <Route path="/courier/:courierId" component={CourierPage} />
           <Route path="*" component={LostPage} />
-          
+
         </Switch>
       </div>
       <Footer />
