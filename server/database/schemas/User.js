@@ -27,9 +27,10 @@ const { Schema } = mongoose;
 // });
 
 const userSchema = new Schema({
+  userType: {type: String, required: false},
   username: { type: String, lowercase: true, required: true, unique: true, immutable: true },
-  userType: {type: String, required: true},
-  username_case: { type: String, required: true },
+  // username_case: { type: String, required: true },
+  email: { type: String, required: false, unique: true },
   password: { type: String, required: true },
   profile_pic: { type: String },
   first_name: { type: String, maxlength: 20 },

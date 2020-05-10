@@ -40,6 +40,8 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res, next) => {
   req.body.username = req.body.username.toLowerCase();
+  req.body.password = req.body.password.toString();
+  console.log(req.body.password)
 
   passport.authenticate('local', (err, user, info) => {
     if (err) {

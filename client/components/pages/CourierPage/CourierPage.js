@@ -22,10 +22,10 @@ export default function CourierPage() {
             <br />
             <br />
             <br />
-          <h1 className="title is-1">
-            Courier View
+          <h1 id="courierTitle" className="title is-1">
+            Waiting for job...
           </h1>
-          <Button variant="success" size="lg"> Press Me! </Button>
+          {/* <Button variant="success" size="lg"> Press Me! </Button> */}
         </div>
       </div>
     </div>
