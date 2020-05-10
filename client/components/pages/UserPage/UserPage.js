@@ -14,7 +14,6 @@ export class UserPage extends React.Component {
 
   componentDidMount(){
     this.props.getCartItems("gigi@email.com")
-    console.log(this.props.userCart)
   }
   // const dispatch = useDispatch();
   // const { user } = useSelector(R.pick(['user']));
@@ -37,8 +36,18 @@ export class UserPage extends React.Component {
         <br />
         <br />
         <h1 className="title is-1">
-          Please Press Button To Alert a Courier to Pick Up Donation!
+          Donation Cart
         </h1>
+        <div className="donoList">
+          <ul>
+            {this.props.userCart.map((item, id=0) => {
+              id++
+              return(
+              <li key = {id}>{item.name}</li>
+              )
+            })}
+          </ul>
+        </div>
       <Button variant="success" size="lg"> Donate Now! </Button>        </div>
     </div>
   </div>
