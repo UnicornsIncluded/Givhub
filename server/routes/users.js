@@ -15,14 +15,18 @@ router.get('/:username/cart', async (req, res, next) => {
     }
   }
 )
-router.put(':username/cart/:userId', async (req, res, next) => {
+router.put('/:username/cart', async (req, res, next) => {
   
   try {
-    User.findByIdAndUpdate({_id: req.params.userId }, {items: [...items, req.body]})
+    User.update({"username": req.params.username}, {$push: {"donationCart.items": req.body}})
+
+    res.sendStatus(201)
   } catch (error) {
     next(err)
   }
 })
+// update({"username": "gigi@email.com"}, {"$push": {"donationCart.items": {"name": "can"}}})
+
 router.post('/checkusername', (req, res) => {
   const username = req.body.username.toLowerCase();
 
