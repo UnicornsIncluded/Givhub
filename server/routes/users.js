@@ -5,6 +5,38 @@ const router   = express.Router();
 
 module.exports = router;
 
+router.get('/', async(req, res) => {
+  await User.find({}, (err, users) => {
+    if (err) {
+      res.status(400).send({message: 'Couldn\'t get users'})
+    } else {
+      res.send(users)
+    }
+  }).select("-password")
+})
+
+router.get('/:linkedUserId', async(req, res) => {
+  await User.findOne({user: req.params.linkedUserId}, (err, users) => {
+    if (err) {
+      res.status(400).send({message: 'Couldn\'t get user'})
+    } else {
+      res.send(users)
+    }
+  }).select("-password")
+})
+
+router.put('/:linkedUserId', async (req, res) => {
+  req.body.updated_at = Date.now();
+
+  await User.findOneAndUpdate({ user: req.params.linkedUserId }, req.body, { new: true }, (err, user) => {
+    if (err) {
+      res.status(400).send({ err, message: 'Error updating user' });
+    }
+    console.log('success!')
+    res.status(200).send({ message: 'User successfully updated', user: user.hidePassword() });
+  });
+});
+
 router.post('/checkusername', (req, res) => {
   const username = req.body.username.toLowerCase();
 

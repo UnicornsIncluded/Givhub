@@ -1,6 +1,9 @@
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_USER_COURIER = 'UPDATE_USER_COURIER';
+export const GET_USER = 'GET_USER';
+export const GET_USERS = 'GET_USERS';
 
 export function login(user) {
   return {
@@ -19,5 +22,19 @@ export function updateUser(user) {
   return {
     type: UPDATE_USER,
     user,
+  };
+}
+
+export function updateUserCourier(user) {
+  return {
+    type: UPDATE_USER_COURIER,
+    user,
+  };
+}
+
+export function getLinkedUser(user) {
+  return {
+    type: GET_USER,
+    user
   };
 }

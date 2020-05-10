@@ -45,6 +45,7 @@ router.put('/', requireAuth, (req, res) => {
     if (err) {
       res.status(400).send({ err, message: 'Error updating user' });
     }
+    console.log('success!')
     res.status(200).send({ message: 'User successfully updated', user: user.hidePassword() });
   });
 });
