@@ -5,6 +5,16 @@ const router   = express.Router();
 
 module.exports = router;
 
+router.get('/:username/cart', async (req, res, next) => {
+    try {
+      const userData = await User.find({username: req.params.username})
+
+      res.json(userData[0])
+    } catch (err) {
+      next(err)
+    }
+  }
+)
 router.post('/checkusername', (req, res) => {
   const username = req.body.username.toLowerCase();
 
