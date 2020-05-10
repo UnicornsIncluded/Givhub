@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
 // import { useDispatch, useSelector } from "react-redux";
 // import * as R from "ramda";
 
@@ -9,13 +10,16 @@ import React, { useState, useEffect } from "react";
 // import { attemptGetUser, attemptUpdateUser } from "_thunks/user";
 // import Box from "_molecules/Box";
 
-export default function GeneralProfile() {
+import { attemptUpdateUser } from '_thunks/user'
+
+export function GeneralProfile(props) {
   const handleSubmit = (event) => {
     console.log('entered handle submit')
     event.preventDefault()
     let email = event.target.email.value
     let userType = event.target.userType.value
     console.log(email, userType)
+    props.attemptUpdateUser({ email, userType });
   }
   return (
     <form onSubmit={() => handleSubmit(event)}>
@@ -29,6 +33,12 @@ export default function GeneralProfile() {
     </form>
   );
 }
+
+const mapDispatchToProps = dispatch => ({
+  attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails))
+})
+
+export default connect(null, mapDispatchToProps)(GeneralProfile);
 
   // const dispatch = useDispatch();
   // const { user } = useSelector(R.pick(['user']));
