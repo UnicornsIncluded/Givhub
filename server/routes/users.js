@@ -15,6 +15,14 @@ router.get('/:username/cart', async (req, res, next) => {
     }
   }
 )
+router.put(':username/cart/:userId', async (req, res, next) => {
+  
+  try {
+    User.findByIdAndUpdate({_id: req.params.userId }, {items: [...items, req.body]})
+  } catch (error) {
+    next(err)
+  }
+})
 router.post('/checkusername', (req, res) => {
   const username = req.body.username.toLowerCase();
 

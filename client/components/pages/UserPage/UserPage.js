@@ -31,6 +31,8 @@ export class UserPage extends React.Component {
     this.setState({
       [event.target.id]: event.target.value
     })
+  }
+  handleSubmit(event){
     
   }
 
@@ -73,16 +75,24 @@ export class UserPage extends React.Component {
           </p>
         )} */}
       </div>
-
+      <div className="has-text-right">
+        <Button
+          type="success"
+          // onClick={register}
+          label="Add"
+          size='lg'
+        > Add</Button>
+      </div>
         </Box>
         <div className="donoList">
           <ul>
-            {this.props.userCart.map((item, id=0) => {
+            {this.props.userCart._id ?
+            this.props.userCart.donationCart.items.map((item, id=0) => {
               id++
               return(
               <li key = {id}>{item.name}</li>
               )
-            })}
+            }): <li>nothing</li> }
           </ul>
         </div>
       <Button variant="success" size="lg"> Donate Now! </Button>        </div>

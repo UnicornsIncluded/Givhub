@@ -24,16 +24,20 @@ const getCart = cart => ({
 export const fetchCart = (username) => async dispatch => {
   try {
     const res = await axios.get(`/api/users/${username}/cart`)
-    dispatch(getCart(res.data.donationCart.items))
+    dispatch(getCart(res.data))
   } catch (err) {
     console.error(err)
   }
 }
 
-export const addToCart = (newCartItem, userId) => async dispatch => {
+export const addToCart = (newCartItem, userId, username) => async dispatch => {
   try {
-    await axios.post(`/api/${userId}/cart`, newCartItem)
-    const {data} = await axios.get(`/api/${userId}/cart`)
+    const updateObj = {
+      newCartItem,
+      userId
+    }
+    await axios.put(`/api/users/${username}/cart/${userId}`, newCartItem)
+    const {data} = await axios.get(`/api/users/${username}/cart`)
     dispatch(getCart(data))
   } catch (error) {
     console.error(error)
