@@ -18,7 +18,6 @@ const users = [
       items: [{ name: "carrot" }, { name: "banana" }, { name: "bagel" }],
       status: "active",
     },
-    // donationCartHistory
   }),
   new User({
     userType: "courier",
@@ -53,3 +52,7 @@ function exit() {
 }
 
 syncUsers();
+
+
+const ohj = db.users.insertMany([{ userType: "courier", username: "gigi@email.com", firstName: "Gigi", lastName: "Hadid", password: "123456", address: "1625 Fairford Dr, Fullerton CA 92833", email: "gigi@email.com", donationCart: { items: [{ name: "vitamins" }, { name: "strawberries" }, { name: "tea" }], status: "active",}
+}])

@@ -5,6 +5,28 @@ const router   = express.Router();
 
 module.exports = router;
 
+router.get('/:username/cart', async (req, res, next) => {
+    try {
+      const userData = await User.find({username: req.params.username})
+
+      res.json(userData[0])
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+router.put('/:username/cart', async (req, res, next) => {
+  
+  try {
+    User.update({"username": req.params.username}, {$push: {"donationCart.items": req.body}})
+
+    res.sendStatus(201)
+  } catch (error) {
+    next(err)
+  }
+})
+// update({"username": "gigi@email.com"}, {"$push": {"donationCart.items": {"name": "can"}}})
+
 router.post('/checkusername', (req, res) => {
   const username = req.body.username.toLowerCase();
 
