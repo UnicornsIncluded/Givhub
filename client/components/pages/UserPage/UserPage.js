@@ -5,11 +5,15 @@ import * as R from 'ramda';
 import Button from 'react-bootstrap/Button'
 import {connect} from 'react-redux'
 import { fetchCart } from '../../../store/reducers/userCart';
+import Box from '../../molecules/Box'
 
 export class UserPage extends React.Component {
   constructor(){
     super()
-    this.state = {}
+    this.state = {
+      donating: ''
+    }
+    this.handleDonateChange = this.handleDonateChange.bind(this)
   }
 
   componentDidMount(){
@@ -23,7 +27,12 @@ export class UserPage extends React.Component {
   //     dispatch(push('/user/gigi@email.com/cart'));
   //   }
   // }, []);
-
+  handleDonateChange(event){
+    this.setState({
+      [event.target.id]: event.target.value
+    })
+    
+  }
 
   render () {
     return (
@@ -38,6 +47,34 @@ export class UserPage extends React.Component {
         <h1 className="title is-1">
           Donation Cart
         </h1>
+        <Box>
+        <h3 className="title is-3">
+        Donate a Food!
+        </h3>
+        <div className="field">
+        <label htmlFor="username" className="label">
+        </label>
+        <p className="control has-icons-right">
+          <input
+            id="donating"
+            // className={usernameInputClasses}
+            placeholder="Can of beans.."
+            type="donating"
+            value={this.state.donating}
+            onChange={this.handleDonateChange}
+          />
+          {/* <span className="icon is-small is-right">
+            <i className={usernameIconClasses} />
+          </span> */}
+        </p>
+        {/* {username && (
+          <p className={usernameHelpClasses}>
+            {usernameMessage}
+          </p>
+        )} */}
+      </div>
+
+        </Box>
         <div className="donoList">
           <ul>
             {this.props.userCart.map((item, id=0) => {
