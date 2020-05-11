@@ -57,13 +57,13 @@ router.get("/:username/cart", async (req, res, next) => {
 });
 router.put("/:username/cart", async (req, res, next) => {
   try {
-    User.update(
+    await User.update(
       { username: req.params.username },
       { $push: { "donationCart.items": req.body } }
     );
 
     res.sendStatus(201);
-  } catch (error) {
+  } catch (err) {
     next(err);
   }
 });
