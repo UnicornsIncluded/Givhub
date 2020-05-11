@@ -9,7 +9,7 @@ import {
   attemptGetLinkedUser,
   attemptGetCouriers,
 } from "../../../store/thunks/user";
-import { fetchCart } from "../../../store/reducers/userCart";
+import { fetchCart, addToCart } from "../../../store/reducers/userCart";
 import Box from "../../molecules/Box";
 
 const socket = io(window.location.origin);
@@ -27,6 +27,7 @@ export class UserPage extends React.Component {
       donating: "",
     };
     this.handleDonateChange = this.handleDonateChange.bind(this);
+    this.handleDonoSubmit = this.handleDonoSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -39,7 +40,13 @@ export class UserPage extends React.Component {
       [event.target.id]: event.target.value,
     });
   }
-  handleSubmit(event) {}
+  handleDonoSubmit(event) {
+    const newCartItem = {}
+    newCartItem.name = this.state.donating
+    //palce holder for dynamic 
+    this.props.addToCart(newCartItem, "gigi@email.com")
+  }
+  
   handleClick = () => {
     randomCourierIndex = Math.floor(Math.random() * (this.props.couriers.length))
     courier = this.props.couriers[randomCourierIndex].user
@@ -52,6 +59,7 @@ export class UserPage extends React.Component {
     console.log("PROPS", this.props.user.username);
     socket.emit("clicked");
   };
+
 
   render() {
     return (
@@ -78,7 +86,8 @@ export class UserPage extends React.Component {
                 </p>
               </div>
               <div className="has-text-right">
-                <Button type="success" label="Add" size="lg">
+                <Button type="success" label="Add" size="lg"
+                onClick={() => this.handleDonoSubmit()}>
                   {" "}
                   Add
                 </Button>
@@ -128,7 +137,8 @@ function mapDispatchToProps(dispatch) {
     getCartItems: (username) => {
       dispatch(fetchCart(username));
     },
-    attemptGetCouriers: () => dispatch(attemptGetCouriers())
+    attemptGetCouriers: () => dispatch(attemptGetCouriers()),
+    addToCart: (nameOfItem, username) => dispatch(addToCart(nameOfItem, username))
   };
 }
 
