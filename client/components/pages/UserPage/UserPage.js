@@ -9,7 +9,11 @@ import {
   attemptGetLinkedUser,
   attemptGetCouriers,
 } from "../../../store/thunks/user";
-import { fetchCart, addToCart } from "../../../store/reducers/userCart";
+import {
+  fetchCart,
+  addToCart,
+  removeFromCart,
+} from "../../../store/reducers/userCart";
 import Box from "../../molecules/Box";
 
 const socket = io(window.location.origin);
@@ -20,6 +24,7 @@ let matched;
 let donor;
 let randomCourierIndex;
 let randomCourier;
+let username, item;
 export class UserPage extends React.Component {
   constructor() {
     super();
@@ -27,7 +32,7 @@ export class UserPage extends React.Component {
       donating: "",
     };
     this.handleDonateChange = this.handleDonateChange.bind(this);
-    this.handleDonoSubmit = this.handleDonoSubmit.bind(this)
+    this.handleDonoSubmit = this.handleDonoSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -41,15 +46,15 @@ export class UserPage extends React.Component {
     });
   }
   handleDonoSubmit(event) {
-    const newCartItem = {}
-    newCartItem.name = this.state.donating
-    //palce holder for dynamic 
-    this.props.addToCart(newCartItem, "gigi@email.com")
+    const newCartItem = {};
+    newCartItem.name = this.state.donating;
+    //palce holder for dynamic
+    this.props.addToCart(newCartItem, "gigi@email.com");
   }
-  
+
   handleClick = () => {
-    randomCourierIndex = Math.floor(Math.random() * (this.props.couriers.length))
-    courier = this.props.couriers[randomCourierIndex].user
+    randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
+    courier = this.props.couriers[randomCourierIndex].user;
     matched = true;
     donor = this.props.user.user;
     linkedUserId = courier;
@@ -60,6 +65,12 @@ export class UserPage extends React.Component {
     socket.emit("clicked");
   };
 
+  handleDelete = (username, item) => {
+    username = username;
+    item = item;
+    console.log('handle delete item', item)
+    this.props.removeFromCart(username, item);
+  };
 
   render() {
     return (
@@ -86,8 +97,12 @@ export class UserPage extends React.Component {
                 </p>
               </div>
               <div className="has-text-right">
-                <Button type="success" label="Add" size="lg"
-                onClick={() => this.handleDonoSubmit()}>
+                <Button
+                  type="success"
+                  label="Add"
+                  size="lg"
+                  onClick={() => this.handleDonoSubmit()}
+                >
                   {" "}
                   Add
                 </Button>
@@ -98,7 +113,22 @@ export class UserPage extends React.Component {
                 {this.props.userCart._id ? (
                   this.props.userCart.donationCart.items.map((item, id = 0) => {
                     id++;
-                    return <li key={id}>{item.name}</li>;
+                    return (
+                      <div>
+                        <li key={id}>
+                          {item.name}
+                          <br />
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              this.handleDelete(this.props.user.username, item)
+                            }
+                          >
+                            X
+                          </Button>
+                        </li>
+                      </div>
+                    );
                   })
                 ) : (
                   <li>nothing</li>
@@ -125,7 +155,11 @@ export class UserPage extends React.Component {
 
 function mapStateToProps(state) {
   console.log("mapping");
-  return { user: state.user, userCart: state.userCart, couriers: state.couriers };
+  return {
+    user: state.user,
+    userCart: state.userCart,
+    couriers: state.couriers,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -138,7 +172,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(fetchCart(username));
     },
     attemptGetCouriers: () => dispatch(attemptGetCouriers()),
-    addToCart: (nameOfItem, username) => dispatch(addToCart(nameOfItem, username))
+    addToCart: (nameOfItem, username) =>
+      dispatch(addToCart(nameOfItem, username)),
+    removeFromCart: (username, item) => dispatch(removeFromCart(username, item)),
   };
 }
 
