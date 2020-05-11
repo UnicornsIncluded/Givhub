@@ -47,7 +47,7 @@ export default function Main({ location }) {
           <Route path="/home" component={HomePage} />
           <Route path="/todo" component={TodoPage} />
           <Route path="/settings" component={SettingsPage} />
-          <Route path="/user/:userId" component={UserPage} />
+          <Route path="/:username/cart" component={UserPage} />
           <Route path="/courier/:courierId" component={CourierPage} />
           <Route path="*" component={LostPage} />
 

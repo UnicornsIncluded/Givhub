@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_CART = 'GET_CART'
+// const REMOVE_ITEM = 'REMOVE_ITEM'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,11 @@ const getCart = cart => ({
   type: GET_CART,
   cart
 })
+
+// const removeItem = item => ({
+//   type: GET_CART,
+//   item
+// })
 
 /**
  * THUNK CREATORS
@@ -44,10 +50,11 @@ export const addToCart = (newCartItem, username) => async dispatch => {
   }
 }
 
-export const removeFromCart = cartItemId => async dispatch => {
+export const removeFromCart = (username, item) => async dispatch => {
   try {
-    await axios.delete(`/api/cart/${cartItemId}`)
-    const {data} = await axios.get(`/api/${userId}/cart`)
+    console.log('REMOVE FROM CART', item)
+    await axios.delete(`/api/users/${username}/cart`, {data: item})
+    const {data} = await axios.get(`/api/users/${username}/cart`)
     dispatch(getCart(data))
   } catch (error) {
     console.error(error)

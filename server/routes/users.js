@@ -26,25 +26,26 @@ router.get("/:linkedUserId", async (req, res) => {
 });
 
 router.put("/:linkedUserId", async (req, res) => {
-  req.body.updated_at = Date.now();
-
-  await User.findOneAndUpdate(
-    { user: req.params.linkedUserId },
-    req.body,
-    { new: true },
-    (err, user) => {
-      if (err) {
-        res.status(400).send({ err, message: "Error updating user" });
-      }
-      console.log("success!");
-      res
-        .status(200)
-        .send({
+  try {
+    req.body.updated_at = Date.now();
+    await User.findOneAndUpdate(
+      { user: req.params.linkedUserId },
+      req.body,
+      { new: true },
+      (err, user) => {
+        if (err) {
+          res.status(400).send({ err, message: "Error updating user" });
+        }
+        console.log("success!");
+        res.status(200).send({
           message: "User successfully updated",
           user: user.hidePassword(),
         });
-    }
-  );
+      }
+    );
+  } catch (err) {
+    next(err);
+  }
 });
 router.get("/:username/cart", async (req, res, next) => {
   try {
@@ -67,7 +68,16 @@ router.put("/:username/cart", async (req, res, next) => {
     next(err);
   }
 });
-// update({"username": "gigi@email.com"}, {"$push": {"donationCart.items": {"name": "can"}}})
+
+router.delete("/:username/cart", async (req, res, next) => {
+  try {
+    console.log("don't leave me behind pls TYLER <3 REQ.BODY", req.body)
+    await User.update({username: req.params.username}, {$pull: {"donationCart.items": req.body}})
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.post("/checkusername", (req, res) => {
   const username = req.body.username.toLowerCase();
