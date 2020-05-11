@@ -24,7 +24,6 @@ let matched;
 let donor;
 let randomCourierIndex;
 let randomCourier;
-let username, item;
 export class UserPage extends React.Component {
   constructor() {
     super();
@@ -38,7 +37,7 @@ export class UserPage extends React.Component {
   componentDidMount() {
     this.props.attemptGetCouriers();
     console.log("current couriers", this.props.couriers);
-    this.props.getCartItems("gigi@email.com");
+    this.props.getCartItems(this.props.match.params.username);
   }
   handleDonateChange(event) {
     this.setState({
@@ -49,7 +48,7 @@ export class UserPage extends React.Component {
     const newCartItem = {};
     newCartItem.name = this.state.donating;
     //palce holder for dynamic
-    this.props.addToCart(newCartItem, "gigi@email.com");
+    this.props.addToCart(newCartItem, this.props.match.params.username);
   }
 
   handleClick = () => {
@@ -66,8 +65,6 @@ export class UserPage extends React.Component {
   };
 
   handleDelete = (username, item) => {
-    username = username;
-    item = item;
     console.log('handle delete item', item)
     this.props.removeFromCart(username, item);
   };
@@ -131,8 +128,8 @@ export class UserPage extends React.Component {
                     );
                   })
                 ) : (
-                  <li>nothing</li>
-                )}
+                    <li>nothing</li>
+                  )}
               </ul>
             </div>
             <Button

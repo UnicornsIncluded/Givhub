@@ -71,7 +71,7 @@ router.put("/:username/cart", async (req, res, next) => {
 
 router.delete("/:username/cart", async (req, res, next) => {
   try {
-    console.log("don't leave me behind pls TYLER <3 REQ.BODY", req.params.username)
+    console.log("don't leave me behind pls TYLER <3 REQ.BODY", req.body)
     await User.update({username: req.params.username}, {$pull: {"donationCart.items": req.body}})
     res.sendStatus(204);
   } catch (err) {
