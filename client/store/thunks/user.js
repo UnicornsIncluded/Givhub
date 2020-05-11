@@ -2,7 +2,7 @@ import { snakeToCamelCase } from "json-style-converter/es5";
 import Notifications from "react-notification-system-redux";
 import axios from "axios";
 import { getUser, putUser, putUserPassword } from "_api/user";
-import { updateUser, updateUserCourier, getLinkedUser } from "_actions/user";
+import { updateUser, updateUserCourier, getLinkedUser, getDonors, getCouriers } from "_actions/user";
 
 import { dispatchError } from "_utils/api";
 
@@ -22,6 +22,34 @@ export const attemptGetLinkedUser = (linkedUserId) => {
       console.log('ATTEMPT GET LINKED USER', user)
       dispatch(getLinkedUser(user));
       return user
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
+
+export const attemptGetDonors = () => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(`/api/donors/`);
+      const users = res.data;
+      console.log('ATTEMPT GET DONORS', users)
+      dispatch(getDonors(users));
+      return user
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
+
+export const attemptGetCouriers = () => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(`/api/couriers/`);
+      const users = res.data;
+      console.log('ATTEMPT GET COURIERS', users)
+      dispatch(getCouriers(users));
+      return users
     } catch (err) {
       console.error(err);
     }

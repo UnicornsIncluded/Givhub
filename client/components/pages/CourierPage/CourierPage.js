@@ -20,8 +20,9 @@ export function CourierPage(props) {
       let linkedUserProps = await props.attemptGetLinkedUser(linkedUserId)
       linkedUsername = linkedUserProps.username
     }
+    fetchData()
   }, []);
-
+  console.log('currently', props)
   return (
     <div className="welcome-page page">
       <div className="section">
@@ -34,7 +35,7 @@ export function CourierPage(props) {
           {typeof props.user.linkedUser == "number" ? (
             <div>
               {/* how do you do this vvvv */}
-              {linkedUserId = 3}
+              {linkedUserId = 14}
             <h1 className="title is-1">New Job!</h1>
             <h2>Please pick up order from {linkedUsername}</h2>
             </div>
@@ -52,7 +53,7 @@ export function CourierPage(props) {
 }
 
 function mapStateToProps(state) {
-  return { user: state.user };
+  return { user: state.user, donors: state.donors };
 }
 
 function mapDispatchToProps(dispatch) {
