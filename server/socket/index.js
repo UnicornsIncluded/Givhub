@@ -8,13 +8,9 @@ module.exports = io => {
 
     // grabs 'clicked' from clientside 
     socket.on('clicked', function() {
-      // var button = document.getElementById('userButton');
     // emits 'clicked' back to clientside 
       console.log('clicked~~~~~~~~~');
-      socket.broadcast.emit('banana')
-      // document.getElementById("alert").innerHTML = "send clicked";
-    
-      // onClickHandler(button);
+      socket.broadcast.emit('clicked')
     });
   })
 }

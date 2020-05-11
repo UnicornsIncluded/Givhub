@@ -33,6 +33,7 @@ const userSchema = new Schema({
   email: { type: String, required: false, unique: true },
   password: { type: String, required: true },
   profile_pic: { type: String },
+  linkedUser: { type: Number },
   first_name: { type: String, maxlength: 20 },
   last_name: { type: String, maxlength: 20 },
   bio: { type: String, maxlength: 240 },
