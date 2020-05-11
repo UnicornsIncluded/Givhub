@@ -32,14 +32,14 @@ export class UserPage extends React.Component {
   componentDidMount() {
     this.props.attemptGetCouriers();
     console.log("current couriers", this.props.couriers);
-    this.props.getCartItems("gigi@email.com");
+    this.props.getCartItems(this.props.match.params.username);
   }
   handleDonateChange(event) {
     this.setState({
       [event.target.id]: event.target.value,
     });
   }
-  handleSubmit(event) {}
+  handleSubmit(event) { }
   handleClick = () => {
     randomCourierIndex = Math.floor(Math.random() * (this.props.couriers.length))
     courier = this.props.couriers[randomCourierIndex].user
@@ -92,8 +92,8 @@ export class UserPage extends React.Component {
                     return <li key={id}>{item.name}</li>;
                   })
                 ) : (
-                  <li>nothing</li>
-                )}
+                    <li>nothing</li>
+                  )}
               </ul>
             </div>
             <Button

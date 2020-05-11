@@ -1,6 +1,7 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import * as R from 'ramda';
@@ -54,7 +55,6 @@ export default function Navigation({ pathname }) {
     'is-hidden-mobile': true,
     'is-active': isSettings,
   });
-
   return (
     <nav className="navbar is-fixed-top has-shadow" role="navigation">
       <div className="container">
@@ -101,9 +101,9 @@ export default function Navigation({ pathname }) {
                   Home
                 </h6>
               </Link>
-              <Link to="/todo" className={todoItemClasses}>
+              <Link to={`/${user.username}/cart`} className={todoItemClasses}>
                 <h6 className="title is-6">
-                  Todo
+                  Donation Cart
                 </h6>
               </Link>
               <Link to="/settings" className={settingsItemClasses}>
@@ -122,24 +122,26 @@ export default function Navigation({ pathname }) {
             </div>
           </div>
         ) : (
-          <div className="navbar-menu">
-            <div className="navbar-end">
-              <Link to="/login" className="navbar-item">
-                <h6 className="title is-6">
-                  Login
+            <div className="navbar-menu">
+              <div className="navbar-end">
+                <Link to="/login" className="navbar-item">
+                  <h6 className="title is-6">
+                    Login
                 </h6>
-              </Link>
-              <Link to="/register" className="navbar-item">
-                <Button label="Sign Up" type="success" />
-              </Link>
+                </Link>
+                <Link to="/register" className="navbar-item">
+                  <Button label="Sign Up" type="success" />
+                </Link>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         <UserDropdown open={open} closeDropdown={closeDropdown} />
       </div>
     </nav>
   );
 }
+
+
 
 Navigation.propTypes = {
   pathname: PropTypes.string.isRequired,
