@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ';
 
@@ -21,6 +24,15 @@ export default class Mapbox extends React.Component {
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom
         });
+
+
+        var directions = new MapboxDirections({
+            accessToken: mapboxgl.accessToken,
+            unit: 'metric',
+            profile: 'mapbox/cycling'
+        })
+
+        map.addControl(directions, 'top-left')
     }
 
     render() {
