@@ -2,8 +2,16 @@ import { snakeToCamelCase } from "json-style-converter/es5";
 import Notifications from "react-notification-system-redux";
 import axios from "axios";
 import { getUser, putUser, putUserPassword } from "_api/user";
-import { updateUser, updateUserCourier, getLinkedUser, getDonors, getCouriers } from "_actions/user";
-
+import {
+  updateUser,
+  updateUserCourier,
+  // getLinkedUser,
+  getDonors,
+  getCouriers,
+} from "_actions/user";
+import {linkedUserUpdated} from '_reducers/linkedUser'
+import io from 'socket.io-client'
+const socket = io(window.location.origin);
 import { dispatchError } from "_utils/api";
 
 export const attemptGetUser = () => (dispatch) =>
@@ -19,9 +27,9 @@ export const attemptGetLinkedUser = (linkedUserId) => {
     try {
       const res = await axios.get(`/api/users/${linkedUserId}`);
       const user = res.data;
-      console.log('ATTEMPT GET LINKED USER', user)
-      dispatch(getLinkedUser(user));
-      return user
+      console.log("ATTEMPT GET LINKED USER", user);
+      dispatch(linkedUserUpdated(user));
+      return user;
     } catch (err) {
       console.error(err);
     }
@@ -33,9 +41,9 @@ export const attemptGetDonors = () => {
     try {
       const res = await axios.get(`/api/donors/`);
       const users = res.data;
-      console.log('ATTEMPT GET DONORS', users)
+      console.log("ATTEMPT GET DONORS", users);
       dispatch(getDonors(users));
-      return user
+      return user;
     } catch (err) {
       console.error(err);
     }
@@ -47,9 +55,9 @@ export const attemptGetCouriers = () => {
     try {
       const res = await axios.get(`/api/couriers/`);
       const users = res.data;
-      console.log('ATTEMPT GET COURIERS', users)
+      console.log("ATTEMPT GET COURIERS", users);
       dispatch(getCouriers(users));
-      return users
+      return users;
     } catch (err) {
       console.error(err);
     }
@@ -78,8 +86,9 @@ export const attemptUpdateUserCourier = (courier, donor) => {
       const { data } = await axios.put(`/api/user`, {
         linkedUser: courier,
       });
-      await axios.put(`/api/users/${courier}`, {linkedUser: donor})
+      const updatedCourier = await axios.put(`/api/users/${courier}`, { linkedUser: donor });
       dispatch(updateUserCourier(data));
+      socket.emit('clicked', updatedCourier.data.user)
     } catch (err) {
       console.error("ERROR updating courier", err);
     }
@@ -100,3 +109,13 @@ export const attemptUpdatePassword = (passwordInfo) => (dispatch) =>
       return data;
     })
     .catch(dispatchError(dispatch));
+
+export const updateStoredSocket = (userSocketId) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`/api/user`, { socketId: userSocketId });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};

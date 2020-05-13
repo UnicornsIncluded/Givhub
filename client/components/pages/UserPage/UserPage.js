@@ -59,9 +59,9 @@ export class UserPage extends React.Component {
     linkedUserId = courier;
     // make not hard coded
     this.props.attemptUpdateUserCourier(courier, donor);
-    this.props.attemptGetLinkedUser(courier);
-    console.log("PROPS", this.props.user.username);
-    socket.emit("clicked");
+    // this.props.attemptGetLinkedUser(courier);
+    matched = true
+    console.log("PROPS", this.props);
   };
 
   handleDelete = (username, item) => {
@@ -141,8 +141,8 @@ export class UserPage extends React.Component {
               Donate Now!{" "}
             </Button>{" "}
           </div>
-          {matched == true ? (
-            <h2>{this.props.user.username} is picking up your donation</h2>
+          {Array.isArray(this.props.linkedUser) == false ? (
+            <h2> {this.props.linkedUser.username} is picking up your donation</h2>
           ) : null}
         </div>
       </div>
@@ -156,6 +156,7 @@ function mapStateToProps(state) {
     user: state.user,
     userCart: state.userCart,
     couriers: state.couriers,
+    linkedUser: state.linkedUser
   };
 }
 

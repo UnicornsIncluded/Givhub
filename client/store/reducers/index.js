@@ -7,6 +7,7 @@ import todos from './todos';
 import userCart from './userCart';
 import donors from './donor'
 import couriers from './courier'
+import linkedUser from './linkedUser'
 
 const createRootReducer = history => combineReducers({
   router: connectRouter(history),
@@ -15,7 +16,8 @@ const createRootReducer = history => combineReducers({
   todos,
   userCart,
   donors,
-  couriers
+  couriers,
+  linkedUser
 });
 
 export default createRootReducer;
