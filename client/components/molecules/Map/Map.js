@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MapGL, { GeolocateControl } from "react-map-gl"
+import MapGL, { GeolocateControl, Source } from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 
 const geolocateStyle = {
@@ -32,6 +32,22 @@ export default function Map() {
                     positionOptions={{ enableHighAccuracy: true }}
                     trackUserLocation={true}
                 />
+
+                <Source id='polylineLayer' type='geojson' data={polylineGeoJSON}>
+                    <Layer
+                        id='lineLayer'
+                        type='line'
+                        source='my-data'
+                        layout={{
+                            'line-join': 'round',
+                            'line-cap': 'round',
+                        }}
+                        paint={{
+                            'line-color': 'rgba(3, 170, 238, 0.5)',
+                            'line-width': 5,
+                        }}
+                    />
+                </Source>
             </MapGL>
         </div>
     )
