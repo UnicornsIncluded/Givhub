@@ -11,33 +11,79 @@ export default class Mapbox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: -74.009,
-            lat: 40.705,
-            zoom: 12
+            loaded: false
         };
+
+        this.getLocation = this.getLocation.bind(this)
     }
 
-    componentDidMount() {
-        const map = new mapboxgl.Map({
-            container: this.mapContainer,
-            style: 'mapbox://styles/mapbox/streets-v10',
-            center: [this.state.lng, this.state.lat],
-            zoom: this.state.zoom
-        });
+    async componentDidMount() {
+        try {
+            const pos = await this.getLocation()
+
+            const map = new mapboxgl.Map({
+                container: this.mapContainer,
+                style: 'mapbox://styles/mapbox/streets-v10',
+                center: [pos.coords.longitude, pos.coords.latitude],
+                zoom: 12
+            });
+
+            const geolocate = new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            })
 
 
-        var directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-            unit: 'metric',
-            profile: 'mapbox/cycling'
-        })
+            const directions = new MapboxDirections({
+                accessToken: mapboxgl.accessToken,
+                unit: 'metric',
+                profile: 'mapbox/driving',
+            })
 
-        map.addControl(directions, 'top-left')
+            map.addControl(directions, 'top-left')
+            map.addControl(geolocate, 'bottom-left')
+
+            map.on('load', function () {
+                directions.setOrigin([pos.coords.longitude, pos.coords.latitude])
+                directions.setDestination("All Faiths Food Bank")
+            })
+            this.setState({ loaded: true })
+        } catch (error) {
+            var msg = null;
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    msg = "Please enable geolocation in your browser to use Givhub.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    msg = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    msg = "Request timed out. Please try again.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    msg = "An unknown error occurred.";
+                    break;
+            }
+            alert(msg);
+        }
+    }
+
+    getLocation() {
+        if (navigator.geolocation) {
+            return new Promise(
+                (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject)
+            )
+        } else {
+            alert('Geolocation is not supported by this browser.')
+        }
     }
 
     render() {
         return (
             <div>
+                {this.state.loaded === false ? <h1>Loading Location Data...</h1> : <div></div>}
                 <div ref={el => this.mapContainer = el} className="mapContainer" />
             </div>
         )
