@@ -8,7 +8,7 @@ import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ';
 
-export class Mapbox extends React.Component {
+export class MapboxCourier extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -101,4 +101,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Mapbox);
+export default connect(mapStateToProps)(MapboxCourier);

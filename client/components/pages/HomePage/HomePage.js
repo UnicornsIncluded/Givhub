@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { push } from 'connected-react-router';
-import * as R from 'ramda';
-import Mapbox from '../../molecules/Map/Mapbox'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { push } from "connected-react-router";
+import * as R from "ramda";
+import MapboxCourier from "../../molecules/Map/Mapbox_Courier";
+import MapboxDonor from "../../molecules/Map/Mapbox_Donor";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const { user } = useSelector(R.pick(['user']));
+  const { user } = useSelector(R.pick(["user"]));
 
   useEffect(() => {
     if (R.isEmpty(user)) {
-      dispatch(push('/login'));
+      dispatch(push("/login"));
     }
   }, []);
 
@@ -20,7 +21,7 @@ export default function HomePage() {
         <div className="container">
           <h1 className="title is-1">
             Home Page
-            <Mapbox />
+            {user.userType == "donor" ? <MapboxDonor /> : <MapboxCourier />}
           </h1>
         </div>
       </div>
