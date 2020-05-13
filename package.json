@@ -102,6 +102,8 @@
     "regenerator-runtime": "^0.13.5",
     "seamless-immutable": "^7.1.4",
     "socket.io": "^2.3.0",
+    "twilio": "^3.43.0",
+    "twilio-cli": "^2.0.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "uuid": "^7.0.3",
     "webpack": "^4.42.1",
