@@ -37,6 +37,7 @@ export class UserPage extends React.Component {
   componentDidMount() {
     this.props.attemptGetCouriers();
     console.log("current couriers", this.props.couriers);
+    console.log('componentdidmount', this.props)
     this.props.getCartItems(this.props.match.params.username);
   }
   handleDonateChange(event) {
@@ -51,6 +52,10 @@ export class UserPage extends React.Component {
     this.props.addToCart(newCartItem, this.props.match.params.username);
   }
 
+  componentDidUpdate() {
+    console.log('COMPONENTDIDUPDATE', this.props)
+  }
+
   handleClick = () => {
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
     courier = this.props.couriers[randomCourierIndex].user;
@@ -60,16 +65,19 @@ export class UserPage extends React.Component {
     // make not hard coded
     this.props.attemptUpdateUserCourier(courier, donor);
     // this.props.attemptGetLinkedUser(courier);
-    matched = true
+    matched = true;
     console.log("PROPS", this.props);
   };
 
   handleDelete = (username, item) => {
-    console.log('handle delete item', item)
+    console.log("handle delete item", item);
     this.props.removeFromCart(username, item);
   };
 
   render() {
+    let courierInfo = this.props.linkedUser;
+    let donorInfo = this.props.user.user;
+    {console.log("courier Info", courierInfo, "donor Info", donorInfo)}
     return (
       <div className="welcome-page page">
         <div className="section">
@@ -128,8 +136,8 @@ export class UserPage extends React.Component {
                     );
                   })
                 ) : (
-                    <li>nothing</li>
-                  )}
+                  <li>nothing</li>
+                )}
               </ul>
             </div>
             <Button
@@ -137,12 +145,17 @@ export class UserPage extends React.Component {
               size="lg"
               onClick={() => this.handleClick()}
             >
-              {" "}
-              Donate Now!{" "}
-            </Button>{" "}
+              Donate Now!
+            </Button>
           </div>
-          {Array.isArray(this.props.linkedUser) == false ? (
-            <h2> {this.props.linkedUser.username} is picking up your donation</h2>
+          {console.log(courierInfo.user, donorInfo.linkedUser, 
+          courierInfo.linkedUser, donorInfo.user)}
+          {Array.isArray(this.props.linkedUser) == false &&
+          courierInfo.user == donorInfo.linkedUser &&
+          courierInfo.linkedUser == donorInfo.user ? (
+            <h2>
+              {this.props.linkedUser.username} is picking up your donation
+            </h2>
           ) : null}
         </div>
       </div>
@@ -156,7 +169,7 @@ function mapStateToProps(state) {
     user: state.user,
     userCart: state.userCart,
     couriers: state.couriers,
-    linkedUser: state.linkedUser
+    linkedUser: state.linkedUser,
   };
 }
 
@@ -172,7 +185,8 @@ function mapDispatchToProps(dispatch) {
     attemptGetCouriers: () => dispatch(attemptGetCouriers()),
     addToCart: (nameOfItem, username) =>
       dispatch(addToCart(nameOfItem, username)),
-    removeFromCart: (username, item) => dispatch(removeFromCart(username, item)),
+    removeFromCart: (username, item) =>
+      dispatch(removeFromCart(username, item)),
   };
 }
 

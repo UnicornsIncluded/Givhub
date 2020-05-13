@@ -29,7 +29,6 @@ export class CourierPage extends React.Component {
             <br />
             <br />
             <br />
-            {console.log(courierInfo.user, donorInfo.linkedUser, courierInfo.linkedUser, donorInfo.user)}
             {courierInfo.user == donorInfo.linkedUser && courierInfo.linkedUser == donorInfo.user
             ? <h1 id="courierTitle" className="title is-1"> {donorInfo.username} has requested a pick up! </h1>
           :<h1 id="courierTitle" className="title is-1"> Waiting for job... </h1>}
