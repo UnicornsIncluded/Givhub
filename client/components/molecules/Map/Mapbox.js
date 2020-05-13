@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from "react-redux";
 import mapboxgl from 'mapbox-gl';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
@@ -7,7 +8,7 @@ import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ';
 
-export default class Mapbox extends React.Component {
+export class Mapbox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,6 +16,7 @@ export default class Mapbox extends React.Component {
         };
 
         this.getLocation = this.getLocation.bind(this)
+        console.log("MAPBOX PROPS", this.props)
     }
 
     async componentDidMount() {
@@ -25,6 +27,7 @@ export default class Mapbox extends React.Component {
                 container: this.mapContainer,
                 style: 'mapbox://styles/mapbox/streets-v10',
                 center: [pos.coords.longitude, pos.coords.latitude],
+                // center: this.props.user.address,
                 zoom: 12
             });
 
@@ -44,10 +47,12 @@ export default class Mapbox extends React.Component {
 
             map.addControl(directions, 'top-left')
             map.addControl(geolocate, 'bottom-left')
+            const donorAddress = this.props.user.address
 
             map.on('load', function () {
-                directions.setOrigin([pos.coords.longitude, pos.coords.latitude])
-                directions.setDestination("All Faiths Food Bank")
+                // directions.setOrigin([pos.coords.longitude, pos.coords.latitude])
+                directions.setOrigin("Fullstack Academy")
+                directions.setDestination(donorAddress)
             })
             this.setState({ loaded: true })
         } catch (error) {
@@ -89,3 +94,11 @@ export default class Mapbox extends React.Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Mapbox);
