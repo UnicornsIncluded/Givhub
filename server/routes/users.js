@@ -28,6 +28,7 @@ router.get("/:linkedUserId", async (req, res) => {
 router.put("/:linkedUserId", async (req, res) => {
   try {
     req.body.updated_at = Date.now();
+    console.log('in the put route')
     await User.findOneAndUpdate(
       { user: req.params.linkedUserId },
       req.body,
