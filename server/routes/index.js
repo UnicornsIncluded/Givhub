@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 const auth = require("./auth");
 const user = require("./user");
@@ -7,6 +8,7 @@ const users = require("./users");
 const todos = require("./todos");
 const donor = require("./donor");
 const courier = require("./courier");
+const sms = require("./sms")
 
 const router = express.Router();
 
@@ -15,6 +17,15 @@ router.use("/api/user", user);
 router.use("/api/users", users);
 router.use("/api/donors", donor);
 router.use("/api/couriers", courier);
+
+router.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
+
+  twiml.message('Permission to simp granted brother');
+
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
+});
 
 router.use("/api/todos", todos);
 
