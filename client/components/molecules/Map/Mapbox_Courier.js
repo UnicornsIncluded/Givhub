@@ -5,7 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import Button from "react-bootstrap/Button";
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-import { attemptUpdateUser, attemptUpdateUserCourier } from "../../../store/thunks/user";
+import { attemptUpdateUser } from "../../../store/thunks/user";
 import io from 'socket.io-client'
 const socket = io(window.location.origin);
 mapboxgl.accessToken = 'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ';
@@ -97,12 +97,12 @@ export class MapboxCourier extends React.Component {
         this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
     }
 
-    deliveredButton() {
+    async deliveredButton() {
         // console.log("delivered props", props)
         // VV maybe empty array?
         socket.emit('delivered', this.props.user.linkedUser)
-        // this.props.attemptUpdateUser({linkedUser: null})
-        // this.props.history.push("/thankyou")
+        await this.props.attemptUpdateUser({linkedUser: null})
+        this.props.history.push("/thankyou")
     }
 
     render() {
