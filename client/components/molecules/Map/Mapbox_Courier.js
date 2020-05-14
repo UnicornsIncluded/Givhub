@@ -12,11 +12,13 @@ export class MapboxCourier extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loaded: false
+            loaded: false,
+            directions: {},
+            newOrigin: ''
         };
 
         this.getLocation = this.getLocation.bind(this)
-        console.log("MAPBOX PROPS", this.props)
+        this.pickedUp = this.pickedUp.bind(this)
     }
 
     async componentDidMount() {
@@ -26,8 +28,7 @@ export class MapboxCourier extends React.Component {
             const map = new mapboxgl.Map({
                 container: this.mapContainer,
                 style: 'mapbox://styles/mapbox/streets-v10',
-                center: [pos.coords.longitude, pos.coords.latitude],
-                // center: this.props.user.address,
+                center: [-74.009, 40.705],
                 zoom: 12
             });
 
@@ -52,9 +53,9 @@ export class MapboxCourier extends React.Component {
             map.on('load', function () {
                 // directions.setOrigin([pos.coords.longitude, pos.coords.latitude])
                 directions.setOrigin("Fullstack Academy")
-                directions.setDestination(donorAddress)
+                directions.setDestination(donorAddress || "New York University")
             })
-            this.setState({ loaded: true })
+            this.setState({ loaded: true, directions: directions, newOrigin: donorAddress || "New York University" })
         } catch (error) {
             var msg = null;
             switch (error.code) {
@@ -85,9 +86,16 @@ export class MapboxCourier extends React.Component {
         }
     }
 
+    pickedUp() {
+        this.state.directions.setOrigin(this.state.newOrigin)
+        this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
+    }
+
     render() {
         return (
             <div>
+                <button onClick={this.pickedUp}>Picked-Up</button>
+                <button>Delivered</button>
                 {this.state.loaded === false ? <h1>Loading Location Data...</h1> : <div></div>}
                 <div ref={el => this.mapContainer = el} className="mapContainer" />
             </div>
