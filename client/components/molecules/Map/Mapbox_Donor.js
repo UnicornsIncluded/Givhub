@@ -1,11 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import mapboxgl from "mapbox-gl";
-import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+// import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
+import Geocode from "react-geocode";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ";
+
+const googleAPIKey = "AIzaSyDC7k8_twTAov9zk3XoHNVM9ztBKTshVhU";
 
 export class MapboxDonor extends React.Component {
   constructor(props) {
@@ -20,8 +23,18 @@ export class MapboxDonor extends React.Component {
 
   async componentDidMount() {
     try {
-      // const pos = await this.getLocation()
-
+      // setting starting markers
+      const donorAddress = this.props.user.address;
+      Geocode.setApiKey(googleAPIKey);
+      Geocode.setLanguage("en");
+      let donorResponse = await Geocode.fromAddress(donorAddress);
+      let donorResult = donorResponse.results[0].geometry.location;
+      const donorLat = donorResult.lat;
+      const donorLng = donorResult.lng;
+      let courierResponse = await Geocode.fromAddress("Fullstack Academy NY");
+      let courierResult = courierResponse.results[0].geometry.location;
+      const courierLat = courierResult.lat;
+      const courierLng = courierResult.lng;
       const geojson = {
         type: "FeatureCollection",
         features: [
@@ -29,22 +42,14 @@ export class MapboxDonor extends React.Component {
             type: "Feature",
             geometry: {
               type: "Point",
-              coordinates: [-77.032, 38.913],
-            },
-            properties: {
-              title: "Mapbox",
-              description: "Washington, D.C.",
+              coordinates: [donorLng, donorLat],
             },
           },
           {
             type: "Feature",
             geometry: {
               type: "Point",
-              coordinates: [-122.414, 37.776],
-            },
-            properties: {
-              title: "Mapbox",
-              description: "San Francisco, California",
+              coordinates: [courierLng, courierLat],
             },
           },
         ],
@@ -52,10 +57,8 @@ export class MapboxDonor extends React.Component {
       const map = new mapboxgl.Map({
         container: this.mapContainer,
         style: "mapbox://styles/mapbox/streets-v10",
-        // center: [pos.coords.longitude, pos.coords.latitude],
-        // center: this.props.user.address,
-        center: [-96, 37.8],
-        zoom: 3,
+        center: [donorLng, donorLat],
+        zoom: 11,
       });
 
       // add markers to map
@@ -70,29 +73,6 @@ export class MapboxDonor extends React.Component {
           .addTo(map);
       });
 
-
-      // const geolocate = new mapboxgl.GeolocateControl({
-      //     positionOptions: {
-      //         enableHighAccuracy: true
-      //     },
-      //     trackUserLocation: true
-      // })
-
-      // const directions = new MapboxDirections({
-      //     accessToken: mapboxgl.accessToken,
-      //     unit: 'metric',
-      //     profile: 'mapbox/driving',
-      // })
-
-      // map.addControl(directions, 'top-left')
-      // map.addControl(geolocate, 'bottom-left')
-      // const donorAddress = this.props.user.address
-
-      // map.on('load', function () {
-      //     // directions.setOrigin([pos.coords.longitude, pos.coords.latitude])
-      //     directions.setOrigin(donorAddress)
-      //     directions.setDestination("Fullstack Academy")
-      // })
       this.setState({ loaded: true });
     } catch (error) {
       var msg = null;
@@ -113,16 +93,6 @@ export class MapboxDonor extends React.Component {
       alert(msg);
     }
   }
-
-  // getLocation() {
-  //     if (navigator.geolocation) {
-  //         return new Promise(
-  //             (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject)
-  //         )
-  //     } else {
-  //         alert('Geolocation is not supported by this browser.')
-  //     }
-  // }
 
   render() {
     return (
