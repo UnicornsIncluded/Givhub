@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios'
 import { connect } from "react-redux";
 // import { push } from "connected-react-router";
 // import * as R from "ramda";
@@ -63,7 +64,8 @@ export class UserPage extends React.Component {
   //   useDispatch(push(`/${this.props.match.params.username}/oip`))
   // }
 
-  handleClick = () => {
+  handleClick = async () => {
+    await axios.post('/sms',{})
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
     courier = this.props.couriers[randomCourierIndex].user;
     matched = true;
@@ -74,6 +76,7 @@ export class UserPage extends React.Component {
     // this.props.attemptGetLinkedUser(courier);
     matched = true;
     console.log("PROPS", this.props);
+    
     this.props.history.push(`/${this.props.match.params.username}/oip`)
     
   };

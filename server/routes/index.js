@@ -1,6 +1,9 @@
 const express = require("express");
 const path = require("path");
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const accountSid = 'ACa9ba0ed93dc599bfa80caf48e9a6d25a';
+const authToken = '78c33c34c9ccb1f851347687113faaa6';
+const client = require('twilio')(accountSid, authToken);
 
 const auth = require("./auth");
 const user = require("./user");
@@ -19,12 +22,14 @@ router.use("/api/donors", donor);
 router.use("/api/couriers", courier);
 
 router.post('/sms', (req, res) => {
-  const twiml = new MessagingResponse();
-
-  twiml.message('Permission to simp granted brother');
-
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+  client.messages
+  .create({
+     body: 'This was sent from a button',
+     from: '+17372524728',
+     to: '+19293136237'
+   })
+  .then(message => console.log(message.sid));
+  res.sendStatus(201)
 });
 
 router.use("/api/todos", todos);
