@@ -109,13 +109,3 @@ export const attemptUpdatePassword = (passwordInfo) => (dispatch) =>
       return data;
     })
     .catch(dispatchError(dispatch));
-
-export const updateStoredSocket = (userSocketId) => {
-  return async (dispatch) => {
-    try {
-      await axios.put(`/api/user`, { socketId: userSocketId });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};

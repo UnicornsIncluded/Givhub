@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import mapboxgl from 'mapbox-gl';
+import Button from "react-bootstrap/Button";
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-
-
+import { attemptUpdateUser, attemptUpdateUserCourier } from "../../../store/thunks/user";
+import io from 'socket.io-client'
+const socket = io(window.location.origin);
 mapboxgl.accessToken = 'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ';
 
 export class MapboxCourier extends React.Component {
@@ -19,6 +21,7 @@ export class MapboxCourier extends React.Component {
 
         this.getLocation = this.getLocation.bind(this)
         this.pickedUp = this.pickedUp.bind(this)
+        console.log("MAPBOXCOURIER PROPS", this.props)
     }
 
     async componentDidMount() {
@@ -51,7 +54,6 @@ export class MapboxCourier extends React.Component {
             const donorAddress = this.props.user.address
 
             map.on('load', function () {
-                // directions.setOrigin([pos.coords.longitude, pos.coords.latitude])
                 directions.setOrigin("Fullstack Academy")
                 directions.setDestination(donorAddress || "New York University")
             })
@@ -76,6 +78,10 @@ export class MapboxCourier extends React.Component {
         }
     }
 
+    // componentDidUpdate() {
+    //     console.log('UPDATED COURIER', this.props)
+    // }
+
     getLocation() {
         if (navigator.geolocation) {
             return new Promise(
@@ -91,11 +97,19 @@ export class MapboxCourier extends React.Component {
         this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
     }
 
+    deliveredButton() {
+        // console.log("delivered props", props)
+        // VV maybe empty array?
+        socket.emit('delivered', this.props.user.linkedUser)
+        // this.props.attemptUpdateUser({linkedUser: null})
+        // this.props.history.push("/thankyou")
+    }
+
     render() {
         return (
             <div>
-                <button onClick={this.pickedUp}>Picked-Up</button>
-                <button>Delivered</button>
+                <Button onClick={this.pickedUp}>Picked-Up</Button>
+                <Button onClick={() => this.deliveredButton()}>Delivered</Button>
                 {this.state.loaded === false ? <h1>Loading Location Data...</h1> : <div></div>}
                 <div ref={el => this.mapContainer = el} className="mapContainer" />
             </div>
@@ -105,8 +119,15 @@ export class MapboxCourier extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        orderStatus: state.orderStatus
     }
 }
 
-export default connect(mapStateToProps)(MapboxCourier);
+function mapDispatchToProps(dispatch) {
+    return {
+        attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails))
+      };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapboxCourier);

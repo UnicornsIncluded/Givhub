@@ -12,13 +12,13 @@ socket.on('connect', () => {
 // grabbing the emit from serverside
 socket.on('clicked', (data) => {
   // can put whatever front end logic we need   
-  console.log('socket click', data)
   store.dispatch(linkedUserUpdated(data))
-  // const courierTitle = document.getElementById('courierTitle')
-  // if (courierTitle) {
-  //   courierTitle.innerText = "THE SOCKET IS WORKING"
-  // }
-  console.log('CLICKED!!!')
+})
+
+socket.on('delivered', (linkedUserId) => {
+  // can put whatever front end logic we need  
+  console.log("SOCKET", linkedUserId) 
+  // store.dispatch(linkedUserUpdated(data))
 })
 
 export default socket

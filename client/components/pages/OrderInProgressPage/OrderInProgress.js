@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  attemptGetLinkedUser,
-  updateStoredSocket
-} from "../../../store/thunks/user";
 import Receipt from '../../molecules/Receipt/Receipt'
 import MapboxCourier from "../../molecules/Map/Mapbox_Courier";
 import MapboxDonor from "../../molecules/Map/Mapbox_Donor";
@@ -11,9 +7,6 @@ import MapboxDonor from "../../molecules/Map/Mapbox_Donor";
 
 export class OrderInProgressPage extends React.Component {
   componentDidMount() {
-    // let linkedUserId = this.props.user.linkedUser
-    // this.props.attemptGetLinkedUser(linkedUserId);
-    // console.log("COURIER PROPS", this.props)
     console.log('ORDERINPROGRESS PROPS', this.props)
   }
   componentDidUpdate() {
@@ -32,7 +25,7 @@ export class OrderInProgressPage extends React.Component {
             <h1>Current Order Details Here</h1>
             <Receipt username={usernameProp}/>
             {console.log(this.props)}
-            {this.props.user.userType == "donor" ? <MapboxDonor /> : <MapboxCourier />}
+            {this.props.user.userType == "donor" ? <MapboxDonor history={this.props.history} /> : <MapboxCourier history={this.props.history}/>}
           </div>
         </div>
       </div>

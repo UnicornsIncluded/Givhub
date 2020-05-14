@@ -21,7 +21,6 @@ export default function HomePage() {
         <div className="container">
           <h1 className="title is-1">
             Home Page
-            {user.userType == "donor" ? <MapboxDonor /> : <MapboxCourier />}
           </h1>
         </div>
       </div>
