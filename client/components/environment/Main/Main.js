@@ -17,7 +17,7 @@ import LostPage from "_pages/LostPage";
 import UserPage from "_pages/UserPage";
 import CourierPage from "_pages/CourierPage";
 // import Map from '../../molecules/Map/Map'
-import Mapbox from '../../molecules/Map/Mapbox'
+// import Mapbox from '../../molecules/Map/Mapbox'
 import Receipt from '../../molecules/Receipt/Receipt'
 
 import Navigation from '_organisms/Navigation';

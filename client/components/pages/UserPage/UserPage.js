@@ -34,6 +34,7 @@ export class UserPage extends React.Component {
     };
     this.handleDonateChange = this.handleDonateChange.bind(this);
     this.handleDonoSubmit = this.handleDonoSubmit.bind(this);
+    // this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   componentDidMount() {
@@ -57,10 +58,10 @@ export class UserPage extends React.Component {
   componentDidUpdate() {
     console.log('COMPONENTDIDUPDATE', this.props)
   }
-  handleRedirect = () => {
-    //this is a hook thing
-    useDispatch(push(`/${this.props.match.params.username}/oip`))
-  }
+  // handleRedirect = () => {
+  //   //this is a hook thing
+  //   useDispatch(push(`/${this.props.match.params.username}/oip`))
+  // }
 
   handleClick = () => {
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
@@ -73,6 +74,7 @@ export class UserPage extends React.Component {
     // this.props.attemptGetLinkedUser(courier);
     matched = true;
     console.log("PROPS", this.props);
+    this.props.history.push(`/${this.props.match.params.username}/oip`)
     
   };
 
@@ -152,6 +154,7 @@ export class UserPage extends React.Component {
               variant="success"
               size="lg"
               onClick={() => this.handleClick()}
+              // onClick={() => this.handleRedirect()}
             >
               Donate Now!
             </Button>
