@@ -15,6 +15,8 @@ import {
   removeFromCart,
 } from "../../../store/reducers/userCart";
 import Box from "../../molecules/Box";
+import { useDispatch, useSelector } from 'react-redux';
+import { push } from 'connected-react-router';
 
 const socket = io(window.location.origin);
 
@@ -55,6 +57,10 @@ export class UserPage extends React.Component {
   componentDidUpdate() {
     console.log('COMPONENTDIDUPDATE', this.props)
   }
+  handleRedirect = () => {
+    //this is a hook thing
+    useDispatch(push(`/${this.props.match.params.username}/oip`))
+  }
 
   handleClick = () => {
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
@@ -67,12 +73,14 @@ export class UserPage extends React.Component {
     // this.props.attemptGetLinkedUser(courier);
     matched = true;
     console.log("PROPS", this.props);
+    
   };
 
   handleDelete = (username, item) => {
     console.log("handle delete item", item);
     this.props.removeFromCart(username, item);
   };
+  
 
   render() {
     let courierInfo = this.props.linkedUser;
