@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { attemptUpdateUser } from "_thunks/user";
 import AddAddress from "../../molecules/AddAddress/AddAddress";
+import AddNumber from "../../molecules/AddNumber/AddNumber";
 
 // export function GeneralProfile(props) {
 //   const handleSubmit = (event) => {
@@ -56,7 +57,12 @@ export class GeneralProfile extends React.Component {
           </select>
           <button type="submit">Submit</button>
         </form>
-        {this.state.userType === "donor" ? (
+        <br />
+        {this.state.userType === "donor" ||
+        this.state.userType === "courier" ? (
+          <AddNumber />
+        ) : null}
+        {this.state.userType === "donor" && this.props.user.phoneNumber ? (
           <div>
             <br />
             <AddAddress />
@@ -67,8 +73,12 @@ export class GeneralProfile extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {user:state.user}
+}
+
 const mapDispatchToProps = (dispatch) => ({
   attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails)),
 });
 
-export default connect(null, mapDispatchToProps)(GeneralProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(GeneralProfile);

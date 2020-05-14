@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { attemptUpdateUser } from "_thunks/user";
 
-class AddressForm extends React.Component {
+class PhoneForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState();
@@ -13,11 +13,8 @@ class AddressForm extends React.Component {
 
   initialState() {
     return {
-      street_address: "",
-      city: "",
-      state: "",
-      zip_code: "",
-      googleMapLink: "",
+      areaCode: "",
+      numberBody: ""
     };
   }
 
@@ -27,46 +24,36 @@ class AddressForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const streetAddress = this.state.street_address;
-    const city = this.state.city;
-    const state = this.state.state;
-    const zipcode = this.state.zip_code;
-    const address =
-      streetAddress + " " + city + " " + state + " " + zipcode;
-    this.props.attemptUpdateUser({ address });
+    const areaCode = this.state.areaCode;
+    const numberBody = this.state.numberBody;
+    const phoneNumber =
+        "+" + "1" + areaCode + numberBody
+    this.props.attemptUpdateUser({ phoneNumber });
   }
 
   render() {
     return (
       <div>
-        <h2>Add Pickup Address</h2>
+        <h2>Add Contact Number</h2>
         <form onSubmit={this.handleSubmit}>
-          <input
+          {/* <input
           //   id="autocomplete" <<< try to implement googlemaps api
-            name={"street_address"}
-            value={this.state.street_address}
-            placeholder={"Street Address"}
+            name={"countryCode"}
+            value={this.state.countryCode}
+            placeholder={"Country Code (1)"}
+            onChange={this.handleChange}
+          /> */}
+          <input
+            name={"areaCode"}
+            value={this.state.areaCode}
+            placeholder={"Area Code"}
             onChange={this.handleChange}
             required
           />
           <input
-            name={"city"}
-            value={this.state.city}
-            placeholder={"City"}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            name={"state"}
-            value={this.state.state}
-            placeholder={"State"}
-            onChange={this.handleChange}
-            required
-          />
-          <input
-            name={"zip_code"}
-            value={this.state.zip_code}
-            placeholder={"Zipcode"}
+            name={"numberBody"}
+            value={this.state.numberBody}
+            placeholder={"Phone Number"}
             onChange={this.handleChange}
             required
           />
@@ -81,4 +68,4 @@ const mapDispatchToProps = (dispatch) => ({
   attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails)),
 });
 
-export default connect(null, mapDispatchToProps)(AddressForm);
+export default connect(null, mapDispatchToProps)(PhoneForm);

@@ -37,6 +37,7 @@ const userSchema = new Schema({
   first_name: { type: String, maxlength: 20 },
   last_name: { type: String, maxlength: 20 },
   address: {type: String},
+  phoneNumber: {type: String},
   bio: { type: String, maxlength: 240 },
   donationCart: {
     items: [
