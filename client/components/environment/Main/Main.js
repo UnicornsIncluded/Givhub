@@ -22,7 +22,7 @@ import Receipt from '../../molecules/Receipt/Receipt'
 
 import Navigation from '_organisms/Navigation';
 import Footer from '_organisms/Footer';
-import { OrderInProgressPage } from '../../pages/OrderInProgressPage/OrderInProgress';
+import OrderInProgressPage from '../../pages/OrderInProgressPage/OrderInProgress';
 import MapboxCourier from "../../molecules/Map/Mapbox_Courier";
 import MapboxDonor from "../../molecules/Map/Mapbox_Donor";
 
