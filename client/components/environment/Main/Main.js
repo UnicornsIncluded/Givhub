@@ -17,20 +17,17 @@ import LostPage from "_pages/LostPage";
 import UserPage from "_pages/UserPage";
 import CourierPage from "_pages/CourierPage";
 // import Map from '../../molecules/Map/Map'
-<<<<<<< HEAD
 import Mapbox from '../../molecules/Map/Mapbox'
 import Receipt from '../../molecules/Receipt/Receipt'
 
 import Navigation from '_organisms/Navigation';
 import Footer from '_organisms/Footer';
 import { OrderInProgressPage } from '../../pages/OrderInProgressPage/OrderInProgress';
-=======
 import MapboxCourier from "../../molecules/Map/Mapbox_Courier";
 import MapboxDonor from "../../molecules/Map/Mapbox_Donor";
 
-import Navigation from "_organisms/Navigation";
-import Footer from "_organisms/Footer";
->>>>>>> b7b791a6c13a6654f4ccf1aace5a1be125f2577c
+// import Navigation from "_organisms/Navigation";
+// import Footer from "_organisms/Footer";
 
 export default function Main({ location }) {
   const dispatch = useDispatch();
@@ -47,28 +44,6 @@ export default function Main({ location }) {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-<<<<<<< HEAD
-  return !loading && (
-    <div className="has-navbar-fixed-top">
-      <Notifications notifications={alerts} />
-      <Navigation pathname={location.pathname} />
-      <div className="main">
-        <Switch>
-          <Route exact path="/" component={WelcomePage} />
-          <Route path="/map" component={Mapbox} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/register" component={RegisterPage} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/todo" component={TodoPage} />
-          <Route path="/settings" component={SettingsPage} />
-          <Route path="/:username/cart" component={UserPage} />
-          <Route path="/courier/:courierId" component={CourierPage} />
-          <Route path="/test/:username/receipt" component={Receipt}/>
-          <Route path="/:username/oip" component={OrderInProgressPage}/>
-          <Route path="*" component={LostPage} />
-
-        </Switch>
-=======
   return (
     !loading && (
       <div className="has-navbar-fixed-top">
@@ -89,11 +64,12 @@ export default function Main({ location }) {
             <Route path="/settings" component={SettingsPage} />
             <Route path="/:username/cart" component={UserPage} />
             <Route path="/courier/:courierId" component={CourierPage} />
+            <Route path="/test/:username/receipt" component={Receipt}/>
+            <Route path="/:username/oip" component={OrderInProgressPage}/> 
             <Route path="*" component={LostPage} />
           </Switch>
         </div>
         <Footer />
->>>>>>> b7b791a6c13a6654f4ccf1aace5a1be125f2577c
       </div>
     )
   );
