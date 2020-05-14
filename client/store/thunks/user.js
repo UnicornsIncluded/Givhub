@@ -95,6 +95,16 @@ export const attemptUpdateUserCourier = (courier, donor) => {
   };
 };
 
+export const updateCourierLinkedDonor = (linkedUserId) => {
+  return async () => {
+    try {
+       await axios.put(`/api/users/${linkedUserId}`, {linkedUser: null})
+    } catch (err) {
+      next (err)
+    }
+  }
+}
+
 export const attemptUpdatePassword = (passwordInfo) => (dispatch) =>
   putUserPassword(passwordInfo)
     .then((data) => {
@@ -109,13 +119,3 @@ export const attemptUpdatePassword = (passwordInfo) => (dispatch) =>
       return data;
     })
     .catch(dispatchError(dispatch));
-
-export const updateStoredSocket = (userSocketId) => {
-  return async (dispatch) => {
-    try {
-      await axios.put(`/api/user`, { socketId: userSocketId });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};

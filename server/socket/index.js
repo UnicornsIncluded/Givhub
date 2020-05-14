@@ -8,19 +8,11 @@ module.exports = (io) => {
 
     // grabs 'clicked' from clientside
     socket.on("clicked", function (data) {
-      console.log("clicked", data);
-      // emits 'linkedUser' back to clientside
-      // if donor triggered event, how do we find the courier?
-      // what is courier's socketid?
-      // keep track of socket id & userid --> maybe keep track of socketid in the db
-      // console.log("COURIER INFO", courier);
-      // const currentCourier =  await User.findOne({ user: courier })
-      // console.log('current user', currentCourier)
-      // let socketId = currentCourier.socketId
-      // console.log('current socket', socketId)
-      // const socketId = currentCourier.socketId
-      // io.to(socketId).emit('clicked')
       socket.broadcast.emit("clicked", data);
+    });
+
+    socket.on("delivered", function (linkedUserId) {
+      socket.broadcast.emit("delivered", linkedUserId);
     });
 
     socket.on("disconnect", () => {

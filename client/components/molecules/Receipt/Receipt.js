@@ -4,11 +4,7 @@ import { connect } from "react-redux";
 // import * as R from "ramda";
 import Button from "react-bootstrap/Button";
 import io from "socket.io-client";
-// import {
-//   attemptUpdateUserCourier,
-//   attemptGetLinkedUser,
-//   attemptGetCouriers,
-// } from "../../../store/thunks/user";
+import { attemptGetLinkedUser } from "../../../store/thunks/user";
 import {
   fetchCart,
   addToCart,
@@ -19,42 +15,29 @@ import Box from "../../molecules/Box";
 export class Receipt extends React.Component {
   constructor(props) {
     super(props);
-    console.log('IN THE THE SUPER', props)
+    console.log("IN THE THE SUPER", props);
     this.state = {
       donating: "",
-      username: this.props.username
+      username: this.props.username,
     };
   }
 
   componentDidMount() {
-      console.log("THIS IS THE PROPS", this.state)
+    let linkedUserId = this.props.user.linkedUser;
+    this.props.attemptGetLinkedUser(linkedUserId);
+    // console.log("THIS IS THE PROPS", this.props)
     this.props.getCartItems(this.state.username);
   }
 
-  handleDonateChange(event) {
-
-  }
-
-  handleDonoSubmit(event) {
-    
-  }
-
   componentDidUpdate() {
-    
+    console.log("THIS IS THE PROPS", this.props);
   }
-
-  handleClick = () => {
- 
-  };
-
-  handleDelete = (username, item) => {
-
-  };
 
   render() {
     // let courierInfo = this.props.linkedUser;
     // let donorInfo = this.props.user.user;
     // {console.log("courier Info", courierInfo, "donor Info", donorInfo)}
+    let userType = this.props.user.userType;
     return (
       <div className="welcome-page page">
         <div className="section">
@@ -65,13 +48,25 @@ export class Receipt extends React.Component {
             <br />
             <div className="orderSummary">
               <ul>
-                {this.props.userCart._id ? (
-                  this.props.userCart.donationCart.items.map((item, index) => {
+                {userType == "donor" ? (
+                  this.props.userCart._id ? (
+                    this.props.userCart.donationCart.items.map(
+                      (item, index) => {
+                        return (
+                          <div>
+                            <li key={index}>{item.name}</li>
+                          </div>
+                        );
+                      }
+                    )
+                  ) : (
+                    <li>nothing</li>
+                  )
+                ) : this.props.linkedUser.donationCart ? (
+                  this.props.linkedUser.donationCart.items.map((item, index) => {
                     return (
                       <div>
-                        <li key={index}>
-                          {item.name}
-                        </li>
+                        <li key={index}>{item.name}</li>
                       </div>
                     );
                   })
@@ -83,7 +78,8 @@ export class Receipt extends React.Component {
           </div>
         </div>
       </div>
-    );s
+    );
+    s;
   }
 }
 
@@ -102,7 +98,8 @@ function mapDispatchToProps(dispatch) {
   return {
     attemptUpdateUserCourier: () =>
       dispatch(attemptUpdateUserCourier(courier, donor)),
-    attemptGetLinkedUser: () => dispatch(attemptGetLinkedUser(linkedUserId)),
+    attemptGetLinkedUser: (linkedUserId) =>
+      dispatch(attemptGetLinkedUser(linkedUserId)),
     getCartItems: (username) => {
       dispatch(fetchCart(username));
     },
