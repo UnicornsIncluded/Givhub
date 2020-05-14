@@ -65,15 +65,18 @@ export class UserPage extends React.Component {
   // }
 
   handleClick = async () => {
-    await axios.post('/sms',{})
+    
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
     courier = this.props.couriers[randomCourierIndex].user;
     matched = true;
     donor = this.props.user.user;
     linkedUserId = courier;
     // make not hard coded
-    this.props.attemptUpdateUserCourier(courier, donor);
-    // this.props.attemptGetLinkedUser(courier);
+    this.props.attemptUpdateUserCourier(courier, donor)
+    .then(() => this.props.attemptGetLinkedUser(courier))
+    .then(() => console.log('CURRENT PROPS', this.props))
+    .then(() => axios.post('/sms',{message: 'You have a new job! Please check it out on Givhub', to: this.props.linkedUser.phoneNumber, }))
+    
     matched = true;
     console.log("PROPS", this.props);
     

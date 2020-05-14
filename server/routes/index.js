@@ -24,9 +24,9 @@ router.use("/api/couriers", courier);
 router.post('/sms', (req, res) => {
   client.messages
   .create({
-     body: 'This was sent from a button',
+     body: req.body.message,
      from: '+17372524728',
-     to: '+19293136237'
+     to: req.body.to
    })
   .then(message => console.log(message.sid));
   res.sendStatus(201)
