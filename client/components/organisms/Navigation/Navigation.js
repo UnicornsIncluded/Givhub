@@ -110,9 +110,14 @@ export default function Navigation({ pathname }) {
                 <Link to={`/${user.username}/cart`} className={todoItemClasses}>
                   <h6 className="title is-6">Donation Cart</h6>
                 </Link>
-              ) : <Link to={`courier/${user.username}`} className={todoItemClasses}>
-              <h6 className="title is-6">Current Jobs</h6>
-            </Link>}
+              ) : (
+                <Link
+                  to={`courier/${user.username}`}
+                  className={todoItemClasses}
+                >
+                  <h6 className="title is-6">Current Jobs</h6>
+                </Link>
+              )}
               <Link to="/settings" className={settingsItemClasses}>
                 <h6 className="title is-6">Settings</h6>
               </Link>

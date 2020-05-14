@@ -36,6 +36,7 @@ const userSchema = new Schema({
   linkedUser: { type: Number },
   first_name: { type: String, maxlength: 20 },
   last_name: { type: String, maxlength: 20 },
+  address: {type: String},
   bio: { type: String, maxlength: 240 },
   donationCart: {
     items: [
