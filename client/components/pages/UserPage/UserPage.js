@@ -9,6 +9,7 @@ import {
   attemptUpdateUserCourier,
   attemptGetLinkedUser,
   attemptGetCouriers,
+  attemptGetUser
 } from "../../../store/thunks/user";
 import {
   fetchCart,
@@ -16,8 +17,8 @@ import {
   removeFromCart,
 } from "../../../store/reducers/userCart";
 import Box from "../../molecules/Box";
-import { useDispatch, useSelector } from 'react-redux';
-import { push } from 'connected-react-router';
+import { useDispatch, useSelector } from "react-redux";
+import { push } from "connected-react-router";
 
 const socket = io(window.location.origin);
 
@@ -41,7 +42,7 @@ export class UserPage extends React.Component {
   componentDidMount() {
     this.props.attemptGetCouriers();
     console.log("current couriers", this.props.couriers);
-    console.log('componentdidmount', this.props)
+    console.log("componentdidmount", this.props);
     this.props.getCartItems(this.props.match.params.username);
   }
   handleDonateChange(event) {
@@ -57,7 +58,7 @@ export class UserPage extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('COMPONENTDIDUPDATE', this.props)
+    console.log("COMPONENTDIDUPDATE", this.props);
   }
   // handleRedirect = () => {
   //   //this is a hook thing
@@ -68,32 +69,34 @@ export class UserPage extends React.Component {
     
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
     courier = this.props.couriers[randomCourierIndex].user;
-    matched = true;
     donor = this.props.user.user;
     linkedUserId = courier;
+    // console.log('PHONE NUM PROPS', this.props.user)
     // make not hard coded
-    this.props.attemptUpdateUserCourier(courier, donor)
-    .then(() => this.props.attemptGetLinkedUser(courier))
-    .then(() => console.log('CURRENT PROPS', this.props))
-    .then(() => axios.post('/sms',{message: 'You have a new job! Please check it out on Givhub', to: this.props.linkedUser.phoneNumber, }))
+    this.props
+      .attemptUpdateUserCourier(courier, donor)
+      .then(() => this.props.attemptGetLinkedUser(courier))
+      .then(() => this.props.attemptGetUser())
+      .then(() => axios.post('/sms',{message: 'You have a new job! Please check it out on Givhub', to: this.props.linkedUser.phoneNumber, }))
+      .then(() =>
+        this.props.history.push(`/${this.props.match.params.username}/oip`)
+        // console.log('this is after the first .then')
+      );
     
-    matched = true;
     console.log("PROPS", this.props);
-    
-    this.props.history.push(`/${this.props.match.params.username}/oip`)
-    
   };
 
   handleDelete = (username, item) => {
     console.log("handle delete item", item);
     this.props.removeFromCart(username, item);
   };
-  
 
   render() {
     let courierInfo = this.props.linkedUser;
     let donorInfo = this.props.user.user;
-    {console.log("courier Info", courierInfo, "donor Info", donorInfo)}
+    {
+      console.log("courier Info", courierInfo, "donor Info", donorInfo);
+    }
     return (
       <div className="welcome-page page">
         <div className="section">
@@ -165,8 +168,12 @@ export class UserPage extends React.Component {
               Donate Now!
             </Button>
           </div>
-          {console.log(courierInfo.user, donorInfo.linkedUser, 
-          courierInfo.linkedUser, donorInfo.user)}
+          {console.log(
+            courierInfo.user,
+            donorInfo.linkedUser,
+            courierInfo.linkedUser,
+            donorInfo.user
+          )}
           {Array.isArray(this.props.linkedUser) == false &&
           courierInfo.user == donorInfo.linkedUser &&
           courierInfo.linkedUser == donorInfo.user ? (
@@ -204,6 +211,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(addToCart(nameOfItem, username)),
     removeFromCart: (username, item) =>
       dispatch(removeFromCart(username, item)),
+      attemptGetUser : () => dispatch(attemptGetUser())
   };
 }
 

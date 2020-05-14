@@ -16,6 +16,7 @@ import SettingsPage from "_pages/SettingsPage";
 import LostPage from "_pages/LostPage";
 import UserPage from "_pages/UserPage";
 import CourierPage from "_pages/CourierPage";
+import ThankYouPage from "_pages/ThankYouPage"
 // import Map from '../../molecules/Map/Map'
 // import Mapbox from '../../molecules/Map/Mapbox'
 import Receipt from '../../molecules/Receipt/Receipt'
@@ -66,6 +67,7 @@ export default function Main({ location }) {
             <Route path="/courier/:courierId" component={CourierPage} />
             <Route path="/test/:username/receipt" component={Receipt}/>
             <Route path="/:username/oip" component={OrderInProgressPage}/> 
+            <Route path="/thankyou" component={ThankYouPage} />
             <Route path="*" component={LostPage} />
           </Switch>
         </div>
