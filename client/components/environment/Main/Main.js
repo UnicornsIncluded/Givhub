@@ -17,11 +17,17 @@ import LostPage from "_pages/LostPage";
 import UserPage from "_pages/UserPage";
 import CourierPage from "_pages/CourierPage";
 // import Map from '../../molecules/Map/Map'
+import Mapbox from '../../molecules/Map/Mapbox'
+import Receipt from '../../molecules/Receipt/Receipt'
+
+import Navigation from '_organisms/Navigation';
+import Footer from '_organisms/Footer';
+import { OrderInProgressPage } from '../../pages/OrderInProgressPage/OrderInProgress';
 import MapboxCourier from "../../molecules/Map/Mapbox_Courier";
 import MapboxDonor from "../../molecules/Map/Mapbox_Donor";
 
-import Navigation from "_organisms/Navigation";
-import Footer from "_organisms/Footer";
+// import Navigation from "_organisms/Navigation";
+// import Footer from "_organisms/Footer";
 
 export default function Main({ location }) {
   const dispatch = useDispatch();
@@ -58,6 +64,8 @@ export default function Main({ location }) {
             <Route path="/settings" component={SettingsPage} />
             <Route path="/:username/cart" component={UserPage} />
             <Route path="/courier/:courierId" component={CourierPage} />
+            <Route path="/test/:username/receipt" component={Receipt}/>
+            <Route path="/:username/oip" component={OrderInProgressPage}/> 
             <Route path="*" component={LostPage} />
           </Switch>
         </div>
