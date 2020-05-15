@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import * as R from "ramda";
 
 import UserDropdown from "_molecules/UserDropdown";
 import Button from "_atoms/Button";
+import { attemptLogout } from "_thunks/auth";
 
 export default function Navigation({ pathname }) {
   const { user } = useSelector(R.pick(["user"]));
+  const dispatch = useDispatch();
 
   const [auth, setAuth] = useState(!R.isEmpty(user));
   const [open, setOpen] = useState(false);
@@ -20,6 +22,10 @@ export default function Navigation({ pathname }) {
     console.log("NAVIGATION>>>>>", user);
   }, [user.username]);
 
+    const logout = () => {
+    closeDropdown();
+    dispatch(attemptLogout()).catch(R.identity);
+  };
   const toggleDropdown = () => setOpen(!open);
 
   const closeDropdown = () => setOpen(false);
@@ -83,18 +89,49 @@ export default function Navigation({ pathname }) {
             )}
             {auth && (
               <a
-                className="navbar-item is-hoverable is-hidden-desktop"
-                onClick={toggleDropdown}
-                onKeyPress={toggleDropdown}
+                className="is-hoverable is-hidden-desktop"
+                // onClick={toggleDropdown}
+                // onKeyPress={toggleDropdown}
               >
-                <figure className="image navbar-image is-32x32">
-                  <img
-                    className="profile-img"
-                    src={user.profilePic || "/images/default-profile.png"}
-                    alt=""
-                  />
-                </figure>
-                <span className="dropdown-caret" />
+                {user.userType == "donor" ? (
+                  <div>
+                  <Link to={`/${user.username}/cart`}>
+                    <img
+                      className="roundedImg"
+                      width="50px"
+                      height="50px"
+                      src="https://i.pinimg.com/originals/4e/4b/06/4e4b06fe3fbca10096ece1aa6354479b.png"
+                    />
+                  </Link>
+                  {/* <Link to={`/${user.username}/cart`}> */}
+                    <img
+                      className="roundedImg"
+                      width="50px"
+                      height="50px"
+                      src="https://cdn.iconscout.com/icon/free/png-256/logout-37-459247.png"
+                      onClick = {logout}
+                    />
+                  {/* </Link> */}
+                  </div>
+                ) : (
+                  <div>
+                  <Link to={`courier/${user.username}`}>
+                    <img
+                      className="roundedImg"
+                      width="50px"
+                      height="50px"
+                      src="https://s3.amazonaws.com/iconbros/icons/icon_pngs/000/000/163/original/delivery.png?1510082899"
+                    />
+                 </Link>
+                 <img
+                 className="roundedImg"
+                 width="50px"
+                 height="50px"
+                 src="https://cdn.iconscout.com/icon/free/png-256/logout-37-459247.png"
+                 onClick = {logout}
+               />
+               </div>
+                )}
               </a>
             )}
           </div>
@@ -151,7 +188,7 @@ export default function Navigation({ pathname }) {
             </div>
           </div>
         )}
-        <UserDropdown open={open} closeDropdown={closeDropdown} />
+        {/* <UserDropdown open={open} closeDropdown={closeDropdown} /> */}
       </div>
     </nav>
   );

@@ -7,7 +7,7 @@ import * as R from "ramda";
 
 import { attemptGetUser } from "_thunks/user";
 
-import WelcomePage from "_pages/WelcomePage";
+// import WelcomePage from "_pages/WelcomePage";
 import LoginPage from "_pages/LoginPage";
 import RegisterPage from "_pages/RegisterPage";
 import HomePage from "_pages/HomePage";
@@ -52,7 +52,7 @@ export default function Main({ location }) {
         <Navigation pathname={location.pathname} />
         <div className="main">
           <Switch>
-            <Route exact path="/" component={WelcomePage} />
+            <Route exact path="/" component={LoginPage} />
             {user.userType == "donor" ? (
               <Route path="/map" component={MapboxDonor} />
             ) : (
