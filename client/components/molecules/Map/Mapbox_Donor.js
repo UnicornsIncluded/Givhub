@@ -19,7 +19,6 @@ export class MapboxDonor extends React.Component {
       pickedUp: false,
     };
 
-    // this.getLocation = this.getLocation.bind(this)
     console.log("MAPBOX DONOR PROPS", this.props);
   }
 
@@ -37,6 +36,8 @@ export class MapboxDonor extends React.Component {
       let courierResult = courierResponse.results[0].geometry.location;
       const courierLat = courierResult.lat;
       const courierLng = courierResult.lng;
+      let foodBankResponse = await Geocode.fromAddress("Israel Food Bank, 244 5th Ave #244, New York, NY 10001");
+      let foodBankResult = foodBankResponse.results[0].geometry.location;
       const geojson = {
         type: "FeatureCollection",
         features: [
@@ -62,7 +63,7 @@ export class MapboxDonor extends React.Component {
         center: [donorLng, donorLat],
         zoom: 11,
       });
-
+      const markerArray = []
       // add markers to map
       geojson.features.forEach(function (marker) {
         // create a HTML element for each feature
@@ -70,12 +71,22 @@ export class MapboxDonor extends React.Component {
         el.className = "marker";
 
         // make a marker for each feature and add to the map
-        new mapboxgl.Marker(el)
+        let newMarker = new mapboxgl.Marker(el)
           .setLngLat(marker.geometry.coordinates)
           .addTo(map);
+
+        markerArray.push(newMarker)
       });
 
       this.setState({ loaded: true });
+
+      socket.on('pickup', (linkedUserId) => {
+        this.setState({ pickedUp: true })
+        markerArray[1].setLngLat([foodBankResult.lng, foodBankResult.lat])
+        // markerArray.forEach(marker => {
+        //   marker.remove()
+        // })
+      })
     } catch (error) {
       var msg = null;
       switch (error.code) {
@@ -94,14 +105,9 @@ export class MapboxDonor extends React.Component {
       }
       alert(msg);
     }
-
-    socket.on('pickup', (linkedUserId) => {
-      this.setState({ pickedUp: true })
-    })
   }
 
   render() {
-    console.log(this.state.pickedUp)
     return (
       <div>
         {this.state.loaded === false ? (
