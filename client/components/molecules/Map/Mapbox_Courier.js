@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios'
-import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import mapboxgl from 'mapbox-gl';
 import Button from "react-bootstrap/Button";
@@ -121,7 +120,7 @@ export class MapboxCourier extends React.Component {
         console.log("delivered props", this.props)
         // VV maybe empty array?
         socket.emit('delivered', this.props.user.linkedUser)
-        await this.props.attemptUpdateUser({ linkedUser: null })
+        // await this.props.attemptUpdateUser({ linkedUser: null })
         this.props.history.push("/thankyou")
     }
 

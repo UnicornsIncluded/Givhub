@@ -13,6 +13,7 @@ export class CourierPage extends React.Component {
     this.props.attemptGetLinkedUser(linkedUserId);
     console.log("COURIER PROPS", this.props)
   }
+
   render() { 
     let donorInfo = this.props.linkedUser
     let courierInfo = this.props.user

@@ -86,9 +86,9 @@ export const attemptUpdateUserCourier = (courier, donor) => {
       const { data } = await axios.put(`/api/user`, {
         linkedUser: courier,
       });
-      const updatedCourier = await axios.put(`/api/users/${courier}`, { linkedUser: donor });
+      await axios.put(`/api/users/${courier}`, { linkedUser: donor });
       dispatch(updateUserCourier(data));
-      socket.emit('clicked', updatedCourier.data.user)
+      socket.emit('clicked', data.user.user)
     } catch (err) {
       console.error("ERROR updating courier", err);
     }
