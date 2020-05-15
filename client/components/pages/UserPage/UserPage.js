@@ -17,10 +17,7 @@ import {
   removeFromCart,
 } from "../../../store/reducers/userCart";
 import Box from "../../molecules/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { push } from "connected-react-router";
-
-const socket = io(window.location.origin);
+import {Spacer} from '../../atoms/Spacer'
 
 let courier;
 let linkedUserId;
@@ -41,8 +38,6 @@ export class UserPage extends React.Component {
 
   componentDidMount() {
     this.props.attemptGetCouriers();
-    console.log("current couriers", this.props.couriers);
-    console.log("componentdidmount", this.props);
     this.props.getCartItems(this.props.match.params.username);
   }
   handleDonateChange(event) {
@@ -56,17 +51,7 @@ export class UserPage extends React.Component {
     //palce holder for dynamic
     this.props.addToCart(newCartItem, this.props.match.params.username);
   }
-
-  componentDidUpdate() {
-    console.log("COMPONENTDIDUPDATE", this.props);
-  }
-  // handleRedirect = () => {
-  //   //this is a hook thing
-  //   useDispatch(push(`/${this.props.match.params.username}/oip`))
-  // }
-
-  handleClick = async () => {
-    
+  handleClick = () => {
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
     courier = this.props.couriers[randomCourierIndex].user;
     donor = this.props.user.user;
@@ -102,10 +87,7 @@ export class UserPage extends React.Component {
       <div className="welcome-page page">
         <div className="section">
           <div className="container">
-            <br />
-            <br />
-            <br />
-            <br />
+            <Spacer />
             <h1 className="title is-1">Donation Cart</h1>
             <Box>
               <h3 className="title is-3">Donate a Food!</h3>

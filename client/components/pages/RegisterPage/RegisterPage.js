@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import * as R from 'ramda';
 import Register from '_templates/RegisterSection';
+import {Spacer} from '../../atoms/Spacer'
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export default function RegisterPage() {
 
   return (
     <div className="register-page page">
+      <Spacer />
       <Register />
     </div>
   );
