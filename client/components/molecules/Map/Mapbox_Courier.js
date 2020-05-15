@@ -93,16 +93,17 @@ export class MapboxCourier extends React.Component {
         }
     }
 
-    pickedUp() {
+    async pickedUp () {
         // this.state.directions.setOrigin(this.state.newOrigin)
         // this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
-        console.log("YOOO NOTIFY THEM", this.props)
-        .then(() => axios.post('/sms',{message: '', to: this.props.user.phoneNumber, }))
+        // console.log("YOOO NOTIFY THEM", this.props)
+        await axios.post('/sms',{message: 'Your courier has picked up your donation! ', to: this.props.linkedUser.phoneNumber, });
 
         
     }
 
     async deliveredButton() {
+        await axios.post('/sms',{message: 'Your courier has delievered up your donation!', to: this.props.linkedUser.phoneNumber, });
         console.log("delivered props", this.props)
         // VV maybe empty array?
         socket.emit('delivered', this.props.user.linkedUser)
