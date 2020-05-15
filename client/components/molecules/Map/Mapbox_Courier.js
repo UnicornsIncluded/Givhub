@@ -1,11 +1,12 @@
 import React from 'react';
+import axios from 'axios'
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import mapboxgl from 'mapbox-gl';
 import Button from "react-bootstrap/Button";
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-import { attemptUpdateUser } from "../../../store/thunks/user";
+import { attemptUpdateUser, attemptGetLinkedUser } from "../../../store/thunks/user";
 import io from 'socket.io-client'
 const socket = io(window.location.origin);
 mapboxgl.accessToken = 'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ';
@@ -93,12 +94,16 @@ export class MapboxCourier extends React.Component {
     }
 
     pickedUp() {
-        this.state.directions.setOrigin(this.state.newOrigin)
-        this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
+        // this.state.directions.setOrigin(this.state.newOrigin)
+        // this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
+        console.log("YOOO NOTIFY THEM", this.props)
+        .then(() => axios.post('/sms',{message: '', to: this.props.user.phoneNumber, }))
+
+        
     }
 
     async deliveredButton() {
-        // console.log("delivered props", props)
+        console.log("delivered props", this.props)
         // VV maybe empty array?
         socket.emit('delivered', this.props.user.linkedUser)
         await this.props.attemptUpdateUser({linkedUser: null})
@@ -120,13 +125,15 @@ export class MapboxCourier extends React.Component {
 function mapStateToProps(state) {
     return {
         user: state.user,
-        orderStatus: state.orderStatus
+        orderStatus: state.orderStatus,
+        linkedUser: state.linkedUser,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails))
+        attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails)),
+        attemptGetLinkedUser: (linkedUserId) => dispatch(attemptGetLinkedUser(linkedUserId)),
       };
 }
 
