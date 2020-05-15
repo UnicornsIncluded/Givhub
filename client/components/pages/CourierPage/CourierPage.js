@@ -1,19 +1,17 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
-  attemptGetLinkedUser
+  attemptGetLinkedUser,
+  attemptGetUser
 } from "../../../store/thunks/user";
 import Button from "react-bootstrap/Button";
 import {Link} from 'react-router-dom'
-
+import {Spacer} from '../../atoms/Spacer'
 export class CourierPage extends React.Component {
   componentDidMount() {
     let linkedUserId = this.props.user.linkedUser
     this.props.attemptGetLinkedUser(linkedUserId);
     console.log("COURIER PROPS", this.props)
-  }
-  componentDidUpdate() {
-    console.log('UPDATED COURIER PROPS', this.props)
   }
   render() { 
     let donorInfo = this.props.linkedUser
@@ -22,10 +20,7 @@ export class CourierPage extends React.Component {
       <div className="welcome-page page">
         <div className="section">
           <div className="container">
-            <br />
-            <br />
-            <br />
-            <br />
+            <Spacer />
             {courierInfo.user == donorInfo.linkedUser && courierInfo.linkedUser == donorInfo.user
             ? <div>
              <h1 id="courierTitle" className="title is-1"> {donorInfo.username} has requested a pick up! </h1>
@@ -46,6 +41,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     attemptGetLinkedUser: (linkedUserId) => dispatch(attemptGetLinkedUser(linkedUserId)),
+    attemptGetUser : () => dispatch(attemptGetUser())
   };
 }
 

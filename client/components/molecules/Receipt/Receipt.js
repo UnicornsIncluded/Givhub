@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 // import * as R from "ramda";
 import Button from "react-bootstrap/Button";
 import io from "socket.io-client";
+import { Spacer } from "../../atoms/Spacer"
+import { attemptGetLinkedUser } from "../../../store/thunks/user";
 import {
   fetchCart,
   addToCart,
@@ -40,10 +42,7 @@ export class Receipt extends React.Component {
       <div className="welcome-page page">
         <div className="section">
           <div className="container">
-            <br />
-            <br />
-            <br />
-            <br />
+            <Spacer />
             <div className="orderSummary">
               <ul>
                 {userType == "donor" ? (

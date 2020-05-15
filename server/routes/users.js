@@ -48,6 +48,16 @@ router.put("/:linkedUserId", async (req, res) => {
     next(err);
   }
 });
+
+// router.delete("/:linkedUserId", async (req, res, next) => {
+//   try {
+//     await User.update({user: req.params.linkedUserId}, {$pull: req.body})
+//     res.sendStatus(204);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
 router.get("/:username/cart", async (req, res, next) => {
   try {
     const userData = await User.find({ username: req.params.username });
@@ -72,7 +82,6 @@ router.put("/:username/cart", async (req, res, next) => {
 
 router.delete("/:username/cart", async (req, res, next) => {
   try {
-    console.log("don't leave me behind pls TYLER <3 REQ.BODY", req.body)
     await User.update({username: req.params.username}, {$pull: {"donationCart.items": req.body}})
     res.sendStatus(204);
   } catch (err) {

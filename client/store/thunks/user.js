@@ -95,6 +95,16 @@ export const attemptUpdateUserCourier = (courier, donor) => {
   };
 };
 
+export const updateCourierLinkedDonor = (linkedUserId) => {
+  return async () => {
+    try {
+       await axios.put(`/api/users/${linkedUserId}`, {linkedUser: null})
+    } catch (err) {
+      next (err)
+    }
+  }
+}
+
 export const attemptUpdatePassword = (passwordInfo) => (dispatch) =>
   putUserPassword(passwordInfo)
     .then((data) => {
