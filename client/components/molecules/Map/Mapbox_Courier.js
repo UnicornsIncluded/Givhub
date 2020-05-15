@@ -22,11 +22,12 @@ export class MapboxCourier extends React.Component {
 
         this.getLocation = this.getLocation.bind(this)
         this.pickedUp = this.pickedUp.bind(this)
+        this.onTheWay = this.onTheWay.bind(this)
         console.log("MAPBOXCOURIER PROPS", this.props)
     }
 
     async componentDidMount() {
-        console.log(this.props.user.linkedUser)
+        console.log(this.props.linkedUser.address, 'HAHAHAHAHAHAHA')
         try {
             const pos = await this.getLocation()
             const map = new mapboxgl.Map({
@@ -47,19 +48,19 @@ export class MapboxCourier extends React.Component {
                 accessToken: mapboxgl.accessToken,
                 unit: 'metric',
                 profile: 'mapbox/driving',
+                controls: {
+                    inputs: false,
+                }
             })
 
             map.addControl(directions, 'top-left')
             map.addControl(geolocate, 'bottom-left')
-            const donorAddress = this.props.user.address
+
 
             this.setState({ loaded: true, directions: directions })
         } catch (error) {
             var msg = null;
             switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    msg = "Please enable geolocation in your browser to use Givhub.";
-                    break;
                 case error.POSITION_UNAVAILABLE:
                     msg = "Location information is unavailable.";
                     break;
@@ -75,17 +76,18 @@ export class MapboxCourier extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.linkedUser.address !== this.props.linkedUser.address) {
-            if (this.state.loaded === true) {
-                this.state.directions.setOrigin("Fullstack Academy")
-                this.state.directions.setDestination(nextProps.linkedUser.address);
-            }
-        } else {
-            if (this.state.loaded === true) {
-                this.state.directions.setOrigin("Fullstack Academy")
-                this.state.directions.setDestination(this.props.linkedUser.address);
-            }
-        }
+        // console.log(nextProps.linkedUser.address, 'LMAOOOOOOOOO')
+        // if (nextProps.linkedUser.address !== this.props.linkedUser.address) {
+        //     if (this.state.loaded === true) {
+        //         this.state.directions.setOrigin("Fullstack Academy")
+        //         this.state.directions.setDestination(nextProps.linkedUser.address);
+        //     }
+        // } else {
+        //     if (this.state.loaded === true) {
+        //         this.state.directions.setOrigin("Fullstack Academy")
+        //         this.state.directions.setDestination(this.props.linkedUser.address);
+        //     }
+        // }
     }
 
     getLocation() {
@@ -98,8 +100,15 @@ export class MapboxCourier extends React.Component {
         }
     }
 
+    async onTheWay() {
+        // await axios.post('/sms', { message: 'Your courier is on the way! ', to: this.props.linkedUser.phoneNumber, });
+        this.state.directions.setOrigin('Fullstack Academy')
+        this.state.directions.setDestination(this.props.linkedUser.address)
+        this.setState({ onTheWay: true, newOrigin: this.props.linkedUser.address })
+    }
+
     async pickedUp() {
-        await axios.post('/sms', { message: 'Your courier has picked up your donation! ', to: this.props.linkedUser.phoneNumber, });
+        // await axios.post('/sms', { message: 'Your courier has picked up your donation! ', to: this.props.linkedUser.phoneNumber, });
         this.state.directions.setOrigin(this.state.newOrigin)
         this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
         this.setState({ pickedUp: true })
@@ -118,6 +127,7 @@ export class MapboxCourier extends React.Component {
     render() {
         return (
             <div>
+                <Button onClick={this.onTheWay}>On The Way</Button>
                 <Button onClick={this.pickedUp}>Picked-Up</Button>
                 <Button onClick={() => this.deliveredButton()}>Delivered</Button>
 
