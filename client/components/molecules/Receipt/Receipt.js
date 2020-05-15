@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 // import * as R from "ramda";
 import Button from "react-bootstrap/Button";
 import io from "socket.io-client";
-import {Spacer} from "../../atoms/Spacer"
+import { Spacer } from "../../atoms/Spacer"
 import { attemptGetLinkedUser } from "../../../store/thunks/user";
 import {
   fetchCart,
@@ -25,7 +25,6 @@ export class Receipt extends React.Component {
 
   componentDidMount() {
     let linkedUserId = this.props.user.linkedUser;
-    this.props.attemptGetLinkedUser(linkedUserId);
     // console.log("THIS IS THE PROPS", this.props)
     this.props.getCartItems(this.state.username);
   }
@@ -58,8 +57,8 @@ export class Receipt extends React.Component {
                       }
                     )
                   ) : (
-                    <li>nothing</li>
-                  )
+                      <li>nothing</li>
+                    )
                 ) : this.props.linkedUser.donationCart ? (
                   this.props.linkedUser.donationCart.items.map((item, index) => {
                     return (
@@ -69,8 +68,8 @@ export class Receipt extends React.Component {
                     );
                   })
                 ) : (
-                  <li>nothing</li>
-                )}
+                      <li>nothing</li>
+                    )}
               </ul>
             </div>
           </div>
@@ -96,8 +95,6 @@ function mapDispatchToProps(dispatch) {
   return {
     attemptUpdateUserCourier: () =>
       dispatch(attemptUpdateUserCourier(courier, donor)),
-    attemptGetLinkedUser: (linkedUserId) =>
-      dispatch(attemptGetLinkedUser(linkedUserId)),
     getCartItems: (username) => {
       dispatch(fetchCart(username));
     },
@@ -105,7 +102,7 @@ function mapDispatchToProps(dispatch) {
     addToCart: (nameOfItem, username) =>
       dispatch(addToCart(nameOfItem, username)),
     removeFromCart: (username, item) =>
-      dispatch(removeFromCart(username, item)),
+      dispatch(removeFromCart(username, item))
   };
 }
 

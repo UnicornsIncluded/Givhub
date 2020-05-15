@@ -17,7 +17,8 @@ export class MapboxCourier extends React.Component {
         this.state = {
             loaded: false,
             directions: {},
-            newOrigin: ''
+            newOrigin: '',
+            pickedUp: false
         };
 
         this.getLocation = this.getLocation.bind(this)
@@ -26,9 +27,9 @@ export class MapboxCourier extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this.props.user.linkedUser)
         try {
             const pos = await this.getLocation()
-
             const map = new mapboxgl.Map({
                 container: this.mapContainer,
                 style: 'mapbox://styles/mapbox/streets-v10',
@@ -43,7 +44,6 @@ export class MapboxCourier extends React.Component {
                 trackUserLocation: true
             })
 
-
             const directions = new MapboxDirections({
                 accessToken: mapboxgl.accessToken,
                 unit: 'metric',
@@ -54,11 +54,7 @@ export class MapboxCourier extends React.Component {
             map.addControl(geolocate, 'bottom-left')
             const donorAddress = this.props.user.address
 
-            map.on('load', function () {
-                directions.setOrigin("Fullstack Academy")
-                directions.setDestination(donorAddress || "New York University")
-            })
-            this.setState({ loaded: true, directions: directions, newOrigin: donorAddress || "New York University" })
+            this.setState({ loaded: true, directions: directions })
         } catch (error) {
             var msg = null;
             switch (error.code) {
@@ -79,9 +75,19 @@ export class MapboxCourier extends React.Component {
         }
     }
 
-    // componentDidUpdate() {
-    //     console.log('UPDATED COURIER', this.props)
-    // }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.linkedUser.address !== this.props.linkedUser.address) {
+            if (this.state.loaded === true) {
+                this.state.directions.setOrigin("Fullstack Academy")
+                this.state.directions.setDestination(nextProps.linkedUser.address);
+            }
+        } else {
+            if (this.state.loaded === true) {
+                this.state.directions.setOrigin("Fullstack Academy")
+                this.state.directions.setDestination(this.props.linkedUser.address);
+            }
+        }
+    }
 
     getLocation() {
         if (navigator.geolocation) {
@@ -93,21 +99,20 @@ export class MapboxCourier extends React.Component {
         }
     }
 
-    async pickedUp () {
-        // this.state.directions.setOrigin(this.state.newOrigin)
-        // this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
-        // console.log("YOOO NOTIFY THEM", this.props)
-        await axios.post('/sms',{message: 'Your courier has picked up your donation! ', to: this.props.linkedUser.phoneNumber, });
-
-        
+    async pickedUp() {
+        await axios.post('/sms', { message: 'Your courier has picked up your donation! ', to: this.props.linkedUser.phoneNumber, });
+        this.state.directions.setOrigin(this.state.newOrigin)
+        this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
+        this.setState({ pickedUp: true })
+        socket.emit('pickup', this.props.user.linkedUser)
     }
 
     async deliveredButton() {
-        await axios.post('/sms',{message: 'Your courier has delievered up your donation!', to: this.props.linkedUser.phoneNumber, });
+        await axios.post('/sms', { message: 'Your courier has delievered up your donation!', to: this.props.linkedUser.phoneNumber, });
         console.log("delivered props", this.props)
         // VV maybe empty array?
         socket.emit('delivered', this.props.user.linkedUser)
-        await this.props.attemptUpdateUser({linkedUser: null})
+        await this.props.attemptUpdateUser({ linkedUser: null })
         this.props.history.push("/thankyou")
     }
 
@@ -116,6 +121,11 @@ export class MapboxCourier extends React.Component {
             <div>
                 <Button onClick={this.pickedUp}>Picked-Up</Button>
                 <Button onClick={() => this.deliveredButton()}>Delivered</Button>
+
+                {this.state.pickedUp ? <div>
+                    <img src="https://i.ya-webdesign.com/images/delivery-icon-png-13.png" alt="picked-up order" />
+                </div> : <div />}
+
                 {this.state.loaded === false ? <h1>Loading Location Data...</h1> : <div></div>}
                 <div ref={el => this.mapContainer = el} className="mapContainer" />
             </div>
@@ -135,7 +145,7 @@ function mapDispatchToProps(dispatch) {
     return {
         attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails)),
         attemptGetLinkedUser: (linkedUserId) => dispatch(attemptGetLinkedUser(linkedUserId)),
-      };
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapboxCourier);

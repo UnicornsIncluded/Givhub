@@ -11,6 +11,10 @@ module.exports = (io) => {
       socket.broadcast.emit("clicked", data);
     });
 
+    socket.on("pickup", function (linkedUserId) {
+      socket.broadcast.emit("pickup", linkedUserId);
+    });
+
     socket.on("delivered", function (linkedUserId) {
       socket.broadcast.emit("delivered", linkedUserId);
     });
