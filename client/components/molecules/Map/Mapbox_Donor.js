@@ -4,6 +4,7 @@ import mapboxgl from "mapbox-gl";
 // import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 import Geocode from "react-geocode";
+import socket from '../../../socket';
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ";
@@ -15,6 +16,7 @@ export class MapboxDonor extends React.Component {
     super(props);
     this.state = {
       loaded: false,
+      pickedUp: false,
     };
 
     // this.getLocation = this.getLocation.bind(this)
@@ -92,16 +94,24 @@ export class MapboxDonor extends React.Component {
       }
       alert(msg);
     }
+
+    socket.on('pickup', (linkedUserId) => {
+      this.setState({ pickedUp: true })
+    })
   }
 
   render() {
+    console.log(this.state.pickedUp)
     return (
       <div>
         {this.state.loaded === false ? (
           <h1>Loading Location Data...</h1>
         ) : (
-          <div></div>
-        )}
+            <div></div>
+          )}
+        {this.state.pickedUp ? <div>
+          <img src="https://i.ya-webdesign.com/images/delivery-icon-png-13.png" alt="picked-up order" />
+        </div> : <div />}
         <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
       </div>
     );

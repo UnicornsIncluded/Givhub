@@ -102,6 +102,7 @@ export class MapboxCourier extends React.Component {
         this.state.directions.setOrigin(this.state.newOrigin)
         this.state.directions.setDestination("Israel Food Bank, 244 5th Ave #244, New York, NY 10001")
         this.setState({ pickedUp: true })
+        socket.emit('pickup', this.props.user.linkedUser)
     }
 
     deliveredButton() {
