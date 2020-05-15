@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios'
 import { connect } from "react-redux";
 // import { push } from "connected-react-router";
 // import * as R from "ramda";
@@ -64,7 +65,8 @@ export class UserPage extends React.Component {
   //   useDispatch(push(`/${this.props.match.params.username}/oip`))
   // }
 
-  handleClick = () => {
+  handleClick = async () => {
+    
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
     courier = this.props.couriers[randomCourierIndex].user;
     donor = this.props.user.user;
@@ -75,6 +77,8 @@ export class UserPage extends React.Component {
       .attemptUpdateUserCourier(courier, donor)
       .then(() => this.props.attemptGetLinkedUser(courier))
       .then(() => this.props.attemptGetUser())
+      .then(() => axios.post('/sms',{message: 'You have a new job! Please check it out on Givhub', to: this.props.linkedUser.phoneNumber, }))
+      .then(() => axios.post('/sms',{message: 'Your courier is on their way to pick up your donation!', to: this.props.userCart.phoneNumber, }))
       .then(() =>
         this.props.history.push(`/${this.props.match.params.username}/oip`)
         // console.log('this is after the first .then')
