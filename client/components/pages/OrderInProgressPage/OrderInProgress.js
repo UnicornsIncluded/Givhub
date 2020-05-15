@@ -7,7 +7,6 @@ import { attemptGetLinkedUser } from "../../../store/thunks/user";
 
 export class OrderInProgressPage extends React.Component {
   componentDidMount() {
-    console.log('ORDERINPROGRESS PROPS', this.props)
     this.props.attemptGetLinkedUser(this.props.user.linkedUser)
   }
 

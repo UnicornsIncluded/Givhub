@@ -80,9 +80,6 @@ export class UserPage extends React.Component {
   render() {
     let courierInfo = this.props.linkedUser;
     let donorInfo = this.props.user.user;
-    {
-      console.log("courier Info", courierInfo, "donor Info", donorInfo);
-    }
     return (
       <div className="welcome-page page">
         <div className="section">
