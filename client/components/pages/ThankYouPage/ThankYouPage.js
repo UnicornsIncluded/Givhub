@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { attemptUpdateUser } from "../../../store/thunks/user";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import {Spacer} from '../../atoms/Spacer'
 
 export class ThankYouPage extends React.Component {
   componentDidMount() {
@@ -16,10 +15,7 @@ export class ThankYouPage extends React.Component {
       <div className="welcome-page page">
         <div className="section">
           <div className="container">
-            <br />
-            <br />
-            <br />
-            <br />
+            <Spacer />
             {this.props.user.userType == "donor" ? (
               <div>
               <h1>Thank You for your donation {this.props.user.username} !</h1>
