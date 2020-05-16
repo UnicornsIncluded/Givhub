@@ -11,7 +11,6 @@ import {attemptGetUser} from '../../../store/thunks/user'
 import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
 import HomePage from '../../pages/HomePage'
-import TodoPage from '../../pages/TodoPage'
 import SettingsPage from '../../pages/SettingsPage'
 import LostPage from '../../pages/LostPage'
 import UserPage from '../../pages/UserPage'
@@ -64,7 +63,6 @@ export default function Main({location}) {
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
             <Route path="/home" component={HomePage} />
-            <Route path="/todo" component={TodoPage} />
             <Route path="/settings" component={SettingsPage} />
             <Route path="/:username/cart" component={UserPage} />
             <Route path="/courier/:courierId" component={CourierPage} />
