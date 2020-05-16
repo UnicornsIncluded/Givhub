@@ -28,22 +28,43 @@ export const attemptLogin = user => {
   }
 }
 
-export const attemptRegister = newUser => dispatch =>
-  postRegister(newUser)
-    .then(data => {
+export const attemptRegister = user => {
+  return async dispatch => {
+    try {
+      const res = await axios.post('/api/auth/register', user)
+      console.log(res.data.user)
       dispatch(
         Notifications.success({
           title: 'Success!',
-          message: data.message,
+          message: res.data.message,
           position: 'tr',
           autoDismiss: 3
         })
       )
-      console.log(newUser)
-      return dispatch(attemptLogin(newUser))
-    })
-    .then(() => dispatch(push('/settings')))
-    .catch(dispatchError(dispatch))
+      await dispatch(attemptLogin(user))
+      dispatch(push('/settings'))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+// export const attemptRegister = newUser => dispatch =>
+//   postRegister(newUser)
+//     .then(data => {
+//       dispatch(
+//         Notifications.success({
+//           title: 'Success!',
+//           message: data.message,
+//           position: 'tr',
+//           autoDismiss: 3
+//         })
+//       )
+//       console.log(newUser)
+//       return dispatch(attemptLogin(newUser))
+//     })
+//     .then(() => dispatch(push('/settings')))
+//     .catch(dispatchError(dispatch))
 
 export const attemptLogout = () => dispatch =>
   postLogout()
