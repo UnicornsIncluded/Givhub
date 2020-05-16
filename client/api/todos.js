@@ -1,5 +1,5 @@
 import request from 'superagent'
-import {handleSuccess, handleError} from '_utils/api'
+import {handleSuccess, handleError} from '../utils/api'
 
 export const postTodo = info =>
   request

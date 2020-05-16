@@ -4,13 +4,13 @@ import classNames from 'classnames'
 import {useDispatch} from 'react-redux'
 import * as R from 'ramda'
 
-import useKeyPress from '_hooks/useKeyPress'
-import {postCheckUsername} from '_api/users'
-import {validateUsername, validatePassword} from '_utils/validation'
-import {attemptRegister} from '_thunks/auth'
+import useKeyPress from '../../../hooks/useKeyPress'
+import {postCheckUsername} from '../../../api/users'
+import {validateUsername, validatePassword} from '../../../utils/validation'
+import {attemptRegister} from '../../../store/thunks/auth'
 
-import Box from '_molecules/Box'
-import Button from '_atoms/Button'
+import Box from '../../molecules/Box'
+import Button from '../../atoms/Button'
 
 export default function Register() {
   const dispatch = useDispatch()

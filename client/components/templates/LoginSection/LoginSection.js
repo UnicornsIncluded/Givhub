@@ -1,5 +1,5 @@
 import React from 'react'
-import Login from '_organisms/Login'
+import Login from '../../organisms/Login'
 
 export default function LoginSection() {
   return (

@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 
-import {attemptAddTodo} from '_thunks/todos'
-import useKeyPress from '_hooks/useKeyPress'
-import Button from '_atoms/Button'
+import {attemptAddTodo} from '../../../store/thunks/todos'
+import useKeyPress from '../../../hooks/useKeyPress'
+import Button from '../../atoms/Button'
 
 export default function AddTodo() {
   const dispatch = useDispatch()

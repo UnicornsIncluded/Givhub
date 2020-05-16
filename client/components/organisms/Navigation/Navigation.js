@@ -6,9 +6,9 @@ import classNames from 'classnames'
 import {useSelector} from 'react-redux'
 import * as R from 'ramda'
 
-import UserDropdown from '_molecules/UserDropdown'
-import Button from '_atoms/Button'
-import {attemptLogout} from '_thunks/auth'
+import UserDropdown from '../../molecules/UserDropdown'
+import Button from '../../atoms/Button'
+import {attemptLogout} from '../../../store/thunks/auth'
 
 export default function Navigation({pathname}) {
   const {user} = useSelector(R.pick(['user']))

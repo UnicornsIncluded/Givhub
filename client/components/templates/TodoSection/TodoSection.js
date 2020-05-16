@@ -1,6 +1,6 @@
 import React from 'react'
-import AddTodo from '_molecules/AddTodo'
-import TodoList from '_organisms/TodoList'
+import AddTodo from '../../molecules/AddTodo'
+import TodoList from '../../organisms/TodoList'
 
 export default function TodoSection() {
   return (

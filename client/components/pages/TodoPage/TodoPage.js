@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {push} from 'connected-react-router'
 import * as R from 'ramda'
 
-import {attemptGetTodos} from '_thunks/todos'
-import TodoSection from '_templates/TodoSection'
+import {attemptGetTodos} from '../../../store/thunks/todos'
+import TodoSection from '../../templates/TodoSection'
 
 export default function TodoPage() {
   const dispatch = useDispatch()

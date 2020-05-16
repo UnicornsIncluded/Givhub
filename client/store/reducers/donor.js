@@ -1,4 +1,4 @@
-import {GET_DONORS} from '_actions/user'
+import {GET_DONORS} from '../actions/user'
 
 export default function donors(state = {}, action) {
   switch (action.type) {

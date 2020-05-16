@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import {useDispatch, useSelector} from 'react-redux'
 import * as R from 'ramda'
 
-import {validatePassword} from '_utils/validation'
-import {attemptUpdatePassword} from '_thunks/user'
+import {validatePassword} from '../../../utils/validation'
+import {attemptUpdatePassword} from '../../../store/thunks/user'
 
 export default function ChangePassword() {
   const dispatch = useDispatch()

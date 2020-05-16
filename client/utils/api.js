@@ -1,7 +1,7 @@
 import {push} from 'connected-react-router'
 import Notifications from 'react-notification-system-redux'
 
-import {logout} from '_actions/user'
+import {logout} from '../store/actions/user'
 
 export const handleSuccess = resp => resp.body
 

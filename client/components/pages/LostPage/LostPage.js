@@ -1,5 +1,5 @@
 import React from 'react'
-import LostSection from '_templates/LostSection'
+import LostSection from '../../templates/LostSection'
 
 export default function LostPage() {
   return (

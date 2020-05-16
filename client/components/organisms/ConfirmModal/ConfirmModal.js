@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import ConfirmDeleteTodo from '_organisms/ConfirmDeleteTodo'
+import ConfirmDeleteTodo from '../../organisms/ConfirmDeleteTodo'
 
 export default function ConfirmModal({confirm, closeModal, deleteTodo}) {
   const modalClasses = classNames({

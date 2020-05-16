@@ -6,7 +6,7 @@ import {
   UPDATE_USER_COURIER,
   GET_USER,
   GET_USERS
-} from '_actions/user'
+} from '../actions/user'
 
 export default function user(state = {}, action) {
   switch (action.type) {

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import * as R from 'ramda'
 
-import {attemptLogout} from '_thunks/auth'
+import {attemptLogout} from '../../../store/thunks/auth'
 
 export default function UserDropdown({open, closeDropdown}) {
   const dispatch = useDispatch()

@@ -7,9 +7,9 @@ import {
   TOGGLE_COMPLETE_TODO,
   UPDATE_TODO,
   REMOVE_TODO
-} from '_actions/todos'
+} from '../actions/todos'
 
-import {LOGOUT_USER} from '_actions/user'
+import {LOGOUT_USER} from '../actions/user'
 
 export function todo(
   state = {

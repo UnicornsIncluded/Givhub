@@ -5,9 +5,9 @@ import {push} from 'connected-react-router'
 import {Switch, Route} from 'react-router'
 import * as R from 'ramda'
 
-import ProfileSettings from '_templates/ProfileSettings'
-import AccountSettings from '_templates/AccountSettings'
-import SettingsMenu from '_organisms/SettingsMenu'
+import ProfileSettings from '../../templates/ProfileSettings'
+import AccountSettings from '../../templates/AccountSettings'
+import SettingsMenu from '../../organisms/SettingsMenu'
 
 export default function SettingsPage({location}) {
   const dispatch = useDispatch()

@@ -2,10 +2,10 @@ import {push} from 'connected-react-router'
 import {snakeToCamelCase} from 'json-style-converter/es5'
 import Notifications from 'react-notification-system-redux'
 
-import {postRegister, postLogin, postLogout} from '_api/auth'
-import {login, logout} from '_actions/user'
+import {postRegister, postLogin, postLogout} from '../../api/auth'
+import {login, logout} from '../actions/user'
 
-import {dispatchError} from '_utils/api'
+import {dispatchError} from '../../utils/api'
 
 export const attemptLogin = user => dispatch =>
   postLogin(user)

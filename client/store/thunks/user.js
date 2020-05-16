@@ -1,18 +1,18 @@
 import {snakeToCamelCase} from 'json-style-converter/es5'
 import Notifications from 'react-notification-system-redux'
 import axios from 'axios'
-import {getUser, putUser, putUserPassword} from '_api/user'
+import {getUser, putUser, putUserPassword} from '../../api/user'
 import {
   updateUser,
   updateUserCourier,
   // getLinkedUser,
   getDonors,
   getCouriers
-} from '_actions/user'
-import {linkedUserUpdated} from '_reducers/linkedUser'
+} from '../actions/user'
+import {linkedUserUpdated} from '../reducers/linkedUser'
 import io from 'socket.io-client'
 const socket = io(window.location.origin)
-import {dispatchError} from '_utils/api'
+import {dispatchError} from '../../utils/api'
 
 export const attemptGetUser = () => dispatch =>
   getUser()

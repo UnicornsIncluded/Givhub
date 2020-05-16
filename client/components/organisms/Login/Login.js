@@ -5,10 +5,10 @@ import * as R from 'ramda'
 
 import {faUser, faLock} from '@fortawesome/free-solid-svg-icons'
 
-import useKeyPress from '_hooks/useKeyPress'
-import {attemptLogin} from '_thunks/auth'
-import Box from '_molecules/Box'
-import FormInput from '_molecules/FormInput'
+import useKeyPress from '../../../hooks/useKeyPress'
+import {attemptLogin} from '../../../store/thunks/auth'
+import Box from '../../molecules/Box'
+import FormInput from '../../molecules/FormInput'
 
 export default function Login() {
   const dispatch = useDispatch()

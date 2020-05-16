@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {attemptUpdateUser} from '_thunks/user'
+import {attemptUpdateUser} from '../../../store/thunks/user'
 
 class AddressForm extends React.Component {
   constructor(props) {

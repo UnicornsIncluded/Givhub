@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import {useDispatch} from 'react-redux'
 import * as R from 'ramda'
 
-import {attemptLogout} from '_thunks/auth'
+import {attemptLogout} from '../../../store/thunks/auth'
 
 export default function SettingsMenu({pathname}) {
   const dispatch = useDispatch()

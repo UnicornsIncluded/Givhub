@@ -7,16 +7,16 @@ import {
   putToggleCompleteTodo,
   putTodo,
   deleteTodo
-} from '_api/todos'
+} from '../../api/todos'
 import {
   setTodos,
   addTodo,
   toggleCompleteTodo,
   updateTodo,
   removeTodo
-} from '_actions/todos'
+} from '../actions/todos'
 
-import {dispatchError} from '_utils/api'
+import {dispatchError} from '../../utils/api'
 
 export const attemptGetTodos = () => dispatch =>
   getTodos()

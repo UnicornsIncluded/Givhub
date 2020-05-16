@@ -1,4 +1,4 @@
-import {GET_COURIERS} from '_actions/user'
+import {GET_COURIERS} from '../actions/user'
 
 export default function couriers(state = {}, action) {
   switch (action.type) {

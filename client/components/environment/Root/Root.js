@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from 'connected-react-router'
 
-import Main from '_environment/Main'
+import Main from '../../environment/Main'
 
 import '../../../socket'
 export default function Root({history, store}) {

@@ -16,8 +16,8 @@ import {
   attemptToggleCompleteTodo,
   attemptUpdateTodo,
   attemptDeleteTodo
-} from '_thunks/todos'
-import ConfirmModal from '_organisms/ConfirmModal'
+} from '../../../store/thunks/todos'
+import ConfirmModal from '../../organisms/ConfirmModal'
 
 const fromNow = date => formatDistanceToNow(parseISO(date), {addSuffix: true})
 

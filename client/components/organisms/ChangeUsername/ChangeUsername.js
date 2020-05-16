@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import {useDispatch, useSelector} from 'react-redux'
 import * as R from 'ramda'
 
-import {attemptUpdateUser} from '_thunks/user'
+import {attemptUpdateUser} from '../../../store/thunks/user'
 
 export default function ChangeUsername() {
   const dispatch = useDispatch()
