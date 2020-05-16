@@ -1,7 +1,6 @@
 import {snakeToCamelCase} from 'json-style-converter/es5'
 import Notifications from 'react-notification-system-redux'
 import axios from 'axios'
-import {putUserPassword} from '../../api/user'
 import {
   updateUser,
   updateUserCourier,
@@ -113,17 +112,21 @@ export const updateCourierLinkedDonor = linkedUserId => {
   }
 }
 
-export const attemptUpdatePassword = passwordInfo => dispatch =>
-  putUserPassword(passwordInfo)
-    .then(data => {
+export const attemptUpdatePassword = passwordInfo => {
+  return async dispatch => {
+    try {
+      const res = await axios.put('/api/user/password', passwordInfo)
       dispatch(
         Notifications.success({
           title: 'Success!',
-          message: data.message,
+          message: res.data.message,
           position: 'tr',
           autoDismiss: 3
         })
       )
-      return data
-    })
-    .catch(dispatchError(dispatch))
+      return res.data
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
