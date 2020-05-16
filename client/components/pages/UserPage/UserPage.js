@@ -77,6 +77,7 @@ export class UserPage extends React.Component {
       .attemptUpdateUserCourier(courier, donor)
       .then(() => this.props.attemptGetLinkedUser(courier))
       .then(() => this.props.attemptGetUser())
+      .then(() => console.log('THIS CLICK PHONE PROPS', this.props))
       .then(() => axios.post('/sms',{message: 'You have a new job! Please check it out on Givhub', to: this.props.linkedUser.phoneNumber, }))
       .then(() => axios.post('/sms',{message: 'Your courier is on their way to pick up your donation!', to: this.props.userCart.phoneNumber, }))
       .then(() =>
