@@ -14,13 +14,17 @@ import io from 'socket.io-client'
 const socket = io(window.location.origin)
 import {dispatchError} from '../../utils/api'
 
-export const attemptGetUser = () => dispatch =>
-  getUser()
-    .then(data => {
-      dispatch(updateUser(snakeToCamelCase(data.user)))
-      return data.user
-    })
-    .catch(dispatchError(dispatch))
+export const attemptGetUser = () => {
+  return async dispatch => {
+    try {
+      const res = await axios.get('/api/user')
+      dispatch(updateUser(snakeToCamelCase(res.data.user)))
+      return res.data.user
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 export const attemptGetLinkedUser = linkedUserId => {
   return async dispatch => {
