@@ -171,7 +171,7 @@ export default function Navigation({pathname}) {
                 <figure className="image navbar-image is-32x32">
                   <img
                     className="profile-img"
-                    src={user.profilePic || '/images/default-profile.png'}
+                    src={user.profilePic || './default-profile.png'}
                     alt=""
                   />
                 </figure>
