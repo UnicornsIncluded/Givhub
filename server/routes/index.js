@@ -8,7 +8,6 @@ const client = require('twilio')(accountSid, authToken)
 const auth = require('./auth')
 const user = require('./user')
 const users = require('./users')
-const todos = require('./todos')
 const donor = require('./donor')
 const courier = require('./courier')
 const sms = require('./sms')
@@ -31,8 +30,6 @@ router.post('/sms', (req, res) => {
     .then(message => console.log(message.sid))
   res.sendStatus(201)
 })
-
-router.use('/api/todos', todos)
 
 router.get('/api/tags', (req, res) => {
   res.send([
