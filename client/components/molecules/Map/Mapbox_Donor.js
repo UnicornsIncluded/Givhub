@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import mapboxgl from 'mapbox-gl'
 // import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
+// import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 import Geocode from 'react-geocode'
 import socket from '../../../socket'
 
