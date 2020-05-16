@@ -4,6 +4,7 @@ import mapboxgl from "mapbox-gl";
 // import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 import Geocode from "react-geocode";
+import socket from '../../../socket';
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ";
@@ -15,9 +16,9 @@ export class MapboxDonor extends React.Component {
     super(props);
     this.state = {
       loaded: false,
+      pickedUp: false,
     };
 
-    // this.getLocation = this.getLocation.bind(this)
     console.log("MAPBOX DONOR PROPS", this.props);
   }
 
@@ -35,6 +36,8 @@ export class MapboxDonor extends React.Component {
       let courierResult = courierResponse.results[0].geometry.location;
       const courierLat = courierResult.lat;
       const courierLng = courierResult.lng;
+      let foodBankResponse = await Geocode.fromAddress("Israel Food Bank, 244 5th Ave #244, New York, NY 10001");
+      let foodBankResult = foodBankResponse.results[0].geometry.location;
       const geojson = {
         type: "FeatureCollection",
         features: [
@@ -60,7 +63,7 @@ export class MapboxDonor extends React.Component {
         center: [donorLng, donorLat],
         zoom: 11,
       });
-
+      const markerArray = []
       // add markers to map
       geojson.features.forEach(function (marker) {
         // create a HTML element for each feature
@@ -68,12 +71,22 @@ export class MapboxDonor extends React.Component {
         el.className = "marker";
 
         // make a marker for each feature and add to the map
-        new mapboxgl.Marker(el)
+        let newMarker = new mapboxgl.Marker(el)
           .setLngLat(marker.geometry.coordinates)
           .addTo(map);
+
+        markerArray.push(newMarker)
       });
 
       this.setState({ loaded: true });
+
+      socket.on('pickup', (linkedUserId) => {
+        this.setState({ pickedUp: true })
+        markerArray[1].setLngLat([foodBankResult.lng, foodBankResult.lat])
+        // markerArray.forEach(marker => {
+        //   marker.remove()
+        // })
+      })
     } catch (error) {
       var msg = null;
       switch (error.code) {
@@ -100,8 +113,11 @@ export class MapboxDonor extends React.Component {
         {this.state.loaded === false ? (
           <h1>Loading Location Data...</h1>
         ) : (
-          <div></div>
-        )}
+            <div></div>
+          )}
+        {this.state.pickedUp ? <div>
+          <img src="https://i.ya-webdesign.com/images/delivery-icon-png-13.png" alt="picked-up order" />
+        </div> : <div />}
         <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
       </div>
     );

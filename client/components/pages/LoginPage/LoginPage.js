@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import * as R from 'ramda';
 import LoginSection from '_templates/LoginSection';
+import {Spacer} from '../../atoms/Spacer'
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export default function LoginPage() {
 
   return (
     <div className="login-page page">
+      <Spacer />
       <LoginSection />
     </div>
   );

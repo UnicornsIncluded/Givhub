@@ -12,55 +12,56 @@ export default function UserDropdown({ open, closeDropdown }) {
 
   const dropdown = useRef(null);
 
-  const dropdownListener = (e) =>
-    !e.path.includes(dropdown.current) && open && closeDropdown();
+  // const dropdownListener = (e) =>
+  //   !e.path.includes(dropdown.current) && open && closeDropdown();
 
-  useEffect(() => {
-    window.addEventListener("click", dropdownListener);
-    window.addEventListener("touchend", dropdownListener);
+  // useEffect(() => {
+  //   window.addEventListener("click", dropdownListener);
+  //   window.addEventListener("touchend", dropdownListener);
 
-    return () => {
-      window.removeEventListener("click", dropdownListener);
-      window.removeEventListener("touchend", dropdownListener);
-    };
-  }, [open]);
+  //   return () => {
+  //     window.removeEventListener("click", dropdownListener);
+  //     window.removeEventListener("touchend", dropdownListener);
+  //   };
+  // }, [open]);
 
-  const logout = () => {
-    closeDropdown();
-    dispatch(attemptLogout()).catch(R.identity);
-  };
+  // const logout = () => {
+  //   closeDropdown();
+  //   dispatch(attemptLogout()).catch(R.identity);
+  // };
 
   return (
-    open && (
-      <div className="dropdown box" ref={dropdown}>
-        <ul className="dropdown-list">
-          <li className="dropdown-header">{user.usernameCase}</li>
-          <hr className="dropdown-separator" />
-          <li className="dropdown-item">
-          {user.userType == "donor" ? (
-              <Link to={`/${user.username}/cart`} onClick={closeDropdown}>
-                Donation Cart
-              </Link>
-          ) : (
-            <Link to={`courier/${user.username}`}>
-              <h6 className="title is-6">Current Jobs</h6>
-            </Link>
-          )}
-          </li>
-          <li className="dropdown-item">
-            <Link to="/settings" onClick={closeDropdown}>
-              Settings
-            </Link>
-          </li>
-          <hr className="dropdown-separator" />
-          <li className="dropdown-item">
-            <a onClick={logout} onKeyPress={logout}>
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    )
+    null
+  //   open && (
+  //     <div className="dropdown box" ref={dropdown}>
+  //       <ul className="dropdown-list">
+  //         <li className="dropdown-header">{user.usernameCase}</li>
+  //         <hr className="dropdown-separator" />
+  //         <li className="dropdown-item">
+  //         {user.userType == "donor" ? (
+  //             <Link to={`/${user.username}/cart`} onClick={closeDropdown}>
+  //               Donation Cart
+  //             </Link>
+  //         ) : (
+  //           <Link to={`courier/${user.username}`}>
+  //             <h6 className="title is-6">Current Jobs</h6>
+  //           </Link>
+  //         )}
+  //         </li>
+  //         <li className="dropdown-item">
+  //           <Link to="/settings" onClick={closeDropdown}>
+  //             Settings
+  //           </Link>
+  //         </li>
+  //         <hr className="dropdown-separator" />
+  //         <li className="dropdown-item">
+  //           <a onClick={logout} onKeyPress={logout}>
+  //             Logout
+  //           </a>
+  //         </li>
+  //       </ul>
+  //     </div>
+  //   )
   );
 }
 
