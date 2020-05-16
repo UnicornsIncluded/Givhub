@@ -1,19 +1,13 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
-import {Router} from 'react-router-dom'
-import history from './history'
-import store from './store'
-import App from './app'
+import {render} from 'react-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-// establishes socket connection
-import './socket'
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <App />
-    </Router>
-  </Provider>,
-  document.getElementById('app')
-)
+import history from '_client/history'
+import store from '_client/store'
+
+import Root from '_environment/Root'
+
+render(<Root history={history} store={store} />, document.getElementById('app'))
