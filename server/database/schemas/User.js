@@ -36,7 +36,7 @@ const userSchema = new Schema({
     immutable: true
   },
   // username_case: { type: String, required: true },
-  email: {type: String, required: false, unique: true},
+  email: {type: String, required: false},
   password: {type: String, required: true},
   profile_pic: {type: String},
   linkedUser: {type: Number, default: null},
