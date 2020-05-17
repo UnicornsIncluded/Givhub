@@ -8,7 +8,7 @@ mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true
 })
 
-const data = [
+const users = [
   new User({
     userType: 'donor',
     username: 'belldonor',
@@ -37,10 +37,11 @@ const data = [
   })
 ]
 
-async function syncData() {
+async function syncUsers() {
   try {
-    for (let i = 0; i < data.length; i++) {
-      await data[i].save()
+    for (let i = 0; i < users.length; i++) {
+      users[i].hashPassword()
+      await users[i].save()
     }
   } catch (error) {
     console.error(error)
@@ -54,7 +55,7 @@ function exit() {
 async function runSeed() {
   console.log('seeding...')
   try {
-    await syncData()
+    await syncUsers()
   } catch (err) {
     console.error(err)
     process.exitCode = 1
