@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -11,6 +12,21 @@ export default function UserDropdown({ open, closeDropdown }) {
   const { user } = useSelector(R.pick(["user"]));
 
   const dropdown = useRef(null);
+=======
+import React, {useEffect, useRef} from 'react'
+import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import * as R from 'ramda'
+
+import {attemptLogout} from '../../../store/thunks/auth'
+
+export default function UserDropdown({open, closeDropdown}) {
+  const dispatch = useDispatch()
+  const {user} = useSelector(R.pick(['user']))
+
+  const dropdown = useRef(null)
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   // const dropdownListener = (e) =>
   //   !e.path.includes(dropdown.current) && open && closeDropdown();
@@ -30,8 +46,12 @@ export default function UserDropdown({ open, closeDropdown }) {
   //   dispatch(attemptLogout()).catch(R.identity);
   // };
 
+<<<<<<< HEAD
   return (
     null
+=======
+  return null
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
   //   open && (
   //     <div className="dropdown box" ref={dropdown}>
   //       <ul className="dropdown-list">
@@ -62,10 +82,18 @@ export default function UserDropdown({ open, closeDropdown }) {
   //       </ul>
   //     </div>
   //   )
+<<<<<<< HEAD
   );
+=======
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 }
 
 UserDropdown.propTypes = {
   open: PropTypes.bool.isRequired,
+<<<<<<< HEAD
   closeDropdown: PropTypes.func.isRequired,
 };
+=======
+  closeDropdown: PropTypes.func.isRequired
+}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6

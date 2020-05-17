@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -7,24 +8,60 @@ export default function Button(props) {
     className, onClick, label, style, type, size, outlined,
     inverted, rounded, hovered, focused, active, loading, disabled,
   } = props;
+=======
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+
+export default function Button(props) {
+  const {
+    className,
+    onClick,
+    label,
+    style,
+    type,
+    size,
+    outlined,
+    inverted,
+    rounded,
+    hovered,
+    focused,
+    active,
+    loading,
+    disabled
+  } = props
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const typeMap = {
     info: 'is-info',
     primary: 'is-primary',
     success: 'is-success',
     warning: 'is-warning',
+<<<<<<< HEAD
     danger: 'is-danger',
   };
+=======
+    danger: 'is-danger'
+  }
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const sizeMap = {
     small: 'is-small',
     normal: '',
     medium: 'is-medium',
+<<<<<<< HEAD
     large: 'is-large',
   };
 
   const isType = typeMap[type] || 'is-info';
   const isSize = sizeMap[size] || '';
+=======
+    large: 'is-large'
+  }
+
+  const isType = typeMap[type] || 'is-info'
+  const isSize = sizeMap[size] || ''
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const buttonClasses = classNames({
     [className]: !!className,
@@ -38,8 +75,13 @@ export default function Button(props) {
     'is-focused': focused,
     'is-active': active,
     'is-loading': loading,
+<<<<<<< HEAD
     'is-static': props.static,
   });
+=======
+    'is-static': props.static
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   return (
     <button
@@ -51,7 +93,11 @@ export default function Button(props) {
     >
       {label}
     </button>
+<<<<<<< HEAD
   );
+=======
+  )
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 }
 
 Button.propTypes = {
@@ -69,8 +115,13 @@ Button.propTypes = {
   active: PropTypes.bool,
   loading: PropTypes.bool,
   static: PropTypes.bool,
+<<<<<<< HEAD
   disabled: PropTypes.bool,
 };
+=======
+  disabled: PropTypes.bool
+}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
 Button.defaultProps = {
   className: '',
@@ -87,5 +138,10 @@ Button.defaultProps = {
   active: false,
   loading: false,
   static: false,
+<<<<<<< HEAD
   disabled: false,
 };
+=======
+  disabled: false
+}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6

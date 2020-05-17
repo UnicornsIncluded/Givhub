@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -18,44 +19,92 @@ export default function ChangePassword() {
   const [valid, setValid] = useState(false);
 
   const match = newPassword === confirmPassword;
+=======
+import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
+import classNames from 'classnames'
+import {useDispatch, useSelector} from 'react-redux'
+import * as R from 'ramda'
+
+import {validatePassword} from '../../../utils/validation'
+import {attemptUpdatePassword} from '../../../store/thunks/user'
+
+export default function ChangePassword() {
+  const dispatch = useDispatch()
+  const {user} = useSelector(R.pick(['user']))
+
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [message, setMessage] = useState('')
+  const [valid, setValid] = useState(false)
+
+  const match = newPassword === confirmPassword
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const newPasswordHelpClasses = classNames({
     help: true,
     'is-danger': !valid,
+<<<<<<< HEAD
     'is-success': valid,
   });
+=======
+    'is-success': valid
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const newPasswordIconClasses = classNames({
     fa: true,
     'fa-check': valid,
     'is-success': valid,
     'fa-warning': newPassword && !valid,
+<<<<<<< HEAD
     'is-danger': newPassword && !valid,
   });
+=======
+    'is-danger': newPassword && !valid
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const newPasswordInputClasses = classNames({
     input: true,
     'is-success': valid,
+<<<<<<< HEAD
     'is-danger': newPassword && !valid,
   });
+=======
+    'is-danger': newPassword && !valid
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const confirmPasswordIconClasses = classNames({
     fa: true,
     'fa-check': confirmPassword && match,
     'is-success': confirmPassword && match,
     'fa-warning': confirmPassword && !match,
+<<<<<<< HEAD
     'is-danger': confirmPassword && !match,
   });
+=======
+    'is-danger': confirmPassword && !match
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const confirmPasswordInputClasses = classNames({
     input: true,
     'is-success': confirmPassword && match,
+<<<<<<< HEAD
     'is-danger': confirmPassword && !match,
   });
+=======
+    'is-danger': confirmPassword && !match
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const confirmPasswordHelpClasses = classNames({
     help: true,
     'is-success': match,
+<<<<<<< HEAD
     'is-danger': !match,
   });
 
@@ -92,6 +141,42 @@ export default function ChangePassword() {
       <h3 className="title is-3">
         Change Password
       </h3>
+=======
+    'is-danger': !match
+  })
+
+  const updateOldPassword = e => setOldPassword(e.target.value)
+  const updateConfirmPassword = e => setConfirmPassword(e.target.value)
+
+  const handleValidatePassword = (username, password) => {
+    const {valid, message} = validatePassword(username, password)
+    setValid(valid)
+    setMessage(message)
+  }
+
+  const updateNewPassword = e => {
+    setNewPassword(e.target.value)
+    handleValidatePassword(user.username, e.target.value)
+  }
+
+  const save = () => {
+    if (valid && newPassword === confirmPassword && oldPassword) {
+      dispatch(attemptUpdatePassword({oldPassword, newPassword}))
+        .then(() => {
+          setOldPassword('')
+          setNewPassword('')
+          setConfirmPassword('')
+          setMessage('')
+          setValid(false)
+        })
+        .catch(R.identity)
+    }
+  }
+
+  return (
+    <div className="change-password box">
+      <h3 className="title is-3">Change Password</h3>
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
       <hr className="separator" />
 
       <div className="field">
@@ -111,9 +196,13 @@ export default function ChangePassword() {
       </div>
 
       <p className="has-space-below">
+<<<<<<< HEAD
         <Link to="/recovery">
           Forgot your password?
         </Link>
+=======
+        <Link to="/recovery">Forgot your password?</Link>
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
       </p>
 
       <div className="field has-help">
@@ -133,11 +222,15 @@ export default function ChangePassword() {
             <i className={newPasswordIconClasses} />
           </span>
         </p>
+<<<<<<< HEAD
         {newPassword && (
           <p className={newPasswordHelpClasses}>
             {message}
           </p>
         )}
+=======
+        {newPassword && <p className={newPasswordHelpClasses}>{message}</p>}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
       </div>
 
       <div className="field has-help">
@@ -174,5 +267,9 @@ export default function ChangePassword() {
         Update Password
       </button>
     </div>
+<<<<<<< HEAD
   );
+=======
+  )
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 }

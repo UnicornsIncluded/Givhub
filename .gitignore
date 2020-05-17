@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dependency Modules
 node_modules
 
@@ -27,3 +28,12 @@ yarn-error.log*
 # OSX
 .DS_Store
 
+=======
+node_modules
+public/bundle.js
+public/bundle.js.map
+secrets.js
+.DS_Store
+npm-debug.log
+yarn-error.log
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6

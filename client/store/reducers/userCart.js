@@ -27,7 +27,11 @@ const getCart = cart => ({
 /**
  * THUNK CREATORS
  */
+<<<<<<< HEAD
 export const fetchCart = (username) => async dispatch => {
+=======
+export const fetchCart = username => async dispatch => {
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
   try {
     const res = await axios.get(`/api/users/${username}/cart`)
     dispatch(getCart(res.data))
@@ -39,8 +43,12 @@ export const fetchCart = (username) => async dispatch => {
 export const addToCart = (newCartItem, username) => async dispatch => {
   try {
     const updateObj = {
+<<<<<<< HEAD
       newCartItem,
     
+=======
+      newCartItem
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
     }
     await axios.put(`/api/users/${username}/cart`, newCartItem)
     const {data} = await axios.get(`/api/users/${username}/cart`)
@@ -72,4 +80,7 @@ export default function userCart(state = [], action) {
       return state
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6

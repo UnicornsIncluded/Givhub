@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +19,28 @@ export default function SettingsPage({ location }) {
       dispatch(push('/login'));
     }
   }, []);
+=======
+import React, {useEffect} from 'react'
+import PropTypes from 'prop-types'
+import {useDispatch, useSelector} from 'react-redux'
+import {push} from 'connected-react-router'
+import {Switch, Route} from 'react-router'
+import * as R from 'ramda'
+
+import ProfileSettings from '../../templates/ProfileSettings'
+import AccountSettings from '../../templates/AccountSettings'
+import SettingsMenu from '../../organisms/SettingsMenu'
+
+export default function SettingsPage({location}) {
+  const dispatch = useDispatch()
+  const {user} = useSelector(R.pick(['user']))
+
+  useEffect(() => {
+    if (R.isEmpty(user)) {
+      dispatch(push('/login'))
+    }
+  }, [])
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   return (
     <div className="settings-page page">
@@ -38,11 +61,21 @@ export default function SettingsPage({ location }) {
         </div>
       </div>
     </div>
+<<<<<<< HEAD
   );
+=======
+  )
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 }
 
 SettingsPage.propTypes = {
   location: PropTypes.shape({
+<<<<<<< HEAD
     pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
+=======
+    pathname: PropTypes.string.isRequired
+  }).isRequired
+}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6

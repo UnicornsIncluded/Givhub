@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+=======
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
 export default function FormInput({
   className,
@@ -11,18 +19,32 @@ export default function FormInput({
   placeholder,
   type,
   leftIcon,
+<<<<<<< HEAD
   rightIcon,
 }) {
   const fieldClasses = classNames({
     field: true,
     [className]: true,
   });
+=======
+  rightIcon
+}) {
+  const fieldClasses = classNames({
+    field: true,
+    [className]: true
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   const controlClasses = classNames({
     control: true,
     'has-icons-left': !!leftIcon,
+<<<<<<< HEAD
     'has-icons-right': !!rightIcon,
   });
+=======
+    'has-icons-right': !!rightIcon
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
   return (
     <div className={fieldClasses}>
@@ -46,15 +68,24 @@ export default function FormInput({
         )}
       </p>
     </div>
+<<<<<<< HEAD
   );
+=======
+  )
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 }
 
 FormInput.defaultProps = {
   className: '',
   leftIcon: undefined,
   rightIcon: undefined,
+<<<<<<< HEAD
   type: 'text',
 };
+=======
+  type: 'text'
+}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
 
 FormInput.propTypes = {
   className: PropTypes.string,
@@ -63,5 +94,10 @@ FormInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   leftIcon: PropTypes.object,
   rightIcon: PropTypes.object,
+<<<<<<< HEAD
   type: PropTypes.string,
 };
+=======
+  type: PropTypes.string
+}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6

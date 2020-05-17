@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -65,12 +66,88 @@ export default function Navigation({ pathname }) {
     "is-hidden-mobile": true,
     "is-active": isSettings,
   });
+=======
+import React, {useState, useEffect} from 'react'
+import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import classNames from 'classnames'
+import {useSelector} from 'react-redux'
+import * as R from 'ramda'
+
+import UserDropdown from '../../molecules/UserDropdown'
+import Button from '../../atoms/Button'
+import {attemptLogout} from '../../../store/thunks/auth'
+
+export default function Navigation({pathname}) {
+  const {user} = useSelector(R.pick(['user']))
+  const dispatch = useDispatch()
+
+  const [auth, setAuth] = useState(!R.isEmpty(user))
+  const [open, setOpen] = useState(false)
+
+  useEffect(
+    () => {
+      setAuth(!R.isEmpty(user))
+      console.log('NAVIGATION>>>>>', user)
+    },
+    [user.username]
+  )
+
+  const logout = () => {
+    closeDropdown()
+    dispatch(attemptLogout()).catch(R.identity)
+  }
+  const toggleDropdown = () => setOpen(!open)
+
+  const closeDropdown = () => setOpen(false)
+
+  const isHome =
+    pathname.length === 5
+      ? pathname === '/home'
+      : R.slice(0, 6, pathname) === '/home/'
+
+  const isTodo =
+    pathname.length === 5
+      ? pathname === '/todo'
+      : R.slice(0, 6, pathname) === '/todo/'
+
+  const isSettings =
+    pathname.length === 9
+      ? pathname === '/settings'
+      : R.slice(0, 10, pathname) === '/settings/'
+
+  const homeItemClasses = classNames({
+    'navbar-item': true,
+    'is-tab': true,
+    'is-hidden-mobile': true,
+    'is-active': isHome
+  })
+
+  const todoItemClasses = classNames({
+    'navbar-item': true,
+    'is-tab': true,
+    'is-hidden-mobile': true,
+    'is-active': isTodo
+  })
+
+  const settingsItemClasses = classNames({
+    'navbar-item': true,
+    'is-tab': true,
+    'is-hidden-mobile': true,
+    'is-active': isSettings
+  })
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
   return (
     <nav className="navbar is-fixed-top has-shadow" role="navigation">
       <div className="container">
         <div className="navbar-brand">
           <Link
+<<<<<<< HEAD
             to={auth ? "/home" : "/"}
+=======
+            to={auth ? '/home' : '/'}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
             className="navbar-item"
             aria-label="main navigation"
           >
@@ -93,6 +170,7 @@ export default function Navigation({ pathname }) {
                 // onClick={toggleDropdown}
                 // onKeyPress={toggleDropdown}
               >
+<<<<<<< HEAD
                 {user.userType == "donor" ? (
                   <div>
                   <Link to={`/${user.username}/cart`}>
@@ -104,11 +182,25 @@ export default function Navigation({ pathname }) {
                     />
                   </Link>
                   {/* <Link to={`/${user.username}/cart`}> */}
+=======
+                {user.userType == 'donor' ? (
+                  <div>
+                    <Link to={`/${user.username}/cart`}>
+                      <img
+                        className="roundedImg"
+                        width="50px"
+                        height="50px"
+                        src="https://i.pinimg.com/originals/4e/4b/06/4e4b06fe3fbca10096ece1aa6354479b.png"
+                      />
+                    </Link>
+                    {/* <Link to={`/${user.username}/cart`}> */}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
                     <img
                       className="roundedImg"
                       width="50px"
                       height="50px"
                       src="https://cdn.iconscout.com/icon/free/png-256/logout-37-459247.png"
+<<<<<<< HEAD
                       onClick = {logout}
                     />
                   {/* </Link> */}
@@ -116,10 +208,27 @@ export default function Navigation({ pathname }) {
                 ) : (
                   <div>
                   <Link to={`courier/${user.username}`}>
+=======
+                      onClick={logout}
+                    />
+                    {/* </Link> */}
+                  </div>
+                ) : (
+                  <div>
+                    <Link to={`courier/${user.username}`}>
+                      <img
+                        className="roundedImg"
+                        width="50px"
+                        height="50px"
+                        src="https://s3.amazonaws.com/iconbros/icons/icon_pngs/000/000/163/original/delivery.png?1510082899"
+                      />
+                    </Link>
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
                     <img
                       className="roundedImg"
                       width="50px"
                       height="50px"
+<<<<<<< HEAD
                       src="https://s3.amazonaws.com/iconbros/icons/icon_pngs/000/000/163/original/delivery.png?1510082899"
                     />
                  </Link>
@@ -131,6 +240,12 @@ export default function Navigation({ pathname }) {
                  onClick = {logout}
                />
                </div>
+=======
+                      src="https://cdn.iconscout.com/icon/free/png-256/logout-37-459247.png"
+                      onClick={logout}
+                    />
+                  </div>
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
                 )}
               </a>
             )}
@@ -143,7 +258,11 @@ export default function Navigation({ pathname }) {
               <Link to="/home" className={homeItemClasses}>
                 <h6 className="title is-6">Home</h6>
               </Link>
+<<<<<<< HEAD
               {user.userType == "donor" ? (
+=======
+              {user.userType == 'donor' ? (
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
                 <Link to={`/${user.username}/cart`} className={todoItemClasses}>
                   <h6 className="title is-6">Donation Cart</h6>
                 </Link>
@@ -168,7 +287,11 @@ export default function Navigation({ pathname }) {
                 <figure className="image navbar-image is-32x32">
                   <img
                     className="profile-img"
+<<<<<<< HEAD
                     src={user.profilePic || "/images/default-profile.png"}
+=======
+                    src={user.profilePic || './default-profile.png'}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
                     alt=""
                   />
                 </figure>
@@ -191,9 +314,18 @@ export default function Navigation({ pathname }) {
         {/* <UserDropdown open={open} closeDropdown={closeDropdown} /> */}
       </div>
     </nav>
+<<<<<<< HEAD
   );
 }
 
 Navigation.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
+=======
+  )
+}
+
+Navigation.propTypes = {
+  pathname: PropTypes.string.isRequired
+}
+>>>>>>> bc27a0cabf6a1cbda6c1457c76f8bb6f240197b6
