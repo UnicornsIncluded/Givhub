@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
 export function Spacer() {
-    return (
-        <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        </div>
-    )
-};
+  return (
+    <div>
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+  )
+}

@@ -1,3 +1,3 @@
-import RegisterSection from './RegisterSection';
+import RegisterSection from './RegisterSection'
 
-export default RegisterSection;
+export default RegisterSection

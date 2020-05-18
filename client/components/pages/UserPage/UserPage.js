@@ -1,85 +1,93 @@
-import React from "react";
+import React from 'react'
 import axios from 'axios'
-import { connect } from "react-redux";
+import {connect} from 'react-redux'
 // import { push } from "connected-react-router";
 // import * as R from "ramda";
-import Button from "react-bootstrap/Button";
-import io from "socket.io-client";
+import Button from 'react-bootstrap/Button'
 import {
   attemptUpdateUserCourier,
   attemptGetLinkedUser,
   attemptGetCouriers,
   attemptGetUser
-} from "../../../store/thunks/user";
+} from '../../../store/thunks/user'
 import {
   fetchCart,
   addToCart,
-  removeFromCart,
-} from "../../../store/reducers/userCart";
-import Box from "../../molecules/Box";
+  removeFromCart
+} from '../../../store/reducers/userCart'
+import Box from '../../molecules/Box'
 import {Spacer} from '../../atoms/Spacer'
 
-let courier;
-let linkedUserId;
-let matched;
-let donor;
-let randomCourierIndex;
-let randomCourier;
+let courier
+let linkedUserId
+let matched
+let donor
+let randomCourierIndex
+let randomCourier
 export class UserPage extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      donating: "",
-    };
-    this.handleDonateChange = this.handleDonateChange.bind(this);
-    this.handleDonoSubmit = this.handleDonoSubmit.bind(this);
-    // this.handleRedirect = this.handleRedirect.bind(this);
+      donating: ''
+    }
+    this.handleDonateChange = this.handleDonateChange.bind(this)
+    this.handleDonoSubmit = this.handleDonoSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.attemptGetCouriers();
-    this.props.getCartItems(this.props.match.params.username);
+    this.props.attemptGetCouriers()
+    this.props.getCartItems(this.props.match.params.username)
   }
   handleDonateChange(event) {
     this.setState({
-      [event.target.id]: event.target.value,
-    });
+      [event.target.id]: event.target.value
+    })
   }
-  handleDonoSubmit(event) {
-    const newCartItem = {};
-    newCartItem.name = this.state.donating;
-    //palce holder for dynamic
-    this.props.addToCart(newCartItem, this.props.match.params.username);
+  handleDonoSubmit() {
+    const newCartItem = {}
+    newCartItem.name = this.state.donating
+    this.props.addToCart(newCartItem, this.props.match.params.username)
   }
   handleClick = () => {
-    randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length);
-    courier = this.props.couriers[randomCourierIndex].user;
-    donor = this.props.user.user;
-    linkedUserId = courier;
-    // console.log('PHONE NUM PROPS', this.props.user)
+    // Need to add if condition to determine if courier already has job
+    // Also need to clear linkedUser and linked address from courier when "delivered is pressed so above if condition can work"
+    const donorAddress = this.props.user.address
+    randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length)
+    courier = this.props.couriers[randomCourierIndex].user
+    donor = this.props.user.user
+    linkedUserId = courier
+
     // make not hard coded
     this.props
-      .attemptUpdateUserCourier(courier, donor)
-      .then(() => this.props.attemptGetLinkedUser(courier))
+      // .attemptUpdateUserCourier(courier, donor)
+      .attemptGetLinkedUser(courier)
       .then(() => this.props.attemptGetUser())
-      .then(() => axios.post('/sms',{message: 'You have a new job! Please check it out on Givhub', to: this.props.linkedUser.phoneNumber, }))
-      .then(() => axios.post('/sms',{message: 'Your courier is on their way to pick up your donation!', to: this.props.userCart.phoneNumber, }))
+      .then(() =>
+        axios.post('/sms', {
+          message: 'You have a new job! Please check it out on Givhub',
+          to: this.props.linkedUser.phoneNumber
+        })
+      )
+      .then(() =>
+        axios.post('/sms', {
+          message:
+            "We've found you a courier and will let you know when they will be on their way!",
+          to: this.props.userCart.phoneNumber
+        })
+      )
+      .then(this.props.attemptUpdateUserCourier(courier, donor, donorAddress))
       .then(() =>
         this.props.history.push(`/${this.props.match.params.username}/oip`)
-        // console.log('this is after the first .then')
-      );
-    
-    console.log("PROPS", this.props);
-  };
+      )
+  }
 
   handleDelete = (username, item) => {
-    console.log("handle delete item", item);
-    this.props.removeFromCart(username, item);
-  };
+    this.props.removeFromCart(username, item)
+  }
 
   render() {
-    let courierInfo = this.props.linkedUser;
-    let donorInfo = this.props.user.user;
+    let courierInfo = this.props.linkedUser
+    let donorInfo = this.props.user.user
     return (
       <div className="welcome-page page">
         <div className="section">
@@ -89,7 +97,7 @@ export class UserPage extends React.Component {
             <Box>
               <h3 className="title is-3">Donate a Food!</h3>
               <div className="field">
-                <label htmlFor="username" className="label"></label>
+                <label htmlFor="username" className="label" />
                 <p className="control has-icons-right">
                   <input
                     id="donating"
@@ -102,12 +110,13 @@ export class UserPage extends React.Component {
               </div>
               <div className="has-text-right">
                 <Button
+                  id="addButton"
                   type="success"
                   label="Add"
                   size="lg"
                   onClick={() => this.handleDonoSubmit()}
                 >
-                  {" "}
+                  {' '}
                   Add
                 </Button>
               </div>
@@ -116,10 +125,10 @@ export class UserPage extends React.Component {
               <ul>
                 {this.props.userCart._id ? (
                   this.props.userCart.donationCart.items.map((item, id = 0) => {
-                    id++;
+                    id++
                     return (
-                      <div>
-                        <li key={id}>
+                      <div key={id}>
+                        <li>
                           {item.name}
                           <br />
                           <Button
@@ -132,7 +141,7 @@ export class UserPage extends React.Component {
                           </Button>
                         </li>
                       </div>
-                    );
+                    )
                   })
                 ) : (
                   <li>nothing</li>
@@ -140,7 +149,8 @@ export class UserPage extends React.Component {
               </ul>
             </div>
             <Button
-              variant="success"
+              id="tealButton"
+              // variant="success"
               size="lg"
               onClick={() => this.handleClick()}
               // onClick={() => this.handleRedirect()}
@@ -148,51 +158,43 @@ export class UserPage extends React.Component {
               Donate Now!
             </Button>
           </div>
-          {console.log(
-            courierInfo.user,
-            donorInfo.linkedUser,
-            courierInfo.linkedUser,
-            donorInfo.user
-          )}
           {Array.isArray(this.props.linkedUser) == false &&
-          courierInfo.user == donorInfo.linkedUser &&
-          courierInfo.linkedUser == donorInfo.user ? (
+          courierInfo.user === donorInfo.linkedUser &&
+          courierInfo.linkedUser === donorInfo.user ? (
             <h2>
               {this.props.linkedUser.username} is picking up your donation
             </h2>
           ) : null}
         </div>
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(state) {
-  console.log("mapping");
   return {
     user: state.user,
     userCart: state.userCart,
     couriers: state.couriers,
-    linkedUser: state.linkedUser,
-  };
+    linkedUser: state.linkedUser
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  console.log("dispatching");
   return {
-    attemptUpdateUserCourier: () =>
-      dispatch(attemptUpdateUserCourier(courier, donor)),
+    attemptUpdateUserCourier: (courier, donor, address) =>
+      dispatch(attemptUpdateUserCourier(courier, donor, address)),
     attemptGetLinkedUser: () => dispatch(attemptGetLinkedUser(linkedUserId)),
-    getCartItems: (username) => {
-      dispatch(fetchCart(username));
+    getCartItems: username => {
+      dispatch(fetchCart(username))
     },
     attemptGetCouriers: () => dispatch(attemptGetCouriers()),
     addToCart: (nameOfItem, username) =>
       dispatch(addToCart(nameOfItem, username)),
     removeFromCart: (username, item) =>
       dispatch(removeFromCart(username, item)),
-      attemptGetUser : () => dispatch(attemptGetUser())
-  };
+    attemptGetUser: () => dispatch(attemptGetUser())
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage)

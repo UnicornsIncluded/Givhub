@@ -1,3 +1,3 @@
-import ConfirmDeleteTodo from './ConfirmDeleteTodo';
+import ConfirmDeleteTodo from './ConfirmDeleteTodo'
 
-export default ConfirmDeleteTodo;
+export default ConfirmDeleteTodo

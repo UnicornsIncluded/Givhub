@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { attemptUpdateUser } from "../../../store/thunks/user";
+import React, {useEffect} from 'react'
+import {connect} from 'react-redux'
+import {attemptUpdateUser} from '../../../store/thunks/user'
 import {Spacer} from '../../atoms/Spacer'
 
 export class ThankYouPage extends React.Component {
   componentDidMount() {
-    if (this.props.user.userType == "donor") {
-      this.props.attemptUpdateUser({"donationCart.items": []})
+    if (this.props.user.userType == 'donor') {
+      this.props.attemptUpdateUser({'donationCart.items': []})
     }
   }
 
@@ -16,11 +16,13 @@ export class ThankYouPage extends React.Component {
         <div className="section">
           <div className="container">
             <Spacer />
-            {this.props.user.userType == "donor" ? (
+            {this.props.user.userType == 'donor' ? (
               <div>
-              <h1>Thank You for your donation {this.props.user.username} !</h1>
-              <br />
-              <h2>Your donation has been successfully delivered</h2>
+                <h1>
+                  Thank You for your donation {this.props.user.username} !
+                </h1>
+                <br />
+                <h2>Your donation has been successfully delivered</h2>
               </div>
             ) : (
               <h1>Thank You for your delivery {this.props.user.username} !</h1>
@@ -28,16 +30,18 @@ export class ThankYouPage extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(state) {
-  return { user: state.user };
+  return {user: state.user}
 }
 
 function mapDispatchToProps(dispatch) {
-  return {attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails))}
+  return {
+    attemptUpdateUser: userDetails => dispatch(attemptUpdateUser(userDetails))
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThankYouPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ThankYouPage)

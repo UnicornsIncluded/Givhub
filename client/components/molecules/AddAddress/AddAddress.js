@@ -1,11 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
-import { attemptUpdateUser } from "_thunks/user";
+import React from 'react'
+import {connect} from 'react-redux'
+import {attemptUpdateUser} from '../../../store/thunks/user'
+import Button from 'react-bootstrap/Button'
 
 class AddressForm extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = this.initialState();
+    super(props)
+    this.state = this.initialState()
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     // this.setState = this.handleSubmit.bind(this)
@@ -13,27 +14,26 @@ class AddressForm extends React.Component {
 
   initialState() {
     return {
-      street_address: "",
-      city: "",
-      state: "",
-      zip_code: "",
-      googleMapLink: "",
-    };
+      street_address: '',
+      city: '',
+      state: '',
+      zip_code: '',
+      googleMapLink: ''
+    }
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({[event.target.name]: event.target.value})
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    const streetAddress = this.state.street_address;
-    const city = this.state.city;
-    const state = this.state.state;
-    const zipcode = this.state.zip_code;
-    const address =
-      streetAddress + " " + city + " " + state + " " + zipcode;
-    this.props.attemptUpdateUser({ address });
+    event.preventDefault()
+    const streetAddress = this.state.street_address
+    const city = this.state.city
+    const state = this.state.state
+    const zipcode = this.state.zip_code
+    const address = streetAddress + ' ' + city + ' ' + state + ' ' + zipcode
+    this.props.attemptUpdateUser({address})
   }
 
   render() {
@@ -42,43 +42,45 @@ class AddressForm extends React.Component {
         <h2>Add Pickup Address</h2>
         <form onSubmit={this.handleSubmit}>
           <input
-          //   id="autocomplete" <<< try to implement googlemaps api
-            name={"street_address"}
+            //   id="autocomplete" <<< try to implement googlemaps api
+            name="street_address"
             value={this.state.street_address}
-            placeholder={"Street Address"}
+            placeholder="Street Address"
             onChange={this.handleChange}
             required
           />
           <input
-            name={"city"}
+            name="city"
             value={this.state.city}
-            placeholder={"City"}
+            placeholder="City"
             onChange={this.handleChange}
             required
           />
           <input
-            name={"state"}
+            name="state"
             value={this.state.state}
-            placeholder={"State"}
+            placeholder="State"
             onChange={this.handleChange}
             required
           />
           <input
-            name={"zip_code"}
+            name="zip_code"
             value={this.state.zip_code}
-            placeholder={"Zipcode"}
+            placeholder="Zipcode"
             onChange={this.handleChange}
             required
           />
-          <button onSubmit={this.handleSubmit}>Submit</button>
+          <Button id="tealButton" type="submit" onSubmit={this.handleSubmit}>
+            Submit
+          </Button>
         </form>
       </div>
-    );
+    )
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails)),
-});
+const mapDispatchToProps = dispatch => ({
+  attemptUpdateUser: userDetails => dispatch(attemptUpdateUser(userDetails))
+})
 
-export default connect(null, mapDispatchToProps)(AddressForm);
+export default connect(null, mapDispatchToProps)(AddressForm)

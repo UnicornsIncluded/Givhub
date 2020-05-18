@@ -1,3 +1,3 @@
-import UserDropdown from './UserDropdown';
+import UserDropdown from './UserDropdown'
 
-export default UserDropdown;
+export default UserDropdown

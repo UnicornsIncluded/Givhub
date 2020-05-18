@@ -1,3 +1,3 @@
-import ConfirmModal from './ConfirmModal';
+import ConfirmModal from './ConfirmModal'
 
-export default ConfirmModal;
+export default ConfirmModal

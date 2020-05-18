@@ -1,3 +1,3 @@
-import LostSection from './LostSection';
+import LostSection from './LostSection'
 
-export default LostSection;
+export default LostSection

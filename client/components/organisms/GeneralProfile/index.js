@@ -1,3 +1,3 @@
-import GeneralProfile from './GeneralProfile';
+import GeneralProfile from './GeneralProfile'
 
-export default GeneralProfile;
+export default GeneralProfile

@@ -1,11 +1,11 @@
 export const LINKED_USER_UPDATED = 'LINKED_USER_UPDATED'
 
 export function linkedUserUpdated(user) {
-    return {
-      type: LINKED_USER_UPDATED,
-      user
-    };
+  return {
+    type: LINKED_USER_UPDATED,
+    user
   }
+}
 
 /**
  * REDUCER

@@ -1,28 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
-export default function Box({ children, className }) {
+export default function Box({children, className}) {
   const boxClasses = classNames({
     [className]: !!className,
-    box: true,
-  });
+    box: true
+  })
 
-  return (
-    <div className={boxClasses}>
-      {children}
-    </div>
-  );
+  return <div className={boxClasses}>{children}</div>
 }
 
 Box.defaultProps = {
-  className: '',
-};
+  className: ''
+}
 
 Box.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.array,
-  ]).isRequired,
-  className: PropTypes.string,
-};
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+    .isRequired,
+  className: PropTypes.string
+}
