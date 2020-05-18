@@ -28,6 +28,7 @@ const users = [
   new User({
     userType: 'courier',
     username: 'gigicourier',
+    linkedUser: null,
     firstName: 'Gigi',
     lastName: 'Hadid',
     password: '123456',
