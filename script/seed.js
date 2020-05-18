@@ -9,38 +9,38 @@ mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true
 })
 
-const users = [
-  new User({
-    userType: 'donor',
-    username: 'belladonor',
-    linkedUser: null,
-    firstName: 'Bella',
-    lastName: 'Hadid',
-    password: '123456',
-    address: '95 Wall Street, New York, NY 10005',
-    phoneNumber: '+19419142203',
-    email: 'bella@email.com',
-    donationCart: {
-      items: [{name: 'carrot'}, {name: 'banana'}, {name: 'bagel'}],
-      status: 'active'
-    }
-  }),
-  new User({
-    userType: 'courier',
-    username: 'gigicourier',
-    linkedUser: null,
-    firstName: 'Gigi',
-    lastName: 'Hadid',
-    password: '123456',
-    address: '275 South Street, New York, NY 10002',
-    phoneNumber: '+17148694380',
-    email: 'gigi@email.com',
-    donationCart: {
-      items: [{name: 'vitamins'}, {name: 'strawberries'}, {name: 'tea'}],
-      status: 'active'
-    }
-  })
-]
+// const users = [
+//   new User({
+//     userType: 'donor',
+//     username: 'belladonor',
+//     linkedUser: null,
+//     firstName: 'Bella',
+//     lastName: 'Hadid',
+//     password: '123456',
+//     address: '95 Wall Street, New York, NY 10005',
+//     phoneNumber: '+19419142203',
+//     email: 'bella@email.com',
+//     donationCart: {
+//       items: [{name: 'carrot'}, {name: 'banana'}, {name: 'bagel'}],
+//       status: 'active'
+//     }
+//   }),
+//   new User({
+//     userType: 'courier',
+//     username: 'gigicourier',
+//     linkedUser: null,
+//     firstName: 'Gigi',
+//     lastName: 'Hadid',
+//     password: '123456',
+//     address: '275 South Street, New York, NY 10002',
+//     phoneNumber: '+17148694380',
+//     email: 'gigi@email.com',
+//     donationCart: {
+//       items: [{name: 'vitamins'}, {name: 'strawberries'}, {name: 'tea'}],
+//       status: 'active'
+//     }
+//   })
+// ]
 
 const foodBanks = [
   new FoodBank({
@@ -77,10 +77,10 @@ const foodBanks = [
 
 async function syncData() {
   try {
-    for (let i = 0; i < users.length; i++) {
-      users[i].hashPassword()
-      await users[i].save()
-    }
+    // for (let i = 0; i < users.length; i++) {
+    //   users[i].hashPassword()
+    //   await users[i].save()
+    // }
 
     for (let i = 0; i < foodBanks.length; i++) {
       await foodBanks[i].save()
