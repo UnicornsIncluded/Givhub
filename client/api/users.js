@@ -1,10 +1,11 @@
-import request from 'superagent';
-import { handleSuccess, handleError } from '_utils/api';
+import request from 'superagent'
+import {handleSuccess, handleError} from '../utils/api'
 
 export const postCheckUsername = username =>
-  request.post('/api/users/checkusername')
-    .send({ username })
+  request
+    .post('/api/users/checkusername')
+    .send({username})
     .then(handleSuccess)
-    .catch(handleError);
+    .catch(handleError)
 
-export const placeholder = () => {};
+export const placeholder = () => {}

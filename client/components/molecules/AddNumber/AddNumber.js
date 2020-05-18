@@ -1,11 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
-import { attemptUpdateUser } from "_thunks/user";
+import React from 'react'
+import {connect} from 'react-redux'
+import {attemptUpdateUser} from '../../../store/thunks/user'
+import Button from 'react-bootstrap/Button'
 
 class PhoneForm extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = this.initialState();
+    super(props)
+    this.state = this.initialState()
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     // this.setState = this.handleSubmit.bind(this)
@@ -13,22 +14,21 @@ class PhoneForm extends React.Component {
 
   initialState() {
     return {
-      areaCode: "",
-      numberBody: ""
-    };
+      areaCode: '',
+      numberBody: ''
+    }
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({[event.target.name]: event.target.value})
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    const areaCode = this.state.areaCode;
-    const numberBody = this.state.numberBody;
-    const phoneNumber =
-        "+" + "1" + areaCode + numberBody
-    this.props.attemptUpdateUser({ phoneNumber });
+    event.preventDefault()
+    const areaCode = this.state.areaCode
+    const numberBody = this.state.numberBody
+    const phoneNumber = '+' + '1' + areaCode + numberBody
+    this.props.attemptUpdateUser({phoneNumber})
   }
 
   render() {
@@ -44,28 +44,30 @@ class PhoneForm extends React.Component {
             onChange={this.handleChange}
           /> */}
           <input
-            name={"areaCode"}
+            name="areaCode"
             value={this.state.areaCode}
-            placeholder={"Area Code"}
+            placeholder="Area Code"
             onChange={this.handleChange}
             required
           />
           <input
-            name={"numberBody"}
+            name="numberBody"
             value={this.state.numberBody}
-            placeholder={"Phone Number"}
+            placeholder="Phone Number"
             onChange={this.handleChange}
             required
           />
-          <button onSubmit={this.handleSubmit}>Submit</button>
+          <Button type="submit" id="tealButton" onSubmit={this.handleSubmit}>
+            Submit
+          </Button>
         </form>
       </div>
-    );
+    )
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  attemptUpdateUser: (userDetails) => dispatch(attemptUpdateUser(userDetails)),
-});
+const mapDispatchToProps = dispatch => ({
+  attemptUpdateUser: userDetails => dispatch(attemptUpdateUser(userDetails))
+})
 
-export default connect(null, mapDispatchToProps)(PhoneForm);
+export default connect(null, mapDispatchToProps)(PhoneForm)

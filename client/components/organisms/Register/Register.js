@@ -1,133 +1,128 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
-import * as R from 'ramda';
+import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
+import classNames from 'classnames'
+import {useDispatch} from 'react-redux'
+import * as R from 'ramda'
 
-import useKeyPress from '_hooks/useKeyPress';
-import { postCheckUsername } from '_api/users';
-import { validateUsername, validatePassword } from '_utils/validation';
-import { attemptRegister } from '_thunks/auth';
+import useKeyPress from '../../../hooks/useKeyPress'
+import {postCheckUsername} from '../../../api/users'
+import {validateUsername, validatePassword} from '../../../utils/validation'
+import {attemptRegister} from '../../../store/thunks/auth'
 
-import Box from '_molecules/Box';
-import Button from '_atoms/Button';
+import Box from '../../molecules/Box'
+import Button from '../../atoms/Button'
 
 export default function Register() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const [username, setUsername] = useState('');
-  const [usernameMessage, setUsernameMessage] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState('');
-  const [usernameAvailable, setUsernameAvailable] = useState(false);
-  const [passwordValid, setPasswordValid] = useState(false);
+  const [username, setUsername] = useState('')
+  const [usernameMessage, setUsernameMessage] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordMessage, setPasswordMessage] = useState('')
+  const [usernameAvailable, setUsernameAvailable] = useState(false)
+  const [passwordValid, setPasswordValid] = useState(false)
 
   const checkPassword = (newUsername, newPassword) => {
-    const { valid, message } = validatePassword(newUsername, newPassword);
+    const {valid, message} = validatePassword(newUsername, newPassword)
 
-    setPasswordValid(valid);
-    setPasswordMessage(message);
-  };
+    setPasswordValid(valid)
+    setPasswordMessage(message)
+  }
 
   const checkUsername = newUsername => {
-    const { valid, message } = validateUsername(newUsername);
+    const {valid, message} = validateUsername(newUsername)
 
     if (valid) {
-      setUsernameMessage('Checking username...');
-      setUsernameAvailable(false);
+      setUsernameMessage('Checking username...')
+      setUsernameAvailable(false)
 
       postCheckUsername(newUsername)
         .then(res => {
-          setUsernameAvailable(res.available);
-          setUsernameMessage(res.message);
+          setUsernameAvailable(res.available)
+          setUsernameMessage(res.message)
         })
-        .catch(R.identity);
+        .catch(R.identity)
     } else {
-      setUsernameAvailable(valid);
-      setUsernameMessage(message);
+      setUsernameAvailable(valid)
+      setUsernameMessage(message)
     }
-  };
+  }
 
   const updateUsername = newUserName => {
-    setUsername(newUserName);
-    checkPassword(newUserName, password);
-  };
+    setUsername(newUserName)
+    checkPassword(newUserName, password)
+  }
 
   const handleUsernameChange = e => {
-    updateUsername(e.target.value);
-    checkUsername(e.target.value);
-  };
+    updateUsername(e.target.value)
+    checkUsername(e.target.value)
+  }
 
   const handlePasswordChange = e => {
-    setPassword(e.target.value);
-    checkPassword(username, e.target.value);
-  };
+    setPassword(e.target.value)
+    checkPassword(username, e.target.value)
+  }
 
   const register = () => {
     if (usernameAvailable && passwordValid) {
       const newUser = {
         username,
-        password,
-      };
+        password
+      }
 
-      dispatch(attemptRegister(newUser))
-        .catch(R.identity);
+      dispatch(attemptRegister(newUser)).catch(R.identity)
     }
-  };
+  }
 
-  useKeyPress('Enter', register);
+  useKeyPress('Enter', register)
 
   const usernameIconClasses = classNames({
     fa: true,
     'fa-check': usernameAvailable,
     'fa-warning': username && !usernameAvailable,
     'is-success': usernameAvailable,
-    'is-danger': username && !usernameAvailable,
-  });
+    'is-danger': username && !usernameAvailable
+  })
 
   const usernameInputClasses = classNames({
     input: true,
     'is-success': usernameAvailable,
-    'is-danger': username && !usernameAvailable,
-  });
+    'is-danger': username && !usernameAvailable
+  })
 
   const usernameHelpClasses = classNames({
     help: true,
     'is-success': usernameAvailable,
-    'is-danger': username && !usernameAvailable,
-  });
+    'is-danger': username && !usernameAvailable
+  })
 
   const passwordIconClasses = classNames({
     fa: true,
     'fa-check': passwordValid,
     'fa-warning': password && !passwordValid,
     'is-success': passwordValid,
-    'is-danger': password && !passwordValid,
-  });
+    'is-danger': password && !passwordValid
+  })
 
   const passwordInputClasses = classNames({
     input: true,
     'is-success': passwordValid,
-    'is-danger': password && !passwordValid,
-  });
+    'is-danger': password && !passwordValid
+  })
 
   const passwordHelpClasses = classNames({
     help: true,
     'is-success': passwordValid,
-    'is-danger': password && !passwordValid,
-  });
+    'is-danger': password && !passwordValid
+  })
 
   return (
     <Box className="register">
-      <h3 className="title is-3">
-        Sign Up
-      </h3>
+      <h3 className="title is-3">Sign Up</h3>
       <hr className="separator" />
       <p className="has-space-below">
         Already a member?&nbsp;
-        <Link to="/login">
-          Login
-        </Link>
+        <Link to="/login">Login</Link>
       </p>
 
       <div className="field">
@@ -147,11 +142,7 @@ export default function Register() {
             <i className={usernameIconClasses} />
           </span>
         </p>
-        {username && (
-          <p className={usernameHelpClasses}>
-            {usernameMessage}
-          </p>
-        )}
+        {username && <p className={usernameHelpClasses}>{usernameMessage}</p>}
       </div>
 
       <div className="field">
@@ -171,11 +162,7 @@ export default function Register() {
             <i className={passwordIconClasses} />
           </span>
         </p>
-        {password && (
-          <p className={passwordHelpClasses}>
-            {passwordMessage}
-          </p>
-        )}
+        {password && <p className={passwordHelpClasses}>{passwordMessage}</p>}
       </div>
 
       <hr className="separator" />
@@ -189,5 +176,5 @@ export default function Register() {
         />
       </div>
     </Box>
-  );
+  )
 }

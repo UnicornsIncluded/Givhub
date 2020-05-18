@@ -1,3 +1,3 @@
-import TodoSection from './TodoSection';
+import TodoSection from './TodoSection'
 
-export default TodoSection;
+export default TodoSection

@@ -1,3 +1,3 @@
-import UserPage from './UserPage';
+import UserPage from './UserPage'
 
-export default UserPage;
+export default UserPage

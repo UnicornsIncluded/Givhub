@@ -1,3 +1,3 @@
-import CourierPage from './CourierPage';
+import CourierPage from './CourierPage'
 
-export default CourierPage;
+export default CourierPage

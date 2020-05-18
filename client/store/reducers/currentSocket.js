@@ -1,11 +1,11 @@
 export const CURRENT_SOCKET = 'CURRENT_SOCKET'
 
 export function getCurrentSocket(socketId) {
-    return {
-      type: CURRENT_SOCKET,
-      socketId
-    };
+  return {
+    type: CURRENT_SOCKET,
+    socketId
   }
+}
 
 /**
  * REDUCER
@@ -18,4 +18,3 @@ export default function currentSocket(state = [], action) {
       return state
   }
 }
-

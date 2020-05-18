@@ -1,3 +1,3 @@
-import LoginSection from './LoginSection';
+import LoginSection from './LoginSection'
 
-export default LoginSection;
+export default LoginSection

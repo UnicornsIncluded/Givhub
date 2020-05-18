@@ -1,4 +1,4 @@
-import update from "immutability-helper";
+import update from 'immutability-helper'
 import {
   LOGIN_USER,
   LOGOUT_USER,
@@ -6,23 +6,23 @@ import {
   UPDATE_USER_COURIER,
   GET_USER,
   GET_USERS
-} from "_actions/user";
+} from '../actions/user'
 
 export default function user(state = {}, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return action.user;
+      return action.user
     case LOGOUT_USER:
-      return {};
+      return {}
     case UPDATE_USER:
-      return update(state, { $merge: action.user });
+      return update(state, {$merge: action.user})
     case UPDATE_USER_COURIER:
-      return update(state, { $merge: action.user });
+      return update(state, {$merge: action.user})
     case GET_USER:
       return action.user
-    case GET_USERS: 
+    case GET_USERS:
       return state.user
     default:
-      return state;
+      return state
   }
 }

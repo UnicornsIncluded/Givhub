@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 export default function FormInput({
   className,
@@ -11,18 +11,18 @@ export default function FormInput({
   placeholder,
   type,
   leftIcon,
-  rightIcon,
+  rightIcon
 }) {
   const fieldClasses = classNames({
     field: true,
-    [className]: true,
-  });
+    [className]: true
+  })
 
   const controlClasses = classNames({
     control: true,
     'has-icons-left': !!leftIcon,
-    'has-icons-right': !!rightIcon,
-  });
+    'has-icons-right': !!rightIcon
+  })
 
   return (
     <div className={fieldClasses}>
@@ -46,15 +46,15 @@ export default function FormInput({
         )}
       </p>
     </div>
-  );
+  )
 }
 
 FormInput.defaultProps = {
   className: '',
   leftIcon: undefined,
   rightIcon: undefined,
-  type: 'text',
-};
+  type: 'text'
+}
 
 FormInput.propTypes = {
   className: PropTypes.string,
@@ -63,5 +63,5 @@ FormInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   leftIcon: PropTypes.object,
   rightIcon: PropTypes.object,
-  type: PropTypes.string,
-};
+  type: PropTypes.string
+}

@@ -1,16 +1,16 @@
-const express = require("express");
-const { User } = require("../database/schemas");
+const express = require('express')
+const {User} = require('../database/schemas')
 
-const router = express.Router();
+const router = express.Router()
 
-module.exports = router;
+module.exports = router
 
-router.get("/", async (req, res) => {
-  await User.find({userType: "donor"}, (err, users) => {
+router.get('/', async (req, res) => {
+  await User.find({userType: 'donor'}, (err, users) => {
     if (err) {
-      res.status(400).send({ message: "Couldn't get users" });
+      res.status(400).send({message: "Couldn't get users"})
     } else {
-      res.send(users);
+      res.send(users)
     }
-  }).select("-password");
-});
+  }).select('-password')
+})

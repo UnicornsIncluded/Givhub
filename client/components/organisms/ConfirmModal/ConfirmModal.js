@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
-import ConfirmDeleteTodo from '_organisms/ConfirmDeleteTodo';
+import ConfirmDeleteTodo from '../../organisms/ConfirmDeleteTodo'
 
-export default function ConfirmModal({ confirm, closeModal, deleteTodo }) {
+export default function ConfirmModal({confirm, closeModal, deleteTodo}) {
   const modalClasses = classNames({
     modal: true,
     'confirm-modal': true,
-    'is-active': confirm,
-  });
+    'is-active': confirm
+  })
 
   return (
     <div className={modalClasses}>
@@ -24,11 +24,11 @@ export default function ConfirmModal({ confirm, closeModal, deleteTodo }) {
         onClick={closeModal}
       />
     </div>
-  );
+  )
 }
 
 ConfirmModal.propTypes = {
   confirm: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  deleteTodo: PropTypes.func.isRequired,
-};
+  deleteTodo: PropTypes.func.isRequired
+}

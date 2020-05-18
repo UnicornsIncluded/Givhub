@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { push } from 'connected-react-router';
-import { Switch, Route } from 'react-router';
-import * as R from 'ramda';
+import React, {useEffect} from 'react'
+import PropTypes from 'prop-types'
+import {useDispatch, useSelector} from 'react-redux'
+import {push} from 'connected-react-router'
+import {Switch, Route} from 'react-router'
+import * as R from 'ramda'
 
-import ProfileSettings from '_templates/ProfileSettings';
-import AccountSettings from '_templates/AccountSettings';
-import SettingsMenu from '_organisms/SettingsMenu';
+import ProfileSettings from '../../templates/ProfileSettings'
+import AccountSettings from '../../templates/AccountSettings'
+import SettingsMenu from '../../organisms/SettingsMenu'
 
-export default function SettingsPage({ location }) {
-  const dispatch = useDispatch();
-  const { user } = useSelector(R.pick(['user']));
+export default function SettingsPage({location}) {
+  const dispatch = useDispatch()
+  const {user} = useSelector(R.pick(['user']))
 
   useEffect(() => {
     if (R.isEmpty(user)) {
-      dispatch(push('/login'));
+      dispatch(push('/login'))
     }
-  }, []);
+  }, [])
 
   return (
     <div className="settings-page page">
@@ -38,11 +38,11 @@ export default function SettingsPage({ location }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 SettingsPage.propTypes = {
   location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
+    pathname: PropTypes.string.isRequired
+  }).isRequired
+}

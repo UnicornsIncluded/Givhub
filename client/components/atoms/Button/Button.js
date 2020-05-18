@@ -1,30 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 export default function Button(props) {
   const {
-    className, onClick, label, style, type, size, outlined,
-    inverted, rounded, hovered, focused, active, loading, disabled,
-  } = props;
+    className,
+    onClick,
+    label,
+    style,
+    type,
+    size,
+    outlined,
+    inverted,
+    rounded,
+    hovered,
+    focused,
+    active,
+    loading,
+    disabled
+  } = props
 
   const typeMap = {
     info: 'is-info',
     primary: 'is-primary',
     success: 'is-success',
     warning: 'is-warning',
-    danger: 'is-danger',
-  };
+    danger: 'is-danger'
+  }
 
   const sizeMap = {
     small: 'is-small',
     normal: '',
     medium: 'is-medium',
-    large: 'is-large',
-  };
+    large: 'is-large'
+  }
 
-  const isType = typeMap[type] || 'is-info';
-  const isSize = sizeMap[size] || '';
+  const isType = typeMap[type] || 'is-info'
+  const isSize = sizeMap[size] || ''
 
   const buttonClasses = classNames({
     [className]: !!className,
@@ -38,8 +50,8 @@ export default function Button(props) {
     'is-focused': focused,
     'is-active': active,
     'is-loading': loading,
-    'is-static': props.static,
-  });
+    'is-static': props.static
+  })
 
   return (
     <button
@@ -51,7 +63,7 @@ export default function Button(props) {
     >
       {label}
     </button>
-  );
+  )
 }
 
 Button.propTypes = {
@@ -69,8 +81,8 @@ Button.propTypes = {
   active: PropTypes.bool,
   loading: PropTypes.bool,
   static: PropTypes.bool,
-  disabled: PropTypes.bool,
-};
+  disabled: PropTypes.bool
+}
 
 Button.defaultProps = {
   className: '',
@@ -87,5 +99,5 @@ Button.defaultProps = {
   active: false,
   loading: false,
   static: false,
-  disabled: false,
-};
+  disabled: false
+}
