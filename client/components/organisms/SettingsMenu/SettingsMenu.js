@@ -19,7 +19,7 @@ export default function SettingsMenu({pathname}) {
       pathname === '/settings/'
   })
 
-  const accountClasses = classNames({'is-active': pathname.includes('account')})
+  // const accountClasses = classNames({'is-active': pathname.includes('account')})
 
   return (
     <aside className="settings-menu menu box">
@@ -33,11 +33,11 @@ export default function SettingsMenu({pathname}) {
       </ul>
       <p className="menu-label">Settings</p>
       <ul className="menu-list">
-        <li>
+        {/* <li>
           <Link to="/settings/account" className={accountClasses}>
             Account
           </Link>
-        </li>
+        </li> */}
         <li>
           <a onClick={logout} onKeyPress={logout}>
             Logout

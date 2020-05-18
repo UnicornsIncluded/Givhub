@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import {attemptGetLinkedUser, attemptGetUser} from '../../../store/thunks/user'
+import {getLinkedUser, getUser} from '../../../store/thunks/user'
 import Button from 'react-bootstrap/Button'
 import {Link} from 'react-router-dom'
 import {Spacer} from '../../atoms/Spacer'
 export class CourierPage extends React.Component {
   componentDidMount() {
     let linkedUserId = this.props.user.linkedUser
-    this.props.attemptGetLinkedUser(linkedUserId)
+    this.props.getLinkedUser(linkedUserId)
   }
 
   render() {
@@ -48,9 +48,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    attemptGetLinkedUser: linkedUserId =>
-      dispatch(attemptGetLinkedUser(linkedUserId)),
-    attemptGetUser: () => dispatch(attemptGetUser())
+    getLinkedUser: linkedUserId => dispatch(getLinkedUser(linkedUserId)),
+    getUser: () => dispatch(getUser())
   }
 }
 

@@ -5,10 +5,10 @@ import {connect} from 'react-redux'
 // import * as R from "ramda";
 import Button from 'react-bootstrap/Button'
 import {
-  attemptUpdateUserCourier,
-  attemptGetLinkedUser,
-  attemptGetCouriers,
-  attemptGetUser
+  updateUserCourier,
+  getLinkedUser,
+  getCouriers,
+  getUser
 } from '../../../store/thunks/user'
 import {
   fetchCart,
@@ -35,7 +35,7 @@ export class UserPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.attemptGetCouriers()
+    this.props.getCouriers()
     this.props.getCartItems(this.props.match.params.username)
   }
   handleDonateChange(event) {
@@ -59,9 +59,8 @@ export class UserPage extends React.Component {
 
     // make not hard coded
     this.props
-      // .attemptUpdateUserCourier(courier, donor)
-      .attemptGetLinkedUser(courier)
-      .then(() => this.props.attemptGetUser())
+      .getLinkedUser(courier)
+      .then(() => this.props.getUser())
       .then(() =>
         axios.post('/sms', {
           message: 'You have a new job! Please check it out on Givhub',
@@ -75,7 +74,7 @@ export class UserPage extends React.Component {
           to: this.props.userCart.phoneNumber
         })
       )
-      .then(this.props.attemptUpdateUserCourier(courier, donor, donorAddress))
+      .then(this.props.updateUserCourier(courier, donor, donorAddress))
       .then(() =>
         this.props.history.push(`/${this.props.match.params.username}/oip`)
       )
@@ -182,18 +181,18 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    attemptUpdateUserCourier: (courier, donor, address) =>
-      dispatch(attemptUpdateUserCourier(courier, donor, address)),
-    attemptGetLinkedUser: () => dispatch(attemptGetLinkedUser(linkedUserId)),
+    updateUserCourier: (courier, donor, address) =>
+      dispatch(updateUserCourier(courier, donor, address)),
+    getLinkedUser: () => dispatch(getLinkedUser(linkedUserId)),
     getCartItems: username => {
       dispatch(fetchCart(username))
     },
-    attemptGetCouriers: () => dispatch(attemptGetCouriers()),
+    getCouriers: () => dispatch(getCouriers()),
     addToCart: (nameOfItem, username) =>
       dispatch(addToCart(nameOfItem, username)),
     removeFromCart: (username, item) =>
       dispatch(removeFromCart(username, item)),
-    attemptGetUser: () => dispatch(attemptGetUser())
+    getUser: () => dispatch(getUser())
   }
 }
 

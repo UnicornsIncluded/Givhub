@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import Receipt from '../../molecules/Receipt/Receipt'
 import MapboxCourier from '../../molecules/Map/Mapbox_Courier'
 import MapboxDonor from '../../molecules/Map/Mapbox_Donor'
-import {attemptGetLinkedUser} from '../../../store/thunks/user'
-import {attemptGetFoodBank} from '../../../store/thunks/foodbank'
+import {getLinkedUser} from '../../../store/thunks/user'
+import {getFoodBank} from '../../../store/thunks/foodbank'
 
 export class OrderInProgressPage extends React.Component {
   constructor(props) {
@@ -15,8 +15,8 @@ export class OrderInProgressPage extends React.Component {
     }
   }
   componentDidMount() {
-    this.props.attemptGetLinkedUser(this.props.user.linkedUser)
-    this.props.attemptGetFoodBank(this.props.user.address)
+    this.props.getLinkedUser(this.props.user.linkedUser)
+    this.props.getFoodBank(this.props.user.address)
   }
 
   render() {
@@ -56,10 +56,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    attemptGetLinkedUser: linkedUserId =>
-      dispatch(attemptGetLinkedUser(linkedUserId)),
-    attemptGetFoodBank: donorAddress =>
-      dispatch(attemptGetFoodBank(donorAddress))
+    getLinkedUser: linkedUserId => dispatch(getLinkedUser(linkedUserId)),
+    getFoodBank: donorAddress => dispatch(getFoodBank(donorAddress))
   }
 }
 

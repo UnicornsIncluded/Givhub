@@ -7,7 +7,6 @@ import classNames from 'classnames'
 import {useSelector} from 'react-redux'
 import * as R from 'ramda'
 
-import UserDropdown from '../../molecules/UserDropdown'
 import Button from '../../atoms/Button'
 import {attemptLogout} from '../../../store/thunks/auth'
 
@@ -90,49 +89,6 @@ export default function Navigation({pathname}) {
                 <Button label="Sign Up" type="success" />
               </Link>
             )}
-            {/* {auth && (
-              <a
-                className="is-hoverable is-hidden-desktop"
-              >
-                {user.userType === 'donor' ? (
-                  <div>
-                    <Link to={`/${user.username}/cart`}>
-                      <img
-                        className="roundedImg"
-                        width="50px"
-                        height="50px"
-                        src="https://i.pinimg.com/originals/4e/4b/06/4e4b06fe3fbca10096ece1aa6354479b.png"
-                      />
-                    </Link>
-                    <img
-                      className="roundedImg"
-                      width="50px"
-                      height="50px"
-                      src="https://cdn.iconscout.com/icon/free/png-256/logout-37-459247.png"
-                      onClick={logout}
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <Link to={`courier/${user.username}`}>
-                      <img
-                        className="roundedImg"
-                        width="50px"
-                        height="50px"
-                        src="https://s3.amazonaws.com/iconbros/icons/icon_pngs/000/000/163/original/delivery.png?1510082899"
-                      />
-                    </Link>
-                    <img
-                      className="roundedImg"
-                      width="50px"
-                      height="50px"
-                      src="https://cdn.iconscout.com/icon/free/png-256/logout-37-459247.png"
-                      onClick={logout}
-                    />
-                  </div>
-                )}
-              </a>
-            )} */}
           </div>
         </div>
 
@@ -187,7 +143,6 @@ export default function Navigation({pathname}) {
             </div>
           </div>
         )}
-        {/* <UserDropdown open={open} closeDropdown={closeDropdown} /> */}
       </div>
     </nav>
   )
