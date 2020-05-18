@@ -12,7 +12,8 @@ mongoose.connect(process.env.DATABASE_URL, {
 const users = [
   new User({
     userType: 'donor',
-    username: 'belldonor',
+    username: 'belladonor',
+    linkedUser: null,
     firstName: 'Bella',
     lastName: 'Hadid',
     password: '123456',
