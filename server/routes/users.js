@@ -25,7 +25,7 @@ router.get('/:linkedUserId', async (req, res) => {
   }).select('-password')
 })
 
-router.put('/:linkedUserId', async (req, res) => {
+router.put('/:linkedUserId', async (req, res, next) => {
   try {
     req.body.updated_at = Date.now()
     console.log('in the put route')

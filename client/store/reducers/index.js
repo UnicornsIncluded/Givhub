@@ -8,6 +8,7 @@ import donors from './donor'
 import couriers from './courier'
 import linkedUser from './linkedUser'
 import orderStatus from './orderStatus'
+import foodBank from './foodbank'
 
 const createRootReducer = history =>
   combineReducers({
@@ -18,7 +19,8 @@ const createRootReducer = history =>
     donors,
     couriers,
     linkedUser,
-    orderStatus
+    orderStatus,
+    foodBank
   })
 
 export default createRootReducer

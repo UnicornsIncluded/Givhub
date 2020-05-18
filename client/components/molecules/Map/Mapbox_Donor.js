@@ -36,10 +36,6 @@ export class MapboxDonor extends React.Component {
       let courierResult = courierResponse.results[0].geometry.location
       const courierLat = courierResult.lat
       const courierLng = courierResult.lng
-      let foodBankResponse = await Geocode.fromAddress(
-        'Israel Food Bank, 244 5th Ave #244, New York, NY 10001'
-      )
-      let foodBankResult = foodBankResponse.results[0].geometry.location
       const geojson = {
         type: 'FeatureCollection',
         features: [
@@ -84,7 +80,10 @@ export class MapboxDonor extends React.Component {
 
       socket.on('pickup', linkedUserId => {
         this.setState({pickedUp: true})
-        markerArray[1].setLngLat([foodBankResult.lng, foodBankResult.lat])
+        markerArray[1].setLngLat([
+          this.props.foodBank.longitude,
+          this.props.foodBank.latitude
+        ])
         // markerArray.forEach(marker => {
         //   marker.remove()
         // })
@@ -110,6 +109,7 @@ export class MapboxDonor extends React.Component {
   }
 
   render() {
+    console.log(this.props, 'RIGHT FOODBANK???')
     return (
       <div>
         {this.state.loaded === false ? (
@@ -135,7 +135,8 @@ export class MapboxDonor extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    foodBank: state.foodBank
   }
 }
 

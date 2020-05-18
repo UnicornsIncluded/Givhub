@@ -4,10 +4,12 @@ import Receipt from '../../molecules/Receipt/Receipt'
 import MapboxCourier from '../../molecules/Map/Mapbox_Courier'
 import MapboxDonor from '../../molecules/Map/Mapbox_Donor'
 import {attemptGetLinkedUser} from '../../../store/thunks/user'
+import {attemptGetFoodBank} from '../../../store/thunks/foodbank'
 
 export class OrderInProgressPage extends React.Component {
   componentDidMount() {
     this.props.attemptGetLinkedUser(this.props.user.linkedUser)
+    this.props.attemptGetFoodBank(this.props.user.address)
   }
 
   render() {
@@ -22,7 +24,6 @@ export class OrderInProgressPage extends React.Component {
             <br />
             <h1>Current Order Details Here</h1>
             <Receipt username={usernameProp} />
-            {console.log(this.props)}
             {this.props.user.linkedUser !== null ? (
               this.props.user.userType == 'donor' ? (
                 <MapboxDonor history={this.props.history} />
@@ -41,14 +42,18 @@ export class OrderInProgressPage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    foodBank: state.foodBank,
+    user: state.user,
+    linkedUser: state.linkedUser
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     attemptGetLinkedUser: linkedUserId =>
-      dispatch(attemptGetLinkedUser(linkedUserId))
+      dispatch(attemptGetLinkedUser(linkedUserId)),
+    attemptGetFoodBank: donorAddress =>
+      dispatch(attemptGetFoodBank(donorAddress))
   }
 }
 

@@ -11,6 +11,7 @@ const users = require('./users')
 const donor = require('./donor')
 const courier = require('./courier')
 const sms = require('./sms')
+const foodbank = require('./foodbank')
 
 const router = express.Router()
 
@@ -19,6 +20,7 @@ router.use('/api/user', user)
 router.use('/api/users', users)
 router.use('/api/donors', donor)
 router.use('/api/couriers', courier)
+router.use('/api/foodbanks', foodbank)
 
 router.post('/sms', (req, res) => {
   client.messages

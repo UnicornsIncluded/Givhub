@@ -27,7 +27,6 @@ export class MapboxCourier extends React.Component {
     this.getLocation = this.getLocation.bind(this)
     this.pickedUp = this.pickedUp.bind(this)
     this.onTheWay = this.onTheWay.bind(this)
-    console.log('MAPBOXCOURIER PROPS', this.props)
   }
 
   async componentDidMount() {
@@ -113,9 +112,7 @@ export class MapboxCourier extends React.Component {
   async pickedUp() {
     // await axios.post('/sms', { message: 'Your courier has picked up your donation! ', to: this.props.linkedUser.phoneNumber, });
     this.state.directions.setOrigin(this.state.newOrigin)
-    this.state.directions.setDestination(
-      'Israel Food Bank, 244 5th Ave #244, New York, NY 10001'
-    )
+    this.state.directions.setDestination(this.props.foodBankAddress)
     this.setState({pickedUp: true})
     socket.emit('pickup', this.props.user.linkedUser)
   }
@@ -125,7 +122,6 @@ export class MapboxCourier extends React.Component {
       message: 'Your courier has delievered up your donation!',
       to: this.props.linkedUser.phoneNumber
     })
-    console.log('delivered props', this.props)
     // VV maybe empty array?
     socket.emit('delivered', this.props.user.linkedUser)
     // await this.props.attemptUpdateUser({ linkedUser: null })
@@ -165,7 +161,8 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     orderStatus: state.orderStatus,
-    linkedUser: state.linkedUser
+    linkedUser: state.linkedUser,
+    foodBankAddress: state.foodBank.address
   }
 }
 
