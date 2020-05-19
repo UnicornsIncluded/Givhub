@@ -82,6 +82,9 @@ export class MapboxDonor extends React.Component {
           this.props.foodBank.longitude,
           this.props.foodBank.latitude
         ])
+        // markerArray.forEach(marker => {
+        //   marker.remove()
+        // })
       })
     } catch (error) {
       var msg = null
@@ -107,13 +110,7 @@ export class MapboxDonor extends React.Component {
     return (
       <div>
         {this.state.loaded === false ? (
-          <div>
-            <img
-              src="https://miro.medium.com/max/1600/1*CsJ05WEGfunYMLGfsT2sXA.gif"
-              alt="loading..."
-            />
-            <h3>Loading location data...</h3>
-          </div>
+          <h1>Loading Location Data...</h1>
         ) : (
           <div />
         )}

@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {updateUser} from '../../../store/thunks/user'
+import {attemptUpdateUser} from '../../../store/thunks/user'
 import Button from 'react-bootstrap/Button'
 
 class PhoneForm extends React.Component {
@@ -28,7 +28,7 @@ class PhoneForm extends React.Component {
     const areaCode = this.state.areaCode
     const numberBody = this.state.numberBody
     const phoneNumber = '+' + '1' + areaCode + numberBody
-    this.props.updateUser({phoneNumber})
+    this.props.attemptUpdateUser({phoneNumber})
   }
 
   render() {
@@ -67,7 +67,7 @@ class PhoneForm extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  updateUser: userDetails => dispatch(updateUser(userDetails))
+  attemptUpdateUser: userDetails => dispatch(attemptUpdateUser(userDetails))
 })
 
 export default connect(null, mapDispatchToProps)(PhoneForm)

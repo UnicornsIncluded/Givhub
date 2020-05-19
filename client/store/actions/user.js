@@ -20,14 +20,14 @@ export function logout() {
   }
 }
 
-export function updatingUser(user) {
+export function updateUser(user) {
   return {
     type: UPDATE_USER,
     user
   }
 }
 
-export function updatingUserCourier(user) {
+export function updateUserCourier(user) {
   return {
     type: UPDATE_USER_COURIER,
     user
@@ -41,14 +41,14 @@ export function updatingUserCourier(user) {
 //   };
 // }
 
-export function gettingDonors(users) {
+export function getDonors(users) {
   return {
     type: GET_DONORS,
     users
   }
 }
 
-export function gettingCouriers(users) {
+export function getCouriers(users) {
   return {
     type: GET_COURIERS,
     users

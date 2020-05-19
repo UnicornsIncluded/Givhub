@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import {useDispatch, useSelector} from 'react-redux'
 import * as R from 'ramda'
 
-import {updateUser} from '../../../store/thunks/user'
+import {attemptUpdateUser} from '../../../store/thunks/user'
 
 export default function ChangeUsername() {
   const dispatch = useDispatch()
@@ -30,7 +30,7 @@ export default function ChangeUsername() {
     if (usernameCase.toLowerCase() === user.username) {
       const updatedUser = {username_case: usernameCase}
 
-      dispatch(updateUser(updatedUser)).catch(() =>
+      dispatch(attemptUpdateUser(updatedUser)).catch(() =>
         setUsernameCase(user.usernameCase)
       )
     }

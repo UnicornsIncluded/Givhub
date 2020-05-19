@@ -5,9 +5,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import * as R from 'ramda'
 
 import {validatePassword} from '../../../utils/validation'
-import {updatePassword} from '../../../store/thunks/user'
+import {attemptUpdatePassword} from '../../../store/thunks/user'
 
-// eslint-disable-next-line complexity
 export default function ChangePassword() {
   const dispatch = useDispatch()
   const {user} = useSelector(R.pick(['user']))
@@ -76,7 +75,7 @@ export default function ChangePassword() {
 
   const save = () => {
     if (valid && newPassword === confirmPassword && oldPassword) {
-      dispatch(updatePassword({oldPassword, newPassword}))
+      dispatch(attemptUpdatePassword({oldPassword, newPassword}))
         .then(() => {
           setOldPassword('')
           setNewPassword('')
