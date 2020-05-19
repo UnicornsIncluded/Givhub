@@ -51,7 +51,11 @@ export default function Main({location}) {
         <Navigation pathname={location.pathname} />
         <div className="main">
           <Switch>
-            <Route exact path="/" component={LoginPage} />
+            {user.userType ? (
+              <Route exact path="/" component={HomePage} />
+            ) : (
+              <Route exact path="/" component={LoginPage} />
+            )}
             {user.userType === 'donor' ? (
               <Route path="/map" component={MapboxDonor} />
             ) : (
