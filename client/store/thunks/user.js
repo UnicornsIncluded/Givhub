@@ -2,18 +2,16 @@ import {snakeToCamelCase} from 'json-style-converter/es5'
 import Notifications from 'react-notification-system-redux'
 import axios from 'axios'
 import {
-  updateUser,
-  updateUserCourier,
-  // getLinkedUser,
-  getDonors,
-  getCouriers
+  updatingUser,
+  updatingUserCourier,
+  gettingDonors,
+  gettingCouriers
 } from '../actions/user'
 import {linkedUserUpdated} from '../reducers/linkedUser'
 import io from 'socket.io-client'
 const socket = io(window.location.origin)
-import {dispatchError} from '../../utils/api'
 
-export const attemptGetUser = () => {
+export const getUser = () => {
   return async dispatch => {
     try {
       const res = await axios.get('/api/user')
@@ -25,7 +23,7 @@ export const attemptGetUser = () => {
   }
 }
 
-export const attemptGetLinkedUser = linkedUserId => {
+export const getLinkedUser = linkedUserId => {
   return async dispatch => {
     try {
       const res = await axios.get(`/api/users/${linkedUserId}`)
@@ -38,12 +36,12 @@ export const attemptGetLinkedUser = linkedUserId => {
   }
 }
 
-export const attemptGetDonors = () => {
+export const getDonors = () => {
   return async dispatch => {
     try {
       const res = await axios.get(`/api/donors/`)
       const users = res.data
-      dispatch(getDonors(users))
+      dispatch(gettingDonors(users))
       return user
     } catch (err) {
       console.error(err)
@@ -51,12 +49,12 @@ export const attemptGetDonors = () => {
   }
 }
 
-export const attemptGetCouriers = () => {
+export const getCouriers = () => {
   return async dispatch => {
     try {
       const res = await axios.get(`/api/couriers/`)
       const users = res.data
-      dispatch(getCouriers(users))
+      dispatch(gettingCouriers(users))
       return users
     } catch (err) {
       console.error(err)
@@ -64,11 +62,11 @@ export const attemptGetCouriers = () => {
   }
 }
 
-export const attemptUpdateUser = info => {
+export const updateUser = info => {
   return async dispatch => {
     try {
       const res = await axios.put('/api/user', info)
-      dispatch(updateUser(snakeToCamelCase(res.data.user)))
+      dispatch(updatingUser(snakeToCamelCase(res.data.user)))
       dispatch(
         Notifications.success({
           title: 'Success!',
@@ -84,7 +82,7 @@ export const attemptUpdateUser = info => {
   }
 }
 
-export const attemptUpdateUserCourier = (courier, donor, donorAddress) => {
+export const updateUserCourier = (courier, donor, donorAddress) => {
   return async dispatch => {
     try {
       const {data} = await axios.put(`/api/user`, {
@@ -94,7 +92,7 @@ export const attemptUpdateUserCourier = (courier, donor, donorAddress) => {
         linkedUser: donor,
         address: donorAddress
       })
-      dispatch(updateUserCourier(data))
+      dispatch(updatingUserCourier(data))
       socket.emit('clicked', data.user.user)
     } catch (err) {
       console.error('ERROR updating courier', err)
@@ -107,12 +105,12 @@ export const updateCourierLinkedDonor = linkedUserId => {
     try {
       await axios.put(`/api/users/${linkedUserId}`, {linkedUser: null})
     } catch (err) {
-      next(err)
+      console.error('ERROR updating courier linked donor', err)
     }
   }
 }
 
-export const attemptUpdatePassword = passwordInfo => {
+export const updatePassword = passwordInfo => {
   return async dispatch => {
     try {
       const res = await axios.put('/api/user/password', passwordInfo)

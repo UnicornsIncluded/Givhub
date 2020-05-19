@@ -5,9 +5,8 @@ import Notifications from 'react-notification-system-redux'
 import {useDispatch, useSelector} from 'react-redux'
 import * as R from 'ramda'
 
-import {attemptGetUser} from '../../../store/thunks/user'
+import {getUser} from '../../../store/thunks/user'
 
-// import WelcomePage from "_pages/WelcomePage";
 import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
 import HomePage from '../../pages/HomePage'
@@ -16,8 +15,7 @@ import LostPage from '../../pages/LostPage'
 import UserPage from '../../pages/UserPage'
 import CourierPage from '../../pages/CourierPage'
 import ThankYouPage from '../../pages/ThankYouPage'
-// import Map from '../../molecules/Map/Map'
-// import Mapbox from '../../molecules/Map/Mapbox'
+
 import Receipt from '../../molecules/Receipt/Receipt'
 
 import Navigation from '../../organisms/Navigation'
@@ -26,8 +24,7 @@ import OrderInProgressPage from '../../pages/OrderInProgressPage/OrderInProgress
 import MapboxCourier from '../../molecules/Map/Mapbox_Courier'
 import MapboxDonor from '../../molecules/Map/Mapbox_Donor'
 
-// import Navigation from "_organisms/Navigation";
-// import Footer from "_organisms/Footer";
+import {Spacer} from '../../atoms/Spacer'
 
 export default function Main({location}) {
   const dispatch = useDispatch()
@@ -36,7 +33,7 @@ export default function Main({location}) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    dispatch(attemptGetUser())
+    dispatch(getUser())
       .then(() => setLoading(false))
       .catch(R.identity)
   }, [])
@@ -54,8 +51,12 @@ export default function Main({location}) {
         <Navigation pathname={location.pathname} />
         <div className="main">
           <Switch>
-            <Route exact path="/" component={LoginPage} />
-            {user.userType == 'donor' ? (
+            {user.userType ? (
+              <Route exact path="/" component={HomePage} />
+            ) : (
+              <Route exact path="/" component={LoginPage} />
+            )}
+            {user.userType === 'donor' ? (
               <Route path="/map" component={MapboxDonor} />
             ) : (
               <Route path="/map" component={MapboxCourier} />
@@ -72,6 +73,7 @@ export default function Main({location}) {
             <Route path="*" component={LostPage} />
           </Switch>
         </div>
+        <Spacer />
         <Footer pathname={location.pathname} />
       </div>
     )

@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
@@ -5,11 +6,9 @@ import mapboxgl from 'mapbox-gl'
 import Button from 'react-bootstrap/Button'
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 // import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-import {
-  attemptUpdateUser,
-  attemptGetLinkedUser
-} from '../../../store/thunks/user'
+import {updateUser, getLinkedUser} from '../../../store/thunks/user'
 import io from 'socket.io-client'
+
 const socket = io(window.location.origin)
 mapboxgl.accessToken =
   'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ'
@@ -112,9 +111,7 @@ export class MapboxCourier extends React.Component {
       message: 'Your courier has delievered up your donation!',
       to: this.props.linkedUser.phoneNumber
     })
-    // VV maybe empty array?
     socket.emit('delivered', this.props.user.linkedUser)
-    // await this.props.attemptUpdateUser({ linkedUser: null })
     this.props.history.push('/thankyou')
   }
 
@@ -137,10 +134,17 @@ export class MapboxCourier extends React.Component {
         )}
 
         {this.state.loaded === false ? (
-          <h1>Loading Location Data...</h1>
+          <div>
+            <img
+              src="https://miro.medium.com/max/1600/1*CsJ05WEGfunYMLGfsT2sXA.gif"
+              alt="loading..."
+            />
+            <h3>Loading location data...</h3>
+          </div>
         ) : (
           <div />
         )}
+        {/* What is this? */}
         <div ref={el => (this.mapContainer = el)} className="mapContainer" />
       </div>
     )
@@ -158,9 +162,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    attemptUpdateUser: userDetails => dispatch(attemptUpdateUser(userDetails)),
-    attemptGetLinkedUser: linkedUserId =>
-      dispatch(attemptGetLinkedUser(linkedUserId))
+    updateUser: userDetails => dispatch(updateUser(userDetails)),
+    getLinkedUser: linkedUserId => dispatch(getLinkedUser(linkedUserId))
   }
 }
 

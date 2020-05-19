@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import {attemptUpdateUser} from '../../../store/thunks/user'
+import {updateUser} from '../../../store/thunks/user'
 import {Spacer} from '../../atoms/Spacer'
 
 export class ThankYouPage extends React.Component {
   componentDidMount() {
-    if (this.props.user.userType == 'donor') {
-      this.props.attemptUpdateUser({'donationCart.items': []})
+    if (this.props.user.userType === 'donor') {
+      this.props.updateUser({'donationCart.items': []})
     }
   }
 
@@ -16,7 +16,7 @@ export class ThankYouPage extends React.Component {
         <div className="section">
           <div className="container">
             <Spacer />
-            {this.props.user.userType == 'donor' ? (
+            {this.props.user.userType === 'donor' ? (
               <div>
                 <h1>
                   Thank You for your donation {this.props.user.username} !
@@ -40,7 +40,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    attemptUpdateUser: userDetails => dispatch(attemptUpdateUser(userDetails))
+    updateUser: userDetails => dispatch(updateUser(userDetails))
   }
 }
 

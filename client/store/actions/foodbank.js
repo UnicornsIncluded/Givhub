@@ -1,6 +1,6 @@
 export const GET_FOODBANK = 'GET_FOODBANK'
 
-export function getFoodBank(foodbank) {
+export function gettingFoodBank(foodbank) {
   return {
     type: GET_FOODBANK,
     foodbank
