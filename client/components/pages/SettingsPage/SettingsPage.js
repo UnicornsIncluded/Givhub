@@ -6,7 +6,7 @@ import {Switch, Route} from 'react-router'
 import * as R from 'ramda'
 
 import ProfileSettings from '../../templates/ProfileSettings'
-// import AccountSettings from '../../templates/AccountSettings'
+import AccountSettings from '../../templates/AccountSettings'
 import SettingsMenu from '../../organisms/SettingsMenu'
 
 export default function SettingsPage({location}) {
@@ -30,7 +30,7 @@ export default function SettingsPage({location}) {
             <div className="column">
               <Switch>
                 <Route path="/settings/profile/" component={ProfileSettings} />
-                {/* <Route path="/settings/account/" component={AccountSettings} /> */}
+                <Route path="/settings/account/" component={AccountSettings} />
                 <Route path="*" component={ProfileSettings} />
               </Switch>
             </div>

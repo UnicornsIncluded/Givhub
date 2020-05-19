@@ -1,16 +1,16 @@
-import {gettingFoodBank} from '../actions/foodbank'
+import {getFoodBank} from '../actions/foodbank'
 import axios from 'axios'
 import Geocode from 'react-geocode'
 const googleAPIKey = 'AIzaSyDC7k8_twTAov9zk3XoHNVM9ztBKTshVhU'
 Geocode.setApiKey(googleAPIKey)
 Geocode.setLanguage('en')
 
-export const getFoodBank = donorAddress => {
+export const attemptGetFoodBank = donorAddress => {
   return async dispatch => {
     try {
       const res = await axios.get('/api/foodbanks')
       const closestFoodbank = await foodBankHelper(donorAddress, res.data)
-      dispatch(gettingFoodBank(closestFoodbank))
+      dispatch(getFoodBank(closestFoodbank))
     } catch (error) {
       console.error(error)
     }
