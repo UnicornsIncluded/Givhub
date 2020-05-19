@@ -114,6 +114,11 @@ export class UserPage extends React.Component {
                   type="success"
                   label="Add"
                   size="lg"
+                  disabled={
+                    this.state.donating.match(/^\s*$/) !== null ||
+                    this.state.donating.match(/[0-9]/) !== null ||
+                    this.state.donating.match(/\W/) !== null
+                  }
                   onClick={() => this.handleDonoSubmit()}
                 >
                   {' '}
