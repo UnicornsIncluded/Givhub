@@ -73,8 +73,10 @@ export class MapboxDonor extends React.Component {
 
         markerArray.push(newMarker)
       })
-      this.props.attemptGetLinkedUser(this.props.user.linkedUser)
 
+      // setInterval(this.props.attemptGetLinkedUser(this.props.user.linkedUser), 5000)
+      this.props.attemptGetLinkedUser(this.props.user.linkedUser)
+      // clearInterval(interval)
       this.setState({loaded: true, map: map})
 
       socket.on('pickup', linkedUserId => {
@@ -83,6 +85,33 @@ export class MapboxDonor extends React.Component {
           this.props.foodBank.longitude,
           this.props.foodBank.latitude
         ])
+      })
+
+      const markerFunc = (courierLong, courierLatit) => {
+        let toRemove = document.querySelectorAll('.bikeMarker')
+        if (toRemove.length >= 1) {
+          console.log('TO REMOVE IS A FUCKING ARRAY', toRemove)
+          let removeArr = Array.from(toRemove)
+          removeArr.map(bikemark => bikemark.remove())
+        }
+        var bike = document.createElement('div')
+        bike.className = 'bikeMarker'
+
+        let newBike = new mapboxgl.Marker(bike)
+          .setLngLat([courierLong, courierLatit])
+          .addTo(this.state.map)
+        console.log('INSIDE MARKER FUNC')
+      }
+
+      socket.on('courierMoved', () => {
+        // can put whatever front end logic we need
+        this.props.attemptGetLinkedUser(this.props.user.linkedUser)
+        let courierLong = this.props.linkedUser.longitude
+        let courierLatit = this.props.linkedUser.latitude
+        if (this.state.loaded === true && courierLong !== undefined) {
+          console.log('BIKE IS LOADING ~~~~~', courierLong, courierLatit)
+          markerFunc(courierLong, courierLatit)
+        }
       })
     } catch (error) {
       var msg = null
@@ -105,23 +134,23 @@ export class MapboxDonor extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    console.log('this.state', this.state)
-    let courierLong = this.props.linkedUser.longitude
-    let courierLatit = this.props.linkedUser.latitude
-    console.log('BIKE PROPS???', this.props.linkedUser)
-    if (this.state.loaded === true && courierLong !== undefined) {
-      console.log('BIKE IS LOADING ~~~~~', courierLong, courierLatit)
-      const markerFunc = () => {
-        var bike = document.createElement('div')
-        bike.className = 'bikeMarker'
-        let newBike = new mapboxgl.Marker(bike)
-          .setLngLat([courierLong, courierLatit])
-          .addTo(this.state.map)
-      }
-      markerFunc()
-    }
-  }
+  // componentDidUpdate() {
+  //   console.log('this.state', this.state)
+  //   let courierLong = this.props.linkedUser.longitude
+  //   let courierLatit = this.props.linkedUser.latitude
+  //   console.log('BIKE PROPS???', this.props.linkedUser)
+  //   if (this.state.loaded === true && courierLong !== undefined) {
+  //     console.log('BIKE IS LOADING ~~~~~', courierLong, courierLatit)
+  //     const markerFunc = () => {
+  //       var bike = document.createElement('div')
+  //       bike.className = 'bikeMarker'
+  //       let newBike = new mapboxgl.Marker(bike)
+  //         .setLngLat([courierLong, courierLatit])
+  //         .addTo(this.state.map)
+  //     }
+  //     markerFunc()
+  //   }
+  // }
 
   render() {
     return (
@@ -142,8 +171,8 @@ export class MapboxDonor extends React.Component {
             <img
               src="https://i.ya-webdesign.com/images/delivery-icon-png-13.png"
               alt="picked-up order"
-              width="100px"
-              height="100px"
+              width="75px"
+              height="75px"
             />
           </div>
         ) : (

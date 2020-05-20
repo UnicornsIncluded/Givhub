@@ -119,6 +119,7 @@ export class MapboxCourier extends React.Component {
       latitude: coords.latitude,
       longitude: coords.longitude
     })
+    socket.emit('courierMoved')
   }
 
   error() {
@@ -140,20 +141,19 @@ export class MapboxCourier extends React.Component {
         <Button onClick={this.onTheWay}>On The Way</Button>
         <Button onClick={this.pickedUp}>Picked-Up</Button>
         <Button onClick={() => this.deliveredButton()}>Delivered</Button>
-
         {this.state.pickedUp ? (
           <div>
             <img
               src="https://i.ya-webdesign.com/images/delivery-icon-png-13.png"
               alt="picked-up order"
-              width="100px"
-              height="100px"
+              width="75px"
+              height="75px"
             />
           </div>
         ) : (
           <div />
         )}
-
+        <br />
         {this.state.loaded === false ? (
           <div>
             <img

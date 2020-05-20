@@ -14,6 +14,10 @@ module.exports = io => {
       socket.broadcast.emit('delivered', linkedUserId)
     })
 
+    socket.on('courierMoved', function() {
+      socket.broadcast.emit('courierMoved')
+    })
+
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })

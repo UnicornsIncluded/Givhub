@@ -30,8 +30,8 @@ export class Receipt extends React.Component {
   render() {
     let userType = this.props.user.userType
     return (
-      <div className="welcome-page page">
-        <div className="section">
+      <div className="page">
+        <div>
           <div className="container">
             <div className="orderSummary">
               <ul>
