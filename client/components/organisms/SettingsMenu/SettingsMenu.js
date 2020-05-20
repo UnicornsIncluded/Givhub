@@ -33,11 +33,11 @@ export default function SettingsMenu({pathname}) {
       </ul>
       <p className="menu-label">Settings</p>
       <ul className="menu-list">
-        <li>
+        {/* <li>
           <Link to="/settings/account" className={accountClasses}>
             Account
           </Link>
-        </li>
+        </li> */}
         <li>
           <a onClick={logout} onKeyPress={logout}>
             Logout

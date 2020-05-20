@@ -130,6 +130,8 @@ export class MapboxCourier extends React.Component {
             <img
               src="https://i.ya-webdesign.com/images/delivery-icon-png-13.png"
               alt="picked-up order"
+              width="100px"
+              height="100px"
             />
           </div>
         ) : (
@@ -137,7 +139,13 @@ export class MapboxCourier extends React.Component {
         )}
 
         {this.state.loaded === false ? (
-          <h1>Loading Location Data...</h1>
+          <div>
+            <img
+              src="https://miro.medium.com/max/1600/1*CsJ05WEGfunYMLGfsT2sXA.gif"
+              alt="loading..."
+            />
+            <h3>Loading location data...</h3>
+          </div>
         ) : (
           <div />
         )}
