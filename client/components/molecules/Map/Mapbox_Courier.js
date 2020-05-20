@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
@@ -27,11 +28,13 @@ export class MapboxCourier extends React.Component {
     this.getLocation = this.getLocation.bind(this)
     this.pickedUp = this.pickedUp.bind(this)
     this.onTheWay = this.onTheWay.bind(this)
+    this.success = this.success.bind(this)
+    this.error = this.error.bind(this)
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    navigator.geolocation.watchPosition(this.success, this.error)
     try {
-      const pos = await this.getLocation()
       const map = new mapboxgl.Map({
         container: this.mapContainer,
         style: 'mapbox://styles/mapbox/streets-v10',
@@ -82,6 +85,7 @@ export class MapboxCourier extends React.Component {
         navigator.geolocation.getCurrentPosition(resolve, reject)
       )
     } else {
+      // eslint-disable-next-line no-alert
       alert('Geolocation is not supported by this browser.')
     }
   }
@@ -107,14 +111,26 @@ export class MapboxCourier extends React.Component {
     socket.emit('pickup', this.props.user.linkedUser)
   }
 
+  async success(position) {
+    let coords = position.coords
+    console.log('SUCCESS COORDS', coords)
+    console.log('SUCCESS PROPS', this.props)
+    await this.props.attemptUpdateUser({
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    })
+  }
+
+  error() {
+    console.log('ERROR getting user latitude longitude')
+  }
+
   async deliveredButton() {
     await axios.post('/sms', {
       message: 'Your courier has delievered up your donation!',
       to: this.props.linkedUser.phoneNumber
     })
-    // VV maybe empty array?
     socket.emit('delivered', this.props.user.linkedUser)
-    // await this.props.attemptUpdateUser({ linkedUser: null })
     this.props.history.push('/thankyou')
   }
 

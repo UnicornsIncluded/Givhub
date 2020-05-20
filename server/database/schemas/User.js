@@ -7,25 +7,6 @@ const mongooseUniqueValidator = require('mongoose-unique-validator')
 
 const {Schema} = mongoose
 
-// var userSchema = new Schema({
-//   username: { type: String, lowercase: true, required: true, unique: true, immutable: true },
-//   userType: {type: String, required: true},
-//   firstName: { type: String, required: true },
-//   lastName: { type: String, required: true },
-//   password: { type: String, required: true },
-//   address: { type: String, required: true },
-//   email: { type: String, required: true, unique: true },
-//   donationCart: {
-//     items: [
-//       {
-//         name: String,
-//       },
-//     ],
-//     status: String,
-//   },
-//   donationCartHistory: [{ type: Schema.Types.ObjectId, ref: "DonationCart" }],
-// });
-
 const userSchema = new Schema({
   userType: {type: String, required: false},
   username: {
@@ -35,16 +16,16 @@ const userSchema = new Schema({
     unique: true,
     immutable: true
   },
-  // username_case: { type: String, required: true },
   email: {type: String, required: false},
   password: {type: String, required: true},
-  profile_pic: {type: String},
   linkedUser: {type: Number, default: null},
   first_name: {type: String, maxlength: 20},
   last_name: {type: String, maxlength: 20},
   address: {type: String, default: null},
   phoneNumber: {type: String},
   bio: {type: String, maxlength: 240},
+  latitude: {type: Number},
+  longitude: {type: Number},
   donationCart: {
     items: [
       {

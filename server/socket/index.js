@@ -1,10 +1,7 @@
-const {User} = require('../database/schemas')
-
 module.exports = io => {
   io.on('connection', socket => {
     console.log(`A socket connection to the server has been made: ${socket.id}`)
 
-    // grabs 'clicked' from clientside
     socket.on('clicked', function(data) {
       socket.broadcast.emit('clicked', data)
     })

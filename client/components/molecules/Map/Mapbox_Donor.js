@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import mapboxgl from 'mapbox-gl'
 import Geocode from 'react-geocode'
 import socket from '../../../socket'
+import {attemptGetLinkedUser} from '../../../../client/store/thunks/user'
 
 mapboxgl.accessToken =
   'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ'
@@ -14,7 +15,8 @@ export class MapboxDonor extends React.Component {
     super(props)
     this.state = {
       loaded: false,
-      pickedUp: false
+      pickedUp: false,
+      map: {}
     }
   }
 
@@ -71,8 +73,9 @@ export class MapboxDonor extends React.Component {
 
         markerArray.push(newMarker)
       })
+      this.props.attemptGetLinkedUser(this.props.user.linkedUser)
 
-      this.setState({loaded: true})
+      this.setState({loaded: true, map: map})
 
       socket.on('pickup', linkedUserId => {
         this.setState({pickedUp: true})
@@ -80,12 +83,10 @@ export class MapboxDonor extends React.Component {
           this.props.foodBank.longitude,
           this.props.foodBank.latitude
         ])
-        // markerArray.forEach(marker => {
-        //   marker.remove()
-        // })
       })
     } catch (error) {
       var msg = null
+      // eslint-disable-next-line default-case
       switch (error.code) {
         case error.PERMISSION_DENIED:
           msg = 'Please enable geolocation in your browser to use Givhub.'
@@ -101,6 +102,24 @@ export class MapboxDonor extends React.Component {
           break
       }
       alert(msg)
+    }
+  }
+
+  componentDidUpdate() {
+    console.log('this.state', this.state)
+    let courierLong = this.props.linkedUser.longitude
+    let courierLatit = this.props.linkedUser.latitude
+    console.log('BIKE PROPS???', this.props.linkedUser)
+    if (this.state.loaded === true && courierLong !== undefined) {
+      console.log('BIKE IS LOADING ~~~~~', courierLong, courierLatit)
+      const markerFunc = () => {
+        var bike = document.createElement('div')
+        bike.className = 'bikeMarker'
+        let newBike = new mapboxgl.Marker(bike)
+          .setLngLat([courierLong, courierLatit])
+          .addTo(this.state.map)
+      }
+      markerFunc()
     }
   }
 
@@ -139,8 +158,16 @@ export class MapboxDonor extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    foodBank: state.foodBank
+    foodBank: state.foodBank,
+    linkedUser: state.linkedUser
   }
 }
 
-export default connect(mapStateToProps)(MapboxDonor)
+function mapDispatchToProps(dispatch) {
+  return {
+    attemptGetLinkedUser: linkedUserId =>
+      dispatch(attemptGetLinkedUser(linkedUserId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapboxDonor)
