@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
@@ -28,7 +29,8 @@ export class UserPage extends React.Component {
   constructor() {
     super()
     this.state = {
-      donating: ''
+      donating: '',
+      itemCount: 0
     }
     this.handleDonateChange = this.handleDonateChange.bind(this)
     this.handleDonoSubmit = this.handleDonoSubmit.bind(this)
@@ -44,6 +46,9 @@ export class UserPage extends React.Component {
     })
   }
   handleDonoSubmit() {
+    this.setState({
+      itemCount: 1
+    })
     const newCartItem = {}
     newCartItem.name = this.state.donating
     this.props.addToCart(newCartItem, this.props.match.params.username)
@@ -163,6 +168,7 @@ export class UserPage extends React.Component {
               // variant="success"
               size="lg"
               onClick={() => this.handleClick()}
+              disabled={this.state.itemCount < 1}
               // onClick={() => this.handleRedirect()}
             >
               Donate Now!
