@@ -158,7 +158,7 @@ export default function Navigation({pathname}) {
                 <h6 className="title is-6">Settings</h6>
               </Link>
             </div>
-            <div className="navbar-end">
+            {/* <div className="navbar-end">
               <a
                 className="navbar-item is-hoverable"
                 onClick={toggleDropdown}
@@ -173,7 +173,7 @@ export default function Navigation({pathname}) {
                 </figure>
                 <span className="dropdown-caret" />
               </a>
-            </div>
+            </div> */}
           </div>
         ) : (
           <div className="navbar-menu">

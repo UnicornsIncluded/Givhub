@@ -29,10 +29,10 @@ export class OrderInProgressPage extends React.Component {
           <div className="container">
             <br />
             <br />
-            <h1>Current Order Details Here</h1>
+            <h2>Current Order Details Here</h2>
             <Receipt username={usernameProp} />
             {this.props.user.linkedUser !== null ? (
-              this.props.user.userType == 'donor' ? (
+              this.props.user.userType === 'donor' ? (
                 <MapboxDonor history={this.props.history} />
               ) : (
                 <MapboxCourier history={this.props.history} />
