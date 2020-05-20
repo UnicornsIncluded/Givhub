@@ -30,7 +30,7 @@ export default function SettingsPage({location}) {
             <div className="column">
               <Switch>
                 <Route path="/settings/profile/" component={ProfileSettings} />
-                <Route path="/settings/account/" component={AccountSettings} />
+                {/* <Route path="/settings/account/" component={AccountSettings} /> */}
                 <Route path="*" component={ProfileSettings} />
               </Switch>
             </div>
