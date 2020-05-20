@@ -126,7 +126,7 @@ export class UserPage extends React.Component {
                 </Button>
               </div>
             </Box>
-            <div className="donoList">
+            <div className="orderSummary">
               <ul>
                 {this.props.userCart._id ? (
                   this.props.userCart.donationCart.items.map((item, id = 0) => {
@@ -134,16 +134,21 @@ export class UserPage extends React.Component {
                     return (
                       <div key={id}>
                         <li>
-                          {item.name}
-                          <br />
-                          <Button
-                            variant="danger"
-                            onClick={() =>
-                              this.handleDelete(this.props.user.username, item)
-                            }
-                          >
-                            X
-                          </Button>
+                          <div>{item.name}</div>
+
+                          <div id="donoSubmit">
+                            <Button
+                              variant="danger"
+                              onClick={() =>
+                                this.handleDelete(
+                                  this.props.user.username,
+                                  item
+                                )
+                              }
+                            >
+                              X
+                            </Button>
+                          </div>
                         </li>
                       </div>
                     )
