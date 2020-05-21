@@ -9,12 +9,8 @@ module.exports = router
 router.post('/sms', (req, res) => {
   const twiml = new MessagingResponse()
 
-  twiml.message('Permission to simp granted broffher')
+  twiml.message('Response here')
 
   res.writeHead(200, {'Content-Type': 'text/xml'})
   res.end(twiml.toString())
 })
-
-// http.createServer(app).listen(1337, () => {
-//   console.log('Express server listening on port 1337');
-// });

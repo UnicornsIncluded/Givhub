@@ -28,8 +28,6 @@ export default function Footer({pathname}) {
       : R.slice(0, 10, pathname) === '/settings/'
 
   const settingsItemClasses = classNames({
-    // 'navbar-item': true,
-    // 'is-tab': true,
     'is-active': isSettings
   })
   return (

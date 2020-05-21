@@ -2,8 +2,6 @@
 import React from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-// import { push } from "connected-react-router";
-// import * as R from "ramda";
 import Button from 'react-bootstrap/Button'
 import {
   attemptUpdateUserCourier,
@@ -54,17 +52,13 @@ export class UserPage extends React.Component {
     this.props.addToCart(newCartItem, this.props.match.params.username)
   }
   handleClick = () => {
-    // Need to add if condition to determine if courier already has job
-    // Also need to clear linkedUser and linked address from courier when "delivered is pressed so above if condition can work"
     const donorAddress = this.props.user.address
     randomCourierIndex = Math.floor(Math.random() * this.props.couriers.length)
     courier = this.props.couriers[randomCourierIndex].user
     donor = this.props.user.user
     linkedUserId = courier
 
-    // make not hard coded
     this.props
-      // .attemptUpdateUserCourier(courier, donor)
       .attemptGetLinkedUser(courier)
       .then(() => this.props.attemptGetUser())
       .then(() =>
@@ -165,16 +159,15 @@ export class UserPage extends React.Component {
             </div>
             <Button
               id="tealButton"
-              // variant="success"
               size="lg"
               onClick={() => this.handleClick()}
               disabled={this.state.itemCount < 1}
-              // onClick={() => this.handleRedirect()}
             >
               Donate Now!
             </Button>
           </div>
-          {Array.isArray(this.props.linkedUser) == false &&
+          {Array.isArray(this.props.linkedUser) === false &&
+          donorInfo &&
           courierInfo.user === donorInfo.linkedUser &&
           courierInfo.linkedUser === donorInfo.user ? (
             <h2>

@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-// import { push } from "connected-react-router";
-// import * as R from "ramda";
+
 import Button from 'react-bootstrap/Button'
 import io from 'socket.io-client'
 import {Spacer} from '../../atoms/Spacer'
@@ -35,7 +34,7 @@ export class Receipt extends React.Component {
           <div className="container">
             <div className="orderSummary">
               <ul>
-                {userType == 'donor' ? (
+                {userType === 'donor' ? (
                   this.props.userCart._id ? (
                     this.props.userCart.donationCart.items.map(
                       (item, index) => {

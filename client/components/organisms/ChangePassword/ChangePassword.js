@@ -7,6 +7,7 @@ import * as R from 'ramda'
 import {validatePassword} from '../../../utils/validation'
 import {attemptUpdatePassword} from '../../../store/thunks/user'
 
+// eslint-disable-next-line complexity
 export default function ChangePassword() {
   const dispatch = useDispatch()
   const {user} = useSelector(R.pick(['user']))
