@@ -34,13 +34,6 @@ export function updateUserCourier(user) {
   }
 }
 
-// export function getLinkedUser(user) {
-//   return {
-//     type: GET_USER,
-//     user
-//   };
-// }
-
 export function getDonors(users) {
   return {
     type: GET_DONORS,

@@ -48,15 +48,6 @@ router.put('/:linkedUserId', async (req, res, next) => {
   }
 })
 
-// router.delete("/:linkedUserId", async (req, res, next) => {
-//   try {
-//     await User.update({user: req.params.linkedUserId}, {$pull: req.body})
-//     res.sendStatus(204);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 router.get('/:username/cart', async (req, res, next) => {
   try {
     const userData = await User.find({username: req.params.username})

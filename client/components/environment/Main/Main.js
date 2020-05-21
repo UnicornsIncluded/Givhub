@@ -51,7 +51,7 @@ export default function Main({location}) {
         <div className="main">
           <Switch>
             <Route exact path="/" component={LoginPage} />
-            {user.userType == 'donor' ? (
+            {user.userType === 'donor' ? (
               <Route path="/map" component={MapboxDonor} />
             ) : (
               <Route path="/map" component={MapboxCourier} />

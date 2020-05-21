@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 import mapboxgl from 'mapbox-gl'
 import Button from 'react-bootstrap/Button'
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
-// import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 import {
   attemptUpdateUser,
   attemptGetLinkedUser
@@ -113,8 +112,6 @@ export class MapboxCourier extends React.Component {
 
   async success(position) {
     let coords = position.coords
-    console.log('SUCCESS COORDS', coords)
-    console.log('SUCCESS PROPS', this.props)
     await this.props.attemptUpdateUser({
       latitude: coords.latitude,
       longitude: coords.longitude
@@ -128,7 +125,7 @@ export class MapboxCourier extends React.Component {
 
   async deliveredButton() {
     await axios.post('/sms', {
-      message: 'Your courier has delievered up your donation!',
+      message: 'Your courier has delivered up your donation!',
       to: this.props.linkedUser.phoneNumber
     })
     socket.emit('delivered', this.props.user.linkedUser)

@@ -15,7 +15,6 @@ socket.on('clicked', data => {
 })
 
 socket.on('delivered', linkedUserId => {
-  // can put whatever front end logic we need
   store.dispatch(updateCourierLinkedDonor(linkedUserId))
   store.dispatch(attemptUpdateUser({linkedUser: null}))
 })

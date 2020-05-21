@@ -4,12 +4,6 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GET_CART = 'GET_CART'
-// const REMOVE_ITEM = 'REMOVE_ITEM'
-
-/**
- * INITIAL STATE
- */
-// const defaultCars = {}
 
 /**
  * ACTION CREATORS
@@ -18,11 +12,6 @@ const getCart = cart => ({
   type: GET_CART,
   cart
 })
-
-// const removeItem = item => ({
-//   type: GET_CART,
-//   item
-// })
 
 /**
  * THUNK CREATORS
