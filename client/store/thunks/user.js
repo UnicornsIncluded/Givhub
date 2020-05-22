@@ -68,15 +68,18 @@ export const attemptUpdateUser = info => {
   return async dispatch => {
     try {
       const res = await axios.put('/api/user', info)
+      console.log('update user info', info)
       dispatch(updateUser(snakeToCamelCase(res.data.user)))
-      dispatch(
-        Notifications.success({
-          title: 'Success!',
-          message: res.data.message,
-          position: 'tr',
-          autoDismiss: 3
-        })
-      )
+      if (!info.latitude) {
+        dispatch(
+          Notifications.success({
+            title: 'Success!',
+            message: res.data.message,
+            position: 'tr',
+            autoDismiss: 3
+          })
+        )
+      }
       return res.data
     } catch (error) {
       console.error(error)
