@@ -8,5 +8,8 @@ import history from './history'
 import store from './store'
 
 import Root from './components/environment/Root'
+import * as serviceWorker from '../public/worker'
 
 render(<Root history={history} store={store} />, document.getElementById('app'))
+
+serviceWorker.register()
