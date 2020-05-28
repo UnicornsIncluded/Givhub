@@ -1,0 +1,15 @@
+{
+  "short_name": "Givhub",
+  "name": "Streamlining Food Donation Delivery",
+  "icons": [
+    {
+      "src": "./favicon.ico",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "http://localhost:3000/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
