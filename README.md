@@ -1,6 +1,6 @@
 # Givhub: A Place To Give
 
-​
+​![](./public/Demogif.gif)
 
 ## Requirements
 
