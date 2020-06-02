@@ -1,6 +1,7 @@
 # Givhub: A Place To Give
 
 ​![](./public/Demogif.gif)
+<img width="60px" height="130px" src="./public/Demogif.gif">
 
 ## Requirements
 
