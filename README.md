@@ -4,6 +4,7 @@ GivHub is our solution to cutting down food waste. It's a Progressive Web Applic
 
 ## Donor View
 <img class="inline-block" width="300px" height="650px" src="./public/Demogif.gif">
+
 ## Courier View
 <img class="inline-block" width="300px" height="650px" src="./public/couriergif.gif">
 
