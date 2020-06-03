@@ -1,7 +1,22 @@
 # Givhub: A Place To Give
 
+GivHub is our solution to cutting down food waste. It's a Progressive Web Application that streamlines the food donation process by matching couriers to donors to deliver the donations directly to the food banks.
+
+## Donor View
 <img class="inline-block" width="300px" height="650px" src="./public/Demogif.gif">
+## Courier View
 <img class="inline-block" width="300px" height="650px" src="./public/couriergif.gif">
+
+## Tech Stack
+
+* MongoDB
+* ExpressJS
+* React/Redux
+* Node.js
+
+* Twilio API
+* Mapbox API
+* Socket IO
 
 ## Requirements
 
