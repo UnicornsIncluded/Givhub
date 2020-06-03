@@ -1,7 +1,7 @@
 # Givhub: A Place To Give
 
-<img width="300px" height="650px" src="./public/Demogif.gif">
-<img width="300px" height="650px" src="./public/couriergif.gif">
+<img class="inline-block" width="300px" height="650px" src="./public/Demogif.gif">
+<img class="inline-block" width="300px" height="650px" src="./public/couriergif.gif">
 
 ## Requirements
 
