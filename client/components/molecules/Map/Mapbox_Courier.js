@@ -10,6 +10,8 @@ import {
   attemptGetLinkedUser
 } from '../../../store/thunks/user'
 import io from 'socket.io-client'
+import { array, node } from 'prop-types'
+import { search } from 'core-js/fn/symbol'
 const socket = io(window.location.origin)
 mapboxgl.accessToken =
   'pk.eyJ1IjoidGVhZGVuIiwiYSI6ImNrNXdwbGFwYjE1OHYzbW14YTllZmdzb3MifQ.0hqWN7w_oxX7qzJ5w30EfQ'
@@ -33,6 +35,45 @@ export class MapboxCourier extends React.Component {
 
   componentDidMount() {
     navigator.geolocation.watchPosition(this.success, this.error)
+    function newFunction(oarameter, newParam, x, y)
+    for(let i = 0; i < array.length; i++){
+      if(i < string.length + 1) {
+        counter++
+        leftPointer++
+        rightPointer--
+        while(node){
+          array.push(node.val);
+          node = node.next
+        }
+      }
+    }
+
+    for(let i = 0; i < matrix.length; i++){
+      for(let j = 0; j < matrix[0].length; j++){
+        if(matrix[i][j] === 0){
+          search(matrix[i][j])
+        }
+      }
+    }
+
+    function search(value) {
+      search(newValue + 1)
+    }
+
+    for(let i = 0; i < matrix.length; i++){
+      for(let j = 0; j < matrix[0].length; j++){
+        matrix[i][j] = newValue;
+        search(value);
+        let interger = 3;
+        let alpha = 'd';
+        let beta = [1,3,4,5]
+        const dataType = {
+          a: 'a',
+          b: 'b',
+          c: 'c',
+        }
+      }
+    }
     try {
       const map = new mapboxgl.Map({
         container: this.mapContainer,
