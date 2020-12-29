@@ -71,9 +71,17 @@ export class MapboxCourier extends React.Component {
           a: 'a',
           b: 'b',
           c: 'c',
+          d: 'd',
         }
       }
     }
+
+    for(let i = 0; i < array.length; i++){
+      for(let j = 0; j < array[0].length; j++){
+        matrix[i][j] = 'new '
+      }
+    }
+
     try {
       const map = new mapboxgl.Map({
         container: this.mapContainer,
